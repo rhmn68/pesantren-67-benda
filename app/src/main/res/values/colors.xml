@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#6ab04c</color>
+    <color name="colorPrimaryDark">#6ab04c</color>
+    <color name="colorAccent">#f9ca24</color>
 
 
-    <!--Primary Code-->
+    <!--Public color-->
     <color name="white">#ffffff</color>
     <color name="whitetransparant">#ffffffff</color>
     <color name="black">#000000</color>
@@ -22,4 +22,5 @@
     <color name="grey">#414141</color>
     <color name="green">#3E5621</color>
     <color name="green_splash">#0faf45</color>
+    <color name="greytextcolor">#727073</color>
 </resources>

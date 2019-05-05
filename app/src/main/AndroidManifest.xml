@@ -19,7 +19,8 @@
         <activity android:name=".view.activity.LoginActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden" />
         <activity android:name=".view.activity.SplashScreen"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
