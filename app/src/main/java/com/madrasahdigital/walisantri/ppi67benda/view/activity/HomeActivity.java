@@ -1,7 +1,9 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
@@ -24,4 +26,8 @@ public class HomeActivity extends AppCompatActivity {
         spinner.setAdapter(adapter);
     }
 
+    public void gotoPresence(View view) {
+        Intent intent = new Intent(HomeActivity.this, PresenceActivity.class);
+        startActivity(intent);
+    }
 }

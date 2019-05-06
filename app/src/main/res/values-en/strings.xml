@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">67 Benda</string>
+    <string name="email">Email</string>
+    <string name="lupakatasandi">Forgot Password? Click here</string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+</resources>

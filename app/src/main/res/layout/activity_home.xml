@@ -70,6 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
                 android:padding="20dp"
+                android:onClick="gotoPresence"
                 android:background="@drawable/btn_green">
 
                 <TextView

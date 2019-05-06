@@ -87,7 +87,7 @@
                 android:layout_marginEnd="@dimen/marginleftright"
                 android:layout_marginRight="@dimen/marginleftright"
                 android:background="@drawable/btn_green"
-                android:text="@string/masuk"
+                android:text="@string/login"
                 android:onClick="gotoHomePage"
                 android:textColor="@color/white" />
 

@@ -2,7 +2,7 @@
     <string name="app_name">67 Benda</string>
 
     <string name="lupakatasandi">Lupa kata sandi? Klik disini</string>
-    <string name="masuk">masuk</string>
+    <string name="login">masuk</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
 
@@ -11,4 +11,12 @@
         <item>Farin Akhsanta</item>
         <item>Fadlan Lazuardi</item>
     </string-array>
+
+    <string-array name="year_example">
+        <item>2017</item>
+        <item>2018</item>
+        <item>2019</item>
+    </string-array>
+    <string name="today">Hari ini</string>
+    <string name="yesterday">Kemarin</string>
 </resources>
