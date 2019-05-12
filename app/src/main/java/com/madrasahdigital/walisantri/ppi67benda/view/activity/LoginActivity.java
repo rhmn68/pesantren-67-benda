@@ -10,8 +10,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
+import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.service.AppLink;
+import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
@@ -22,6 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
+import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class LoginActivity extends AppCompatActivity {
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoadingDialog loadingDialog;
     private String email;
     private String password;
+    private SharedPrefManager sharedPrefManager;
 
 
     @Override
@@ -44,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        sharedPrefManager = new SharedPrefManager(LoginActivity.this);
     }
 
     public void gotoHomePage(View view) {
@@ -69,6 +74,7 @@ public class LoginActivity extends AppCompatActivity {
         @Override
         protected Boolean doInBackground(Void... voids) {
             OkHttpClient client = new OkHttpClient();
+            boolean status = false;
 
             RequestBody body = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -76,24 +82,50 @@ public class LoginActivity extends AppCompatActivity {
                     .addFormDataPart("password", password)
                     .build();
             Request request = new Request.Builder()
-                    .url(AppLink.LINK_LOGIN)
+                    .url(Constant.LINK_LOGIN)
                     .post(body)
                     .build();
 
             try {
-                okhttp3.Response response = client.newCall(request).execute();
+                Response response = client.newCall(request).execute();
                 ResponseBody responseBody = response.body();
                 jsonObject = new JSONObject(responseBody.string());
 
                 int statusCode = response.code();
 
                 if (statusCode == 200) {
-                    return true;
+                    status = true;
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
             }
+
+            if (status) {
+                try {
+                    request = new Request.Builder()
+                            .url(Constant.LINK_GET_ALL_SANTRI)
+                            .get()
+                            .addHeader("Authorization", jsonObject.getString("token"))
+                            .build();
+
+                    Response response = client.newCall(request).execute();
+                    ResponseBody responseBody = response.body();
+                    String bodyString = responseBody.string();
+
+                    Gson gson = new Gson();
+                    AllSantri allSantri =
+                            gson.fromJson(bodyString, AllSantri.class);
+
+                    sharedPrefManager.saveAllSantri(allSantri);
+                    sharedPrefManager.setIdActiveSantriInHomePage(allSantri.getSantri().get(0).getId());
+
+                    return true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
             return false;
         }
 
@@ -102,16 +134,18 @@ public class LoginActivity extends AppCompatActivity {
             loadingDialog.dismiss();
             try {
                 if (isSuccess) {
-                    SharedPrefManager sharedPrefManager = new SharedPrefManager(LoginActivity.this);
                     sharedPrefManager.setLogin(true);
                     sharedPrefManager.setToken(jsonObject.getString("token"));
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
+                    finish();
                 } else {
                     Log.w(TAG, "message : " + jsonObject.getString("message"));
                     UtilsManager.showToast(LoginActivity.this, jsonObject.getString("message"));
                 }
             } catch (Exception e) {
+                UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
         }
