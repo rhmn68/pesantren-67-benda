@@ -7,4 +7,6 @@
     <string name="password">Password</string>
     <string name="today">Today</string>
     <string name="yesterday">Yesterday</string>
+    <string name="lengkapiform">Please fill the form</string>
+    <string name="cekkoneksi">Please check your connection</string>
 </resources>

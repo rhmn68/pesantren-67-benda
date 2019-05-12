@@ -5,4 +5,6 @@ package com.madrasahdigital.walisantri.ppi67benda.service;
  */
 public class AppLink {
     public static final String SERVER_LINK = "http://pesantrenbenda.cloudapp.web.id/";
+
+    public static final String LINK_LOGIN = SERVER_LINK + "api/user/auth/login";
 }

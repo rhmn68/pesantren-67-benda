@@ -1,4 +1,4 @@
-package com.madrasahdigital.walisantri.ppi67benda.viewmodel;
+package com.madrasahdigital.walisantri.ppi67benda.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

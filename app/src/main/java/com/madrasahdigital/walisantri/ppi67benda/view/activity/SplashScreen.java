@@ -9,7 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.viewmodel.SharedPrefManager;
+import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 
 import java.lang.ref.WeakReference;
 
