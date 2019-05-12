@@ -21,6 +21,7 @@ public class SharedPrefManager {
 
     // Shared preferences file name
     private final String PREF_NAME = Constant.this_app;
+    private final String KEY_TOKEN = "tokenku";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -43,6 +44,7 @@ public class SharedPrefManager {
         editor.apply();
         Log.d(TAG, "User login session modified!");
     }
+
     /**
      * function untuk melihat apakah sudah login atau belum
      * true : sudah
@@ -51,6 +53,16 @@ public class SharedPrefManager {
      */
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
+    }
+
+    public String getToken() {
+        return pref.getString(KEY_TOKEN, "");
+    }
+
+    public void setToken(String token) {
+        editor = pref.edit();
+        editor.putString(KEY_TOKEN, token);
+        editor.apply();
     }
 
     public void resetData() {
