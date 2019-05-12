@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.google.gson.Gson;
+import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+
 /**
  * Created by Alhudaghifari on 5:42 26/01/19
  */
@@ -22,6 +25,8 @@ public class SharedPrefManager {
     // Shared preferences file name
     private final String PREF_NAME = Constant.this_app;
     private final String KEY_TOKEN = "tokenku";
+    private final String KEY_ALL_SANTRI = "allsantri321";
+    private final String KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE = "santriactive231";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -63,6 +68,35 @@ public class SharedPrefManager {
         editor = pref.edit();
         editor.putString(KEY_TOKEN, token);
         editor.apply();
+    }
+
+    public String getIdActiveSantriInHomePage() {
+        return pref.getString(KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE, "");
+    }
+
+    public void setIdActiveSantriInHomePage(String idActiveSantri) {
+        editor = pref.edit();
+        editor.putString(KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE, idActiveSantri);
+        editor.apply();
+    }
+
+    public void saveAllSantri(AllSantri allSantri) {
+        Gson gson = new Gson();
+        String jsonUser = gson.toJson(allSantri);
+
+        editor = pref.edit();
+        editor.putString(KEY_ALL_SANTRI, jsonUser);
+        editor.apply();
+    }
+
+    public AllSantri getAllSantri() {
+        String jsonUser = pref.getString(KEY_ALL_SANTRI, "");
+
+        Gson gson = new Gson();
+        AllSantri allSantri = gson.fromJson(jsonUser,
+                AllSantri.class);
+
+        return allSantri;
     }
 
     public void resetData() {
