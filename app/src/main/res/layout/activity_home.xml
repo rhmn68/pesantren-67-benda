@@ -5,118 +5,172 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:paddingTop="50dp"
     tools:context=".view.activity.HomeActivity">
 
     <RelativeLayout
-        android:id="@+id/rellayTopBar"
-        android:layout_width="match_parent"
+        android:id="@+id/rellayProfil"
+        android:layout_width="70dp"
         android:layout_height="70dp"
-        android:elevation="4dp"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/border_black">
+        android:layout_centerHorizontal="true">
 
-        <RelativeLayout
-            android:id="@+id/rellayProfil"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civProfPic"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_centerVertical="true">
+            android:layout_centerVertical="true"
+            android:src="@drawable/circle_green" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/civProfPic"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:src="@drawable/circle_green"
-                android:layout_centerVertical="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="F"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/rellayProfil"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp" />
+
+    <RelativeLayout
+        android:id="@+id/rellayInfoPresence"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/spinner"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:background="@drawable/btn_green">
+
+        <RelativeLayout
+            android:id="@+id/rellayTglHariIni"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:background="@drawable/round_left_green_darker">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="F"
-                android:textSize="18sp"
-                android:textColor="@color/white"
-                android:layout_centerInParent="true"/>
+                android:layout_centerInParent="true"
+                android:text="16\nApril"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
 
         </RelativeLayout>
 
-        <Spinner
-            android:id="@+id/spinner"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_toRightOf="@id/rellayProfil"
-            android:layout_toEndOf="@id/rellayProfil"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp" />
+            android:layout_toRightOf="@id/rellayTglHariIni">
+
+            <TextView
+                android:id="@+id/todayTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/today"
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/todayTitle"
+                android:text="Masuk"
+                android:textSize="18sp"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
 
     </RelativeLayout>
 
-    <ScrollView
+    <View
+        android:id="@+id/v_green_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/rellayTopBar">
+        android:layout_marginTop="80dp"
+        android:layout_below="@id/rellayInfoPresence"
+        android:background="@color/colorPrimary" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="30dp"
+        android:layout_below="@id/rellayInfoPresence"
+        android:background="@drawable/border_black"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="50dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:padding="20dp"
+                android:background="@drawable/btn_green"
                 android:onClick="gotoPresence"
-                android:background="@drawable/btn_green">
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:text="Presensi"
-                    android:textSize="22sp"
                     android:layout_marginLeft="20dp"
-                    android:textColor="@color/white"/>
+                    android:text="Presensi"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:src="@drawable/books"/>
+                    android:src="@drawable/books" />
 
             </RelativeLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:padding="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/btn_green">
+                android:background="@drawable/btn_green"
+                android:padding="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Pembayaran"
-                    android:textSize="22sp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:layout_marginRight="20dp"
-                    android:textColor="@color/white"/>
+                    android:text="Pembayaran"
+                    android:textColor="@color/white"
+                    android:textSize="22sp" />
 
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
-                    android:src="@drawable/money"/>
+                    android:src="@drawable/money" />
 
             </RelativeLayout>
 
