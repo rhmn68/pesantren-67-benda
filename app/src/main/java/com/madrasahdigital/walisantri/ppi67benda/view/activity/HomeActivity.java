@@ -19,7 +19,6 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         spinner = findViewById(R.id.spinner);
 
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this, R.array.name_example, R.layout.spinner_text);
@@ -28,6 +27,11 @@ public class HomeActivity extends AppCompatActivity {
 
     public void gotoPresence(View view) {
         Intent intent = new Intent(HomeActivity.this, PresenceActivity.class);
+        startActivity(intent);
+    }
+
+    public void gotoFinance(View view) {
+        Intent intent = new Intent(HomeActivity.this, FinanceActivity.class);
         startActivity(intent);
     }
 }

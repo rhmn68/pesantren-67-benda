@@ -21,4 +21,11 @@
     <string name="yesterday">Kemarin</string>
     <string name="lengkapiform">Mohon lengkapi form</string>
     <string name="cekkoneksi">Mohon cek koneksi anda</string>
+    <string name="action_about">Tentang</string>
+    <string name="logout">Kelu</string>
+    <string name="title_activity_finance">FinanceActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
+    <string name="finance">Keuangan</string>
+    <string name="Presence">Presensi</string>
 </resources>

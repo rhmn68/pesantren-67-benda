@@ -9,4 +9,8 @@
     <string name="yesterday">Yesterday</string>
     <string name="lengkapiform">Please fill the form</string>
     <string name="cekkoneksi">Please check your connection</string>
+    <string name="action_about">About</string>
+    <string name="logout">Logout</string>
+    <string name="finance">Finance</string>
+    <string name="Presence">Presence</string>
 </resources>
