@@ -9,4 +9,5 @@ public class Constant {
 
     public static final String LINK_LOGIN = SERVER_LINK + "api/user/auth/login";
     public static final String LINK_GET_ALL_SANTRI = SERVER_LINK + "api/santri";
+    public static final String LINK_GET_PAYMENT_INFO = SERVER_LINK + "api/payment";
 }

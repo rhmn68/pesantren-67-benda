@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Alhudaghifari on 14:25 13/05/19
  */
-public class Payment {
+public class PaymentModel {
 
     @SerializedName("id")
     @Expose
