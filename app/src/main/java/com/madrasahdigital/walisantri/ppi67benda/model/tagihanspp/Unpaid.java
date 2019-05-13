@@ -1,0 +1,78 @@
+package com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * Created by Alhudaghifari on 22:59 13/05/19
+ */
+public class Unpaid {
+
+
+    @SerializedName("id")
+    @Expose
+    private Integer id;
+    @SerializedName("status")
+    @Expose
+    private Boolean status;
+    @SerializedName("nominal")
+    @Expose
+    private String nominal;
+    @SerializedName("periode")
+    @Expose
+    private String periode;
+    @SerializedName("bulan")
+    @Expose
+    private String bulan;
+    @SerializedName("url")
+    @Expose
+    private String url;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String getNominal() {
+        return nominal;
+    }
+
+    public void setNominal(String nominal) {
+        this.nominal = nominal;
+    }
+
+    public String getPeriode() {
+        return periode;
+    }
+
+    public void setPeriode(String periode) {
+        this.periode = periode;
+    }
+
+    public String getBulan() {
+        return bulan;
+    }
+
+    public void setBulan(String bulan) {
+        this.bulan = bulan;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+}
