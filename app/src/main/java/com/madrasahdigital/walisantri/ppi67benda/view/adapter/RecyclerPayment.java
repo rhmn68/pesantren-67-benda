@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.payment.PaymentModel;
+import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class RecyclerPayment extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         viewHolderCategory.tvDate.setText(paymentModel.getDate());
         viewHolderCategory.tvStatus.setText(paymentModel.getStatus());
-        viewHolderCategory.tvNominal.setText(paymentModel.getTotal());
+        viewHolderCategory.tvNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.parseDouble(paymentModel.getTotal())));
 
         viewHolderCategory.mViewContainer.setOnClickListener(new View.OnClickListener() {
             @Override

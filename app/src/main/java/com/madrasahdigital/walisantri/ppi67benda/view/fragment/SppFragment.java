@@ -56,7 +56,7 @@ public class SppFragment extends Fragment {
     private void setUpViewPager() {
         adapter = new ViewPagerAdapter(getChildFragmentManager());
 
-        adapter.addFragment(new SpecificFragment(), getResources().getString(R.string.title_specific));
+        adapter.addFragment(new RiwayatSppFragment(), getResources().getString(R.string.title_specific));
         adapter.addFragment(new InvoiceFragment(), getResources().getString(R.string.title_invoice));
 
         viewPager.setAdapter(adapter);

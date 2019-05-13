@@ -43,6 +43,7 @@ public class PaymentFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPrefManager sharedPrefManager;
+    private boolean isThreadWork = false;
 
     public PaymentFragment() {
         // Required empty public constructor
@@ -61,8 +62,9 @@ public class PaymentFragment extends Fragment {
         swipeRefreshLayout = v.findViewById(R.id.swipeRefresh);
         sharedPrefManager = new SharedPrefManager(getContext());
         paymentModelList = new ArrayList<>();
+        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
-        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.YELLOW, Color.GREEN);
+        initializationOfListener();
 
         new GetPaymentData().execute();
         return v;
@@ -79,16 +81,31 @@ public class PaymentFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-
+                if (!isThreadWork)
+                    new GetPaymentData().execute();
             }
         });
+    }
+
+    private void initializationOfViewer() {
+        final LinearLayoutManager mLinearLayoutManager =
+                new LinearLayoutManager(PaymentFragment.this.getActivity());
+        mRecyclerView.setLayoutManager(mLinearLayoutManager);
+        mRecyclerView.setHasFixedSize(true);
+
+        recyclerListChat = new RecyclerPayment(getContext(), paymentModelList);
+        recyclerListChat.setOnArtikelClickListener(onArtikelClickListener);
+
+        mRecyclerView.setAdapter(recyclerListChat);
     }
 
     private class GetPaymentData extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
         protected void onPreExecute() {
+            isThreadWork = true;
             swipeRefreshLayout.setRefreshing(true);
+            paymentModelList = new ArrayList<>();
         }
 
         @Override
@@ -124,23 +141,12 @@ public class PaymentFragment extends Fragment {
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             swipeRefreshLayout.setRefreshing(false);
+            isThreadWork = false;
             if (isSuccess) {
                 initializationOfViewer();
             } else {
                 UtilsManager.showToast(getContext(), getResources().getString(R.string.cekkoneksi));
             }
         }
-    }
-
-    private void initializationOfViewer() {
-        final LinearLayoutManager mLinearLayoutManager =
-                new LinearLayoutManager(PaymentFragment.this.getActivity());
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-        mRecyclerView.setHasFixedSize(true);
-
-        recyclerListChat = new RecyclerPayment(getContext(), paymentModelList);
-        recyclerListChat.setOnArtikelClickListener(onArtikelClickListener);
-
-        mRecyclerView.setAdapter(recyclerListChat);
     }
 }
