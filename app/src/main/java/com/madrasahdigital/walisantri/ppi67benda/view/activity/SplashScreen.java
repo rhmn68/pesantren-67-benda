@@ -1,9 +1,11 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Window;
 import android.view.WindowManager;
@@ -37,6 +39,10 @@ public class SplashScreen extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen); // Session manager
         session = new SharedPrefManager(getApplicationContext());
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat
+                    .getColor(SplashScreen.this, R.color.colorPrimaryDark));
+        }
         continueTask();
     }
 
