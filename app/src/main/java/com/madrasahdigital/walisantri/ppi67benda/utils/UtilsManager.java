@@ -3,13 +3,54 @@ package com.madrasahdigital.walisantri.ppi67benda.utils;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.madrasahdigital.walisantri.ppi67benda.R;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 /**
  * Created by Alhudaghifari on 14:09 12/05/19
  */
 public class UtilsManager {
+
+    public static String convertLongToCurrencyIDv2WithoutRp(double amount){
+        NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
+        return n.format(amount).replace("$", "").replaceAll("\\,", "#").replaceAll("\\.", ",").replaceAll("\\#", ".").replace(",00", "");
+    }
+
+    public static String getMonthFromNumber(Context context, String numString) {
+        int num = Integer.parseInt(numString);
+        switch (num) {
+            case 1:
+                return context.getResources().getString(R.string.bln_januari);
+            case 2:
+                return context.getResources().getString(R.string.bln_februari);
+            case 3:
+                return context.getResources().getString(R.string.bln_maret);
+            case 4:
+                return context.getResources().getString(R.string.bln_april);
+            case 5:
+                return context.getResources().getString(R.string.bln_mei);
+            case 6:
+                return context.getResources().getString(R.string.bln_juni);
+            case 7:
+                return context.getResources().getString(R.string.bln_juli);
+            case 8:
+                return context.getResources().getString(R.string.bln_agustus);
+            case 9:
+                return context.getResources().getString(R.string.bln_september);
+            case 10:
+                return context.getResources().getString(R.string.bln_oktober);
+            case 11:
+                return context.getResources().getString(R.string.bln_november);
+            case 12:
+                return context.getResources().getString(R.string.bln_desember);
+        }
+        return "";
+    }
+
     /**
      * @param s
      * @return md5 password
