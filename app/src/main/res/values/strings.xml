@@ -23,9 +23,10 @@
     <string name="cekkoneksi">Mohon cek koneksi anda</string>
     <string name="action_about">Tentang</string>
     <string name="logout">Kelu</string>
-    <string name="title_activity_finance">FinanceActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
     <string name="finance">Keuangan</string>
     <string name="Presence">Presensi</string>
+    <string name="title_spp">SPP</string>
+    <string name="title_pembayaran">Pembayaran</string>
+    <string name="title_activity_finance">Keuangan</string>
+
 </resources>
