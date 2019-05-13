@@ -31,7 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void gotoFinance(View view) {
-//        Intent intent = new Intent(HomeActivity.this, FinanceActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(HomeActivity.this, FinanceActivity.class);
+        startActivity(intent);
     }
 }

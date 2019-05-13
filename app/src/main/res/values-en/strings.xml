@@ -16,4 +16,6 @@
     <string name="title_activity_finance">Finance</string>
     <string name="title_pembayaran">Payment</string>
     <string name="title_spp">SPP</string>
+    <string name="title_invoice">Invoice</string>
+    <string name="title_specific">Specific</string>
 </resources>

@@ -28,5 +28,7 @@
     <string name="title_spp">SPP</string>
     <string name="title_pembayaran">Pembayaran</string>
     <string name="title_activity_finance">Keuangan</string>
+    <string name="title_specific">Spesifik</string>
+    <string name="title_invoice">Tagihan</string>
 
 </resources>
