@@ -28,7 +28,21 @@
     <string name="title_spp">SPP</string>
     <string name="title_pembayaran">Pembayaran</string>
     <string name="title_activity_finance">Keuangan</string>
-    <string name="title_specific">Spesifik</string>
+    <string name="title_specific">Riwayat</string>
     <string name="title_invoice">Tagihan</string>
+    <string name="bln_januari">Januari</string>
+    <string name="bln_februari">Februari</string>
+    <string name="bln_maret">Maret</string>
+    <string name="bln_april">April</string>
+    <string name="bln_mei">Mei</string>
+    <string name="bln_juni">Juni</string>
+    <string name="bln_juli">Juli</string>
+    <string name="bln_agustus">Agustus</string>
+    <string name="bln_september">September</string>
+    <string name="bln_oktober">Oktober</string>
+    <string name="bln_november">November</string>
+    <string name="bln_desember">Desember</string>
+    <string name="lunas">Lunas</string>
+    <string name="belumdibayar">Belum dibayar</string>
 
 </resources>

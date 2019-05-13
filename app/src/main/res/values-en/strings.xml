@@ -17,5 +17,19 @@
     <string name="title_pembayaran">Payment</string>
     <string name="title_spp">SPP</string>
     <string name="title_invoice">Invoice</string>
-    <string name="title_specific">Specific</string>
+    <string name="title_specific">History</string>
+    <string name="bln_agustus">August</string>
+    <string name="bln_april">April</string>
+    <string name="bln_desember">December</string>
+    <string name="bln_februari">February</string>
+    <string name="bln_januari">January</string>
+    <string name="bln_juli">July</string>
+    <string name="bln_juni">June</string>
+    <string name="bln_maret">March</string>
+    <string name="bln_mei">May</string>
+    <string name="bln_november">November</string>
+    <string name="bln_oktober">October</string>
+    <string name="bln_september">September</string>
+    <string name="lunas">Paid Off</string>
+    <string name="belumdibayar">Not Yet Paid</string>
 </resources>
