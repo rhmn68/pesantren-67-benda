@@ -11,4 +11,5 @@ public class Constant {
     public static final String LINK_GET_ALL_SANTRI = SERVER_LINK + "api/santri";
     public static final String LINK_GET_PAYMENT_INFO = SERVER_LINK + "api/payment";
     public static final String LINK_GET_RIWAYAT_SPP = SERVER_LINK + "api/santri/1/spp";
+    public static final String LINK_GET_TAGIHAN_SPP = SERVER_LINK + "api/spp/unpaid";
 }
