@@ -32,4 +32,5 @@
     <string name="bln_september">September</string>
     <string name="lunas">Paid Off</string>
     <string name="belumdibayar">Not Yet Paid</string>
+    <string name="pilihsantri">Choose Santri Account</string>
 </resources>
