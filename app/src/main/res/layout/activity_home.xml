@@ -81,6 +81,22 @@
         android:layout_marginRight="30dp"
         android:background="@drawable/border_black">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:indeterminateDrawable="@drawable/progressbar_color"
+            android:layout_centerInParent="true"/>
+
+        <ImageView
+            android:id="@+id/ivRefresh"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:visibility="gone"
+            android:layout_centerInParent="true"
+            app:srcCompat="@drawable/ic_refresh_green_48dp" />
+
         <RelativeLayout
             android:id="@+id/rellayTglHariIni"
             android:layout_width="90dp"
@@ -91,6 +107,7 @@
             android:background="@drawable/round_left_green_darker">
 
             <TextView
+                android:id="@+id/tvDatePresenceToday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -102,6 +119,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rellayTodayDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -117,6 +135,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:id="@+id/tvStatusPresenceToday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/todayTitle"

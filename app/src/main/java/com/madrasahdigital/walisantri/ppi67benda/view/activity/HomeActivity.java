@@ -1,18 +1,35 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
+import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
+import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.SantriChooserDialog;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -21,32 +38,54 @@ public class HomeActivity extends AppCompatActivity {
     private SharedPrefManager sharedPrefManager;
     private AllSantri allSantri;
     private LinearLayout linlayName;
+    private RelativeLayout rellayTglHariIni;
+    private RelativeLayout rellayTodayDetails;
     private SantriChooserDialog santriChooserDialog;
     private TextView tvSantriActive;
     private TextView tvFirstCharForImageProfil;
+    private TextView tvDatePresenceToday;
+    private TextView tvStatusPresenceToday;
+    private ProgressBar progressBar;
+    private ImageView ivRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         linlayName = findViewById(R.id.linlayName);
+        rellayTodayDetails = findViewById(R.id.rellayTodayDetails);
+        rellayTglHariIni = findViewById(R.id.rellayTglHariIni);
         tvSantriActive = findViewById(R.id.tvSantriActive);
+        progressBar = findViewById(R.id.progressBar);
+        ivRefresh = findViewById(R.id.ivRefresh);
+        tvStatusPresenceToday = findViewById(R.id.tvStatusPresenceToday);
+        tvDatePresenceToday = findViewById(R.id.tvDatePresenceToday);
         tvFirstCharForImageProfil = findViewById(R.id.tvFirstCharForImageProfil);
         sharedPrefManager = new SharedPrefManager(HomeActivity.this);
         allSantri = sharedPrefManager.getAllSantri();
         santriChooserDialog = new SantriChooserDialog(HomeActivity.this, allSantri.getSantri());
+
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
                     .getColor(HomeActivity.this, R.color.colorPrimaryDark));
         }
 
+        getPresenceStatusToday();
         setNameAndImageProfil(sharedPrefManager.getIdActiveSantriInHomePage());
 
         linlayName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 santriChooserDialog.show();
+            }
+        });
+
+        ivRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenceStatusToday();
             }
         });
 
@@ -75,6 +114,13 @@ public class HomeActivity extends AppCompatActivity {
         }
     }
 
+    private void getPresenceStatusToday() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        String dateToday = dateFormat.format(date);
+        new GetPresenceToday(dateToday).execute();
+    }
+
     public void gotoPresence(View view) {
         Intent intent = new Intent(HomeActivity.this, PresenceActivity.class);
         startActivity(intent);
@@ -83,5 +129,68 @@ public class HomeActivity extends AppCompatActivity {
     public void gotoFinance(View view) {
         Intent intent = new Intent(HomeActivity.this, FinanceActivity.class);
         startActivity(intent);
+    }
+
+    private class GetPresenceToday extends AsyncTask<Void, Integer, Boolean> {
+
+        private String date;
+        private Presence presence;
+
+        public GetPresenceToday(String date) {
+            this.date = date;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressBar.setVisibility(View.VISIBLE);
+            rellayTglHariIni.setVisibility(View.GONE);
+            rellayTodayDetails.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_PRESENCE_TODAY + date)
+                    .get()
+                    .addHeader("Authorization", sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                presence = gson.fromJson(bodyString, Presence.class);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            progressBar.setVisibility(View.GONE);
+
+            if (isSuccess) {
+                rellayTglHariIni.setVisibility(View.VISIBLE);
+                rellayTodayDetails.setVisibility(View.VISIBLE);
+                ivRefresh.setVisibility(View.GONE);
+                DateFormat dayFormat = new SimpleDateFormat("dd");
+                DateFormat monthFormat = new SimpleDateFormat("MM");
+                Date date = new Date();
+                String dateToday = dayFormat.format(date) + "\n" + UtilsManager.getMonthFromNumber(HomeActivity.this, monthFormat.format(date));
+                tvDatePresenceToday.setText(dateToday);
+                tvStatusPresenceToday.setText(presence.getStatus());
+            } else {
+                ivRefresh.setVisibility(View.VISIBLE);
+            }
+        }
     }
 }
