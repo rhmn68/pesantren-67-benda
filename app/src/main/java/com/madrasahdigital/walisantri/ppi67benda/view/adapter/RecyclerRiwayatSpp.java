@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
+import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.riwayatspp.RiwayatSpp;
+import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.util.List;
@@ -26,10 +28,23 @@ public class RecyclerRiwayatSpp extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<RiwayatSpp> riwayatSppList;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
+    private SharedPrefManager sharedPrefManager;
+    private AllSantri allSantri;
+    private String santriName;
 
     public RecyclerRiwayatSpp(Context context, List<RiwayatSpp> riwayatSpps) {
         mContext = context;
         riwayatSppList = riwayatSpps;
+        sharedPrefManager = new SharedPrefManager(context);
+        allSantri = sharedPrefManager.getAllSantri();
+        for (int i=0;i<allSantri.getTotal();i++) {
+            if (allSantri.getSantri().get(i).getId().equals(sharedPrefManager.getIdActiveSantriInHomePage())) {
+                if (allSantri.getSantri().get(i).getFullname().length() < 30)
+                    santriName = allSantri.getSantri().get(i).getFullname();
+                else
+                    santriName = allSantri.getSantri().get(i).getFullname().substring(0,30);
+            }
+        }
     }
 
     @NonNull
@@ -60,6 +75,7 @@ public class RecyclerRiwayatSpp extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         viewHolderCategory.tvPeriode.setText(date);
         viewHolderCategory.tvStatus.setText(status);
+        viewHolderCategory.tvSantriName.setText(santriName);
         viewHolderCategory.tvNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.parseDouble(riwayatSpp.getNominal())));
 
         viewHolderCategory.mViewContainer.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +107,7 @@ public class RecyclerRiwayatSpp extends RecyclerView.Adapter<RecyclerView.ViewHo
         public TextView tvPeriode;
         public TextView tvStatus;
         public TextView tvNominal;
+        public TextView tvSantriName;
         public ImageView ivCheck;
 
         public ViewHolderCategory(View itemView) {
@@ -100,6 +117,7 @@ public class RecyclerRiwayatSpp extends RecyclerView.Adapter<RecyclerView.ViewHo
             tvPeriode = itemView.findViewById(R.id.tvPeriode);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvNominal = itemView.findViewById(R.id.tvNominal);
+            tvSantriName = itemView.findViewById(R.id.tvSantriName);
             ivCheck = itemView.findViewById(R.id.ivCheck);
         }
     }
