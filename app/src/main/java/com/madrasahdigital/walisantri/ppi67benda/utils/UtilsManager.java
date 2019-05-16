@@ -7,13 +7,35 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
  * Created by Alhudaghifari on 14:09 12/05/19
  */
 public class UtilsManager {
+
+    public static Date yesterday() {
+        final Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, -1);
+        return cal.getTime();
+    }
+
+    public static String getYesterdayDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        return dateFormat.format(yesterday());
+    }
+
+    public static String getTodayDateString() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
 
     public static String convertLongToCurrencyIDv2WithoutRp(double amount){
         NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);

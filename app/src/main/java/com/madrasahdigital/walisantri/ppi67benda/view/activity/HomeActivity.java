@@ -65,8 +65,6 @@ public class HomeActivity extends AppCompatActivity {
         allSantri = sharedPrefManager.getAllSantri();
         santriChooserDialog = new SantriChooserDialog(HomeActivity.this, allSantri.getSantri());
 
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
                     .getColor(HomeActivity.this, R.color.colorPrimaryDark));
@@ -115,10 +113,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void getPresenceStatusToday() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
-        Date date = new Date();
-        String dateToday = dateFormat.format(date);
-        new GetPresenceToday(dateToday).execute();
+        new GetPresenceToday(UtilsManager.getTodayDateString()).execute();
     }
 
     public void gotoPresence(View view) {
