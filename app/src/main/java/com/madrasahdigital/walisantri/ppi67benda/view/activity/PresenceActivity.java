@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,6 +15,10 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.applikeysolutions.cosmocalendar.listeners.OnMonthChangeListener;
+import com.applikeysolutions.cosmocalendar.model.Month;
+import com.applikeysolutions.cosmocalendar.settings.lists.connected_days.ConnectedDays;
+import com.applikeysolutions.cosmocalendar.view.CalendarView;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
@@ -23,7 +28,10 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
+import java.util.TreeSet;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -48,6 +56,8 @@ public class PresenceActivity extends AppCompatActivity {
     private RelativeLayout rellayInfoPresenceToday;
     private RelativeLayout rellayInfoPresenceYesterday;
     private SharedPrefManager sharedPrefManager;
+    private CalendarView cosmoCalendar;
+    private ProgressBar progressBar;
 
     private final int TODAY = 0;
     private final int YESTERDAY = 1;
@@ -59,6 +69,7 @@ public class PresenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_presence);
 
         spinner = findViewById(R.id.spinner);
+        progressBar = findViewById(R.id.progressBar);
         progressBarToday = findViewById(R.id.progressBarToday);
         progressBarYesterday = findViewById(R.id.progressBarYesterday);
         ivRefreshToday = findViewById(R.id.ivRefreshToday);
@@ -69,6 +80,7 @@ public class PresenceActivity extends AppCompatActivity {
         tvStatusPresenceYesterday = findViewById(R.id.tvStatusPresenceYesterday);
         rellayTglHariIni = findViewById(R.id.rellayTglHariIni);
         rellayTglYesterday = findViewById(R.id.rellayTglYesterday);
+        cosmoCalendar = findViewById(R.id.cosmoCalendar);
         rellayInfoPresenceToday = findViewById(R.id.rellayInfoPresenceToday);
         rellayInfoPresenceYesterday = findViewById(R.id.rellayInfoPresenceYesterday);
         sharedPrefManager = new SharedPrefManager(PresenceActivity.this);
@@ -84,8 +96,11 @@ public class PresenceActivity extends AppCompatActivity {
                     .getColor(PresenceActivity.this, R.color.colorPrimaryDark));
         }
 
+        initializeListener();
+
         getPresenceStatusToday();
-        getPresenceStatusYesterday();
+
+        new GetPresenceByYearAndMonth(UtilsManager.getYear(), UtilsManager.getMonth()).execute();
     }
 
     @Override
@@ -121,12 +136,142 @@ public class PresenceActivity extends AppCompatActivity {
         isActivityActive = false;
     }
 
+    private void initializeListener() {
+        ivRefreshToday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenceStatusToday();
+            }
+        });
+
+        ivRefreshYesterday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getPresenceStatusYesterday();
+            }
+        });
+
+        cosmoCalendar.setOnMonthChangeListener(new OnMonthChangeListener() {
+            @Override
+            public void onMonthChanged(Month month) {
+                Log.d(TAG, "month : " + month.getMonthName());
+            }
+        });
+    }
+
+    private void setStatusPresenceInCalendar(Presence[] presenceArray) {
+        Calendar calendar = Calendar.getInstance();
+        Set<Long> daysPresent = new TreeSet<>();
+        Set<Long> daysIll = new TreeSet<>();
+        Set<Long> daysPermit = new TreeSet<>();
+        ConnectedDays connectedDaysPresent;
+        ConnectedDays connectedIll;
+        ConnectedDays connectedPermit;
+
+        for (int i=0;i<presenceArray.length;i++) {
+            if (presenceArray[i].getStatus().equals("present")) {
+                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
+                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
+                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
+                daysPresent.add(calendar.getTime().getTime());
+            } else if (presenceArray[i].getStatus().equals("ill")) {
+                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
+                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
+                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
+                daysIll.add(calendar.getTime().getTime());
+            } else if (presenceArray[i].getStatus().equals("permit")) {
+                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
+                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
+                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
+                daysPermit.add(calendar.getTime().getTime());
+            }
+        }
+
+        //Define Present
+        int textColor = Color.parseColor("#449425");
+        int selectedTextColor = Color.parseColor("#449425");
+        int disabledTextColor = Color.parseColor("#ff8000");
+        connectedDaysPresent = new ConnectedDays(daysPresent, textColor, selectedTextColor, disabledTextColor);
+
+        // define ill
+        textColor = Color.parseColor("#D32F2F");
+        selectedTextColor = Color.parseColor("#D32F2F");
+        disabledTextColor = Color.parseColor("#ff8000");
+        connectedIll = new ConnectedDays(daysIll, textColor, selectedTextColor, disabledTextColor);
+
+        // define permit
+        textColor = Color.parseColor("#0084ff");
+        selectedTextColor = Color.parseColor("#0084ff");
+        disabledTextColor = Color.parseColor("#ff8000");
+        connectedPermit = new ConnectedDays(daysPermit, textColor, selectedTextColor, disabledTextColor);
+
+        //Connect days to calendar
+        cosmoCalendar.addConnectedDays(connectedDaysPresent);
+        cosmoCalendar.addConnectedDays(connectedIll);
+        cosmoCalendar.addConnectedDays(connectedPermit);
+    }
+
     private void getPresenceStatusToday() {
         new GetPresenceStatusByDate(UtilsManager.getTodayDateString(), TODAY).execute();
     }
 
     private void getPresenceStatusYesterday() {
         new GetPresenceStatusByDate(UtilsManager.getYesterdayDateString(), YESTERDAY).execute();
+    }
+
+
+    private class GetPresenceByYearAndMonth extends AsyncTask<Void, Integer, Boolean> {
+
+        private String year;
+        private String month;
+        private Object[] presences;
+
+        public GetPresenceByYearAndMonth(String year, String month) {
+            this.year = year;
+            this.month = month;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            if (isActivityActive) {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_PRESENCE_SANTRI.replace("$", year).replace("#", month))
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                presences = gson.fromJson(bodyString, Object[].class);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            progressBar.setVisibility(View.GONE);
+            Log.d(TAG, "presence length : " + presences.length);
+            Log.d(TAG, "presence : " + presences);
+//            setStatusPresenceInCalendar(presences);
+        }
     }
 
     private class GetPresenceStatusByDate extends AsyncTask<Void, Integer, Boolean> {

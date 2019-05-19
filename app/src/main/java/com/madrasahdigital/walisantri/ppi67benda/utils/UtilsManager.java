@@ -19,10 +19,55 @@ import java.util.Locale;
  */
 public class UtilsManager {
 
+    public static int getDayFromString(String myDate) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(myDate);
+            DateFormat dateFormat = new SimpleDateFormat("dd");
+            return Integer.parseInt(dateFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int getMonthFromString(String myDate) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(myDate);
+            DateFormat dateFormat = new SimpleDateFormat("MM");
+            return Integer.parseInt(dateFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
+    public static int getYearFromString(String myDate) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(myDate);
+            DateFormat dateFormat = new SimpleDateFormat("yyyy");
+            return Integer.parseInt(dateFormat.format(date));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public static Date yesterday() {
         final Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
         return cal.getTime();
+    }
+
+    public static String getYear() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy");
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    public static String getMonth() {
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        Date date = new Date();
+        return dateFormat.format(date);
     }
 
     public static String getYesterdayDateString() {
