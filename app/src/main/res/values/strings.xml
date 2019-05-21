@@ -50,5 +50,7 @@
     <string name="status_permit">Izin</string>
     <string name="status_weekend">Weekend</string>
     <string name="dopayment">Lakukan Pembayaran</string>
+    <string name="total">Total</string>
+    <string name="silakancek">Silakan centang SPP yang ingin dibayar</string>
 
 </resources>

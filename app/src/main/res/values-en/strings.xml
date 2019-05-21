@@ -38,4 +38,6 @@
     <string name="status_present">Present</string>
     <string name="status_weekend">Weekend</string>
     <string name="dopayment">Make Payment</string>
+    <string name="total">Total</string>
+    <string name="silakancek">Please check the list you want to pay</string>
 </resources>
