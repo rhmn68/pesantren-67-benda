@@ -103,7 +103,6 @@ public class PresenceActivity extends AppCompatActivity {
         initializeListener();
 
         getPresenceStatusToday();
-        getPresenceStatusYesterday();
 
         new GetPresenceByYearAndMonth(UtilsManager.getYear(), UtilsManager.getMonth()).execute();
     }
@@ -162,24 +161,6 @@ public class PresenceActivity extends AppCompatActivity {
                 Log.d(TAG, "month : " + month.getMonthName());
             }
         });
-    }
-
-    private void setSomething() {
-        Calendar calendar = new GregorianCalendar(2019, 4, 8);
-        Set<Long> days = new TreeSet<>();
-        days.add(calendar.getTimeInMillis());
-        calendar.set(2019, 4, 9);
-        days.add(calendar.getTimeInMillis());
-
-
-//Define colors
-        int textColor = Color.parseColor("#449425");
-        int selectedTextColor = Color.parseColor("#449425");
-        int disabledTextColor = Color.parseColor("#ff8000");
-        ConnectedDays connectedDays = new ConnectedDays(days, textColor, selectedTextColor, disabledTextColor);
-
-//Connect days to calendar
-        cosmoCalendar.addConnectedDays(connectedDays);
     }
 
     private void setStatusPresenceInCalendar(List<Presence> presence) {

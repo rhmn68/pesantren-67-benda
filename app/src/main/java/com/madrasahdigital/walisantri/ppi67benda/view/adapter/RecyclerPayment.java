@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -47,6 +48,12 @@ public class RecyclerPayment extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
         viewHolderCategory.tvDate.setText(paymentModel.getDate());
         viewHolderCategory.tvStatus.setText(paymentModel.getStatus());
+
+        if (paymentModel.getStatus().equals("pending")) {
+            viewHolderCategory.ivCheck.setImageResource(R.drawable.ic_add_circle_red_24dp);
+            viewHolderCategory.ivCheck.setRotation(45);
+            viewHolderCategory.tvNominal.setTextColor(mContext.getResources().getColor(R.color.red));
+        }
         viewHolderCategory.tvNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.parseDouble(paymentModel.getTotal())));
 
         viewHolderCategory.mViewContainer.setOnClickListener(new View.OnClickListener() {
@@ -78,6 +85,7 @@ public class RecyclerPayment extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public TextView tvDate;
         public TextView tvStatus;
         public TextView tvNominal;
+        public ImageView ivCheck;
 
         public ViewHolderCategory(View itemView) {
             super(itemView);
@@ -86,6 +94,7 @@ public class RecyclerPayment extends RecyclerView.Adapter<RecyclerView.ViewHolde
             tvDate = itemView.findViewById(R.id.tvDate);
             tvStatus = itemView.findViewById(R.id.tvStatus);
             tvNominal = itemView.findViewById(R.id.tvNominal);
+            ivCheck = itemView.findViewById(R.id.ivCheck);
         }
     }
 

@@ -49,5 +49,6 @@
     <string name="status_ill">Sakit</string>
     <string name="status_permit">Izin</string>
     <string name="status_weekend">Weekend</string>
+    <string name="dopayment">Lakukan Pembayaran</string>
 
 </resources>
