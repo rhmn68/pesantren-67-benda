@@ -195,7 +195,8 @@ public class PresenceActivity extends AppCompatActivity {
         for (int i=0;i<presence.size();i++) {
             Log.d(TAG, "year : " + UtilsManager.getYearFromString(presence.get(i).getDate()) +
                             " month : " + UtilsManager.getMonthFromString(presence.get(i).getDate()) +
-                            " day : " + UtilsManager.getDayFromString(presence.get(i).getDate()));
+                            " day : " + UtilsManager.getDayFromString(presence.get(i).getDate()) +
+                            " status : " + presence.get(i).getStatus());
             if (presence.get(i).getStatus().equals("present")) {
                 calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
                         UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
@@ -228,8 +229,8 @@ public class PresenceActivity extends AppCompatActivity {
         connectedIll = new ConnectedDays(daysIll, textColor, selectedTextColor, disabledTextColor);
 
         // define permit
-        textColor = Color.parseColor("#0084ff");
-        selectedTextColor = Color.parseColor("#0084ff");
+        textColor = Color.parseColor("#f9ca24");
+        selectedTextColor = Color.parseColor("#f9ca24");
         disabledTextColor = Color.parseColor("#ff8000");
         connectedPermit = new ConnectedDays(daysPermit, textColor, selectedTextColor, disabledTextColor);
 

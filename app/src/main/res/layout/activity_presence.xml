@@ -35,132 +35,13 @@
         android:layout_centerInParent="true"/>
 
 
-    <RelativeLayout
-        android:id="@+id/rellayStatus"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_below="@id/cosmoCalendar"
-        android:padding="10dp"
-        android:gravity="center"
-        android:background="@color/white">
-
-        <LinearLayout
-            android:id="@+id/linlayStatusLeft"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/linlayPresence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civPresence"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/colorPresent"/>
-
-                <TextView
-                    android:id="@+id/tvPresence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/status_present"
-                    android:textColor="@color/greytextcolor"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linlayWeekend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civWeekend"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/black"/>
-
-                <TextView
-                    android:id="@+id/tvWeekend"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/status_weekend"
-                    android:textColor="@color/greytextcolor"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linlayStatusRight"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_toRightOf="@id/linlayStatusLeft"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:id="@+id/linlayIll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civIll"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/colorIll"/>
-
-                <TextView
-                    android:id="@+id/tvIll"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/status_ill"
-                    android:textColor="@color/greytextcolor"/>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:id="@+id/linlayPermit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/civPermit"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
-                    android:src="@color/colorPermit"/>
-
-                <TextView
-                    android:id="@+id/tvPermit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="@string/status_permit"
-                    android:textColor="@color/greytextcolor"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </RelativeLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:layout_below="@id/rellayStatus">
+        android:layout_below="@id/cosmoCalendar">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,11 +50,130 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                android:id="@+id/rellayStatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:layout_below="@id/cosmoCalendar"
+                android:padding="10dp"
+                android:gravity="center"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:id="@+id/linlayStatusLeft"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linlayPresence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civPresence"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@color/colorPresent"/>
+
+                        <TextView
+                            android:id="@+id/tvPresence"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/status_present"
+                            android:textColor="@color/greytextcolor"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linlayWeekend"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civWeekend"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@color/black"/>
+
+                        <TextView
+                            android:id="@+id/tvWeekend"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/status_weekend"
+                            android:textColor="@color/greytextcolor"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayStatusRight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@id/linlayStatusLeft"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/linlayIll"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civIll"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@color/colorIll"/>
+
+                        <TextView
+                            android:id="@+id/tvIll"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/status_ill"
+                            android:textColor="@color/greytextcolor"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linlayPermit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civPermit"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:src="@color/colorPermit"/>
+
+                        <TextView
+                            android:id="@+id/tvPermit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="@string/status_permit"
+                            android:textColor="@color/greytextcolor"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/border_black">
 
                 <ProgressBar
