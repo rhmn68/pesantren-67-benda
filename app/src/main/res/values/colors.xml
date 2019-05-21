@@ -24,4 +24,9 @@
     <color name="green_splash">#0faf45</color>
     <color name="greytextcolor">#727073</color>
     <color name="red">#D32F2F</color>
+
+    <!--Presence color-->
+    <color name="colorPresent">#449425</color>
+    <color name="colorIll">#D32F2F</color>
+    <color name="colorPermit">#f9ca24</color>
 </resources>
