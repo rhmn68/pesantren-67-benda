@@ -15,23 +15,17 @@
         app:popupTheme="@style/AppTheme.PopupOverlay"
         app:title="@string/Presence"/>
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="@color/white"
-        android:layout_below="@id/toolbar"
-        android:popupBackground="@color/white"
-        android:entries="@array/year_example"/>
-
     <com.applikeysolutions.cosmocalendar.view.CalendarView
         android:id="@+id/cosmoCalendar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/spinner"
-        android:layout_above="@id/linlayBottom"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/toolbar"
         android:theme="@style/AppTheme"
-        style="@style/AppTheme"/>
+        style="@style/AppTheme"
+        app:weekendDayTextColor="@color/black"
+        app:dayTextColor="@color/silver"
+        app:connectedDayIconPosition="top"
+        app:connectedDayIconRes="@drawable/ic_arrow_drop_down_blue_12dp"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -40,150 +34,287 @@
         android:visibility="gone"
         android:layout_centerInParent="true"/>
 
-    <LinearLayout
-        android:id="@+id/linlayBottom"
+
+    <RelativeLayout
+        android:id="@+id/rellayStatus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_alignParentBottom="true">
+        android:layout_marginTop="1dp"
+        android:layout_below="@id/cosmoCalendar"
+        android:padding="10dp"
+        android:gravity="center"
+        android:background="@color/white">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="@color/colorPrimary">
+        <LinearLayout
+            android:id="@+id/linlayStatusLeft"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <ProgressBar
-                android:id="@+id/progressBarToday"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:indeterminateDrawable="@drawable/progressbar_color"
-                android:layout_centerInParent="true"/>
-
-            <ImageView
-                android:id="@+id/ivRefreshToday"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_refresh_white_24dp" />
-
-            <RelativeLayout
-                android:id="@+id/rellayTglHariIni"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@color/colorPrimaryDark">
-
-                <TextView
-                    android:id="@+id/tvDateToday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="16\nApril"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rellayInfoPresenceToday"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/linlayPresence"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/rellayTglHariIni">
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civPresence"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@color/colorPresent"/>
 
                 <TextView
-                    android:id="@+id/todayTitle"
+                    android:id="@+id/tvPresence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/today"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginStart="10dp"
+                    android:text="@string/status_present"
+                    android:textColor="@color/greytextcolor"/>
 
-                <TextView
-                    android:id="@+id/tvStatusPresenceToday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/todayTitle"
-                    android:text="Masuk"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
+            </LinearLayout>
 
-            </RelativeLayout>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginTop="1dp"
-            android:visibility="gone"
-            android:background="@color/colorPrimary">
-
-            <ProgressBar
-                android:id="@+id/progressBarYesterday"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:indeterminateDrawable="@drawable/progressbar_color"
-                android:layout_centerInParent="true"/>
-
-            <ImageView
-                android:id="@+id/ivRefreshYesterday"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:visibility="gone"
-                android:layout_centerInParent="true"
-                app:srcCompat="@drawable/ic_refresh_white_24dp" />
-
-            <RelativeLayout
-                android:id="@+id/rellayTglYesterday"
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:background="@color/colorPrimaryDark">
-
-                <TextView
-                    android:id="@+id/tvDateYesterday"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="15\nApril"
-                    android:gravity="center"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rellayInfoPresenceYesterday"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:id="@+id/linlayWeekend"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/rellayTglYesterday">
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civWeekend"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@color/black"/>
 
                 <TextView
-                    android:id="@+id/tvYesterdayTitle"
+                    android:id="@+id/tvWeekend"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/yesterday"
-                    android:textSize="14sp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginStart="10dp"
+                    android:text="@string/status_weekend"
+                    android:textColor="@color/greytextcolor"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linlayStatusRight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@id/linlayStatusLeft"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linlayIll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civIll"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@color/colorIll"/>
 
                 <TextView
-                    android:id="@+id/tvStatusPresenceYesterday"
+                    android:id="@+id/tvIll"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/tvYesterdayTitle"
-                    android:text="Masuk"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"/>
+                    android:layout_marginStart="10dp"
+                    android:text="@string/status_ill"
+                    android:textColor="@color/greytextcolor"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linlayPermit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/civPermit"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@color/colorPermit"/>
+
+                <TextView
+                    android:id="@+id/tvPermit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@string/status_permit"
+                    android:textColor="@color/greytextcolor"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@id/rellayStatus">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/border_black">
+
+                <ProgressBar
+                    android:id="@+id/progressBarToday"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:indeterminateDrawable="@drawable/progressbar_color"
+                    android:layout_centerInParent="true"/>
+
+                <ImageView
+                    android:id="@+id/ivRefreshToday"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_refresh_white_24dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rellayTglHariIni"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/round_left_green_darker">
+
+                    <TextView
+                        android:id="@+id/tvDateToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="16\nApril"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rellayInfoPresenceToday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/rellayTglHariIni">
+
+                    <TextView
+                        android:id="@+id/todayTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/today"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvStatusPresenceToday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/todayTitle"
+                        android:text="Masuk"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
 
             </RelativeLayout>
 
-        </RelativeLayout>
-    </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:background="@drawable/border_black">
+
+                <ProgressBar
+                    android:id="@+id/progressBarYesterday"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:indeterminateDrawable="@drawable/progressbar_color"
+                    android:layout_centerInParent="true"/>
+
+                <ImageView
+                    android:id="@+id/ivRefreshYesterday"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:visibility="gone"
+                    android:layout_centerInParent="true"
+                    app:srcCompat="@drawable/ic_refresh_white_24dp" />
+
+                <RelativeLayout
+                    android:id="@+id/rellayTglYesterday"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:background="@drawable/round_left_green_darker">
+
+                    <TextView
+                        android:id="@+id/tvDateYesterday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="16\nApril"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rellayInfoPresenceYesterday"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/rellayTglYesterday">
+
+                    <TextView
+                        android:id="@+id/tvTitleYesterday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/yesterday"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"/>
+
+                    <TextView
+                        android:id="@+id/tvStatusPresenceYesterday"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tvTitleYesterday"
+                        android:text="Masuk"
+                        android:textSize="16sp"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
 
 </RelativeLayout>

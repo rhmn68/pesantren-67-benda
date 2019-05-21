@@ -6,13 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.applikeysolutions.cosmocalendar.listeners.OnMonthChangeListener;
@@ -26,10 +26,15 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
+import org.json.JSONObject;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -42,7 +47,6 @@ public class PresenceActivity extends AppCompatActivity {
 
     private final String TAG = PresenceActivity.class.getSimpleName();
 
-    private Spinner spinner;
     private ProgressBar progressBarToday;
     private ProgressBar progressBarYesterday;
     private ImageView ivRefreshToday;
@@ -68,7 +72,6 @@ public class PresenceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_presence);
 
-        spinner = findViewById(R.id.spinner);
         progressBar = findViewById(R.id.progressBar);
         progressBarToday = findViewById(R.id.progressBarToday);
         progressBarYesterday = findViewById(R.id.progressBarYesterday);
@@ -85,6 +88,7 @@ public class PresenceActivity extends AppCompatActivity {
         rellayInfoPresenceYesterday = findViewById(R.id.rellayInfoPresenceYesterday);
         sharedPrefManager = new SharedPrefManager(PresenceActivity.this);
         isActivityActive = true;
+        cosmoCalendar.setCalendarOrientation(OrientationHelper.HORIZONTAL);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
@@ -99,6 +103,7 @@ public class PresenceActivity extends AppCompatActivity {
         initializeListener();
 
         getPresenceStatusToday();
+        getPresenceStatusYesterday();
 
         new GetPresenceByYearAndMonth(UtilsManager.getYear(), UtilsManager.getMonth()).execute();
     }
@@ -159,8 +164,27 @@ public class PresenceActivity extends AppCompatActivity {
         });
     }
 
-    private void setStatusPresenceInCalendar(Presence[] presenceArray) {
-        Calendar calendar = Calendar.getInstance();
+    private void setSomething() {
+        Calendar calendar = new GregorianCalendar(2019, 4, 8);
+        Set<Long> days = new TreeSet<>();
+        days.add(calendar.getTimeInMillis());
+        calendar.set(2019, 4, 9);
+        days.add(calendar.getTimeInMillis());
+
+
+//Define colors
+        int textColor = Color.parseColor("#449425");
+        int selectedTextColor = Color.parseColor("#449425");
+        int disabledTextColor = Color.parseColor("#ff8000");
+        ConnectedDays connectedDays = new ConnectedDays(days, textColor, selectedTextColor, disabledTextColor);
+
+//Connect days to calendar
+        cosmoCalendar.addConnectedDays(connectedDays);
+    }
+
+    private void setStatusPresenceInCalendar(List<Presence> presence) {
+
+        Calendar calendar = new GregorianCalendar();
         Set<Long> daysPresent = new TreeSet<>();
         Set<Long> daysIll = new TreeSet<>();
         Set<Long> daysPermit = new TreeSet<>();
@@ -168,23 +192,27 @@ public class PresenceActivity extends AppCompatActivity {
         ConnectedDays connectedIll;
         ConnectedDays connectedPermit;
 
-        for (int i=0;i<presenceArray.length;i++) {
-            if (presenceArray[i].getStatus().equals("present")) {
-                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
-                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
-                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
-                daysPresent.add(calendar.getTime().getTime());
-            } else if (presenceArray[i].getStatus().equals("ill")) {
-                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
-                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
-                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
-                daysIll.add(calendar.getTime().getTime());
-            } else if (presenceArray[i].getStatus().equals("permit")) {
-                calendar.set(UtilsManager.getYearFromString(presenceArray[i].getDate()),
-                        UtilsManager.getMonthFromString(presenceArray[i].getDate()),
-                        UtilsManager.getDayFromString(presenceArray[i].getDate()));
-                daysPermit.add(calendar.getTime().getTime());
+        for (int i=0;i<presence.size();i++) {
+            Log.d(TAG, "year : " + UtilsManager.getYearFromString(presence.get(i).getDate()) +
+                            " month : " + UtilsManager.getMonthFromString(presence.get(i).getDate()) +
+                            " day : " + UtilsManager.getDayFromString(presence.get(i).getDate()));
+            if (presence.get(i).getStatus().equals("present")) {
+                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
+                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+                daysPresent.add(calendar.getTimeInMillis());
+            } else if (presence.get(i).getStatus().equals("ill")) {
+                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
+                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+                daysIll.add(calendar.getTimeInMillis());
+            } else if (presence.get(i).getStatus().equals("permit")) {
+                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
+                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+                daysPermit.add(calendar.getTimeInMillis());
             }
+            Log.d(TAG, "tanggalan : " + calendar.getTimeInMillis());
         }
 
         //Define Present
@@ -219,12 +247,11 @@ public class PresenceActivity extends AppCompatActivity {
         new GetPresenceStatusByDate(UtilsManager.getYesterdayDateString(), YESTERDAY).execute();
     }
 
-
     private class GetPresenceByYearAndMonth extends AsyncTask<Void, Integer, Boolean> {
 
         private String year;
         private String month;
-        private Object[] presences;
+        private List<Presence> presences;
 
         public GetPresenceByYearAndMonth(String year, String month) {
             this.year = year;
@@ -254,8 +281,15 @@ public class PresenceActivity extends AppCompatActivity {
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 
+                JSONObject jsonObject = new JSONObject(bodyString);
                 Gson gson = new Gson();
-                presences = gson.fromJson(bodyString, Object[].class);
+                presences = new ArrayList<>();
+                int i = 1;
+                while (jsonObject.has(String.valueOf(i))) {
+                    Log.d(TAG, "date : " + jsonObject.getJSONObject(String.valueOf(i)).get("date"));
+                    presences.add(gson.fromJson(jsonObject.getString(String.valueOf(i)), Presence.class) );
+                    i++;
+                }
 
                 return true;
             } catch (Exception e) {
@@ -268,9 +302,10 @@ public class PresenceActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             progressBar.setVisibility(View.GONE);
-            Log.d(TAG, "presence length : " + presences.length);
-            Log.d(TAG, "presence : " + presences);
-//            setStatusPresenceInCalendar(presences);
+            if (isSuccess) {
+                setStatusPresenceInCalendar(presences);
+//                setSomething();
+            }
         }
     }
 
