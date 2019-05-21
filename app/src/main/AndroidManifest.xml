@@ -12,16 +12,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".view.activity.MakePaymentActivity"></activity>
         <activity
             android:name=".view.activity.FinanceActivity"
+            android:configChanges="locale|orientation"
             android:label="@string/title_activity_finance"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".view.activity.PresenceActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"></activity>
-        <activity android:name=".view.activity.PresenceActivity"
-            android:configChanges="locale|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.activity.HomeActivity"
             android:configChanges="locale|orientation"
