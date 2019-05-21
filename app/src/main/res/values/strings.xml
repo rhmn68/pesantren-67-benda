@@ -45,5 +45,9 @@
     <string name="lunas">Lunas</string>
     <string name="belumdibayar">Belum dibayar</string>
     <string name="pilihsantri">Pilih Akun Santri</string>
+    <string name="status_present">Hadir</string>
+    <string name="status_ill">Sakit</string>
+    <string name="status_permit">Izin</string>
+    <string name="status_weekend">Weekend</string>
 
 </resources>

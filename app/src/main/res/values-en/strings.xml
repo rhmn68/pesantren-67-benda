@@ -33,4 +33,8 @@
     <string name="lunas">Paid Off</string>
     <string name="belumdibayar">Not Yet Paid</string>
     <string name="pilihsantri">Choose Santri Account</string>
+    <string name="status_ill">Ill</string>
+    <string name="status_permit">Permit</string>
+    <string name="status_present">Present</string>
+    <string name="status_weekend">Weekend</string>
 </resources>
