@@ -38,6 +38,7 @@ public class MakePaymentActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPrefManager sharedPrefManager;
     private TextView tvTotalNominal;
+    private double totalPayment;
     private boolean isThreadWork = false;
 
     @Override
@@ -52,6 +53,7 @@ public class MakePaymentActivity extends AppCompatActivity {
         tagihanSppModelList = new ArrayList<>();
 
         swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
+        totalPayment = 0;
 
         initializationOfListener();
         new GetTagihanSpp().execute();
@@ -71,6 +73,11 @@ public class MakePaymentActivity extends AppCompatActivity {
             public void onClick(int posisi, boolean isCheckBoxChecked, TagihanAllVarModel tagihanAllVarModel) {
                 Log.d(TAG, "posisi : " + posisi + " isCheckBoxChecked : " + isCheckBoxChecked +
                                 " nama : " + tagihanAllVarModel.getFullname());
+                if (isCheckBoxChecked)
+                    totalPayment += Double.parseDouble(tagihanAllVarModel.getNominal());
+                else
+                    totalPayment -= Double.parseDouble(tagihanAllVarModel.getNominal());
+                tvTotalNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(totalPayment));
             }
         };
     }
@@ -115,7 +122,6 @@ public class MakePaymentActivity extends AppCompatActivity {
                 TagihanSppModel[] tagihanSppModels =
                         gson.fromJson(bodyString, TagihanSppModel[].class);
 
-                tagihanSppModelList.addAll(Arrays.asList(tagihanSppModels));
                 tagihanSppModelList.addAll(Arrays.asList(tagihanSppModels));
 
                 return true;
