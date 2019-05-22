@@ -43,4 +43,10 @@
     <string name="silakancek">Please check the list you want to pay</string>
     <string name="setting">Settings</string>
     <string name="tidak">No</string>
+    <string name="belumdaftar">Not registered?</string>
+    <string name="daftardisini">Register here</string>
+    <string name="reg_nama">Full Name</string>
+    <string name="reg_no_telepon">Phone Number</string>
+    <string name="reg_tanggal_lahir">Date of Birth</string>
+    <string name="lengkapidata">Complete the following data</string>
 </resources>

@@ -55,5 +55,11 @@
     <string name="silakancek">Silakan centang SPP yang ingin dibayar</string>
     <string name="setting">Pengaturan</string>
     <string name="tidak">Tidak</string>
+    <string name="belumdaftar">Anda belum terdaftar?</string>
+    <string name="daftardisini">Daftar disini</string>
+    <string name="reg_nama">Nama Lengkap</string>
+    <string name="reg_tanggal_lahir">Tanggal Lahir</string>
+    <string name="reg_no_telepon">Nomor Telepon</string>
+    <string name="lengkapidata">Lengkapi Data Berikut</string>
 
 </resources>
