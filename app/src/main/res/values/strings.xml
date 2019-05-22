@@ -22,9 +22,10 @@
     <string name="lengkapiform">Mohon lengkapi form</string>
     <string name="cekkoneksi">Mohon cek koneksi anda</string>
     <string name="action_about">Tentang</string>
-    <string name="logout">Kelu</string>
+    <string name="logout">Keluar Akun</string>
     <string name="finance">Keuangan</string>
     <string name="Presence">Presensi</string>
+    <string name="logoutmessage">Anda yakin ingin keluar ?</string>
     <string name="title_spp">SPP</string>
     <string name="title_pembayaran">Pembayaran</string>
     <string name="title_activity_finance">Keuangan</string>
@@ -52,5 +53,7 @@
     <string name="dopayment">Lakukan Pembayaran</string>
     <string name="total">Total</string>
     <string name="silakancek">Silakan centang SPP yang ingin dibayar</string>
+    <string name="setting">Pengaturan</string>
+    <string name="tidak">Tidak</string>
 
 </resources>

@@ -13,6 +13,7 @@
     <string name="logout">Logout</string>
     <string name="finance">Finance</string>
     <string name="Presence">Presence</string>
+    <string name="logoutmessage">Are you sure want to logout?</string>
     <string name="title_activity_finance">Finance</string>
     <string name="title_pembayaran">Payment</string>
     <string name="title_spp">SPP</string>
@@ -40,4 +41,6 @@
     <string name="dopayment">Make Payment</string>
     <string name="total">Total</string>
     <string name="silakancek">Please check the list you want to pay</string>
+    <string name="setting">Settings</string>
+    <string name="tidak">No</string>
 </resources>
