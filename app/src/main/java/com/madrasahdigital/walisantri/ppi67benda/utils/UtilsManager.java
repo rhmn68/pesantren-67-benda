@@ -19,6 +19,17 @@ import java.util.Locale;
  */
 public class UtilsManager {
 
+    public static String getDateAnotherFormatFromString(String myDate) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(myDate);
+            DateFormat dateFormat = new SimpleDateFormat("HH:mm dd MMMM yyyy");
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static int getDayFromString(String myDate) {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd").parse(myDate);

@@ -6,6 +6,11 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Alhudaghifari on 5:42 26/01/19
@@ -27,6 +32,7 @@ public class SharedPrefManager {
     private final String KEY_TOKEN = "tokenku";
     private final String KEY_ALL_SANTRI = "allsantri321";
     private final String KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE = "santriactive231";
+    private final String KEY_DATA_NOTIF = "datanotif323";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -79,6 +85,32 @@ public class SharedPrefManager {
         editor.putString(KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE, idActiveSantri);
         editor.apply();
     }
+
+    public void saveNotificationList(List<NotificationModel> notificationModels) {
+        editor = pref.edit();
+        Gson gson = new Gson();
+        String jsonChat = gson.toJson(notificationModels);
+        editor.putString(KEY_DATA_NOTIF, jsonChat);
+        editor.apply();
+    }
+
+    public ArrayList<NotificationModel> getNotificationList() {
+        List<NotificationModel> item;
+
+        if (pref.contains(KEY_DATA_NOTIF)) {
+            String jsonChat = pref.getString(KEY_DATA_NOTIF, null);
+            Gson gson = new Gson();
+            NotificationModel[] ChatItems = gson.fromJson(jsonChat,
+                    NotificationModel[].class);
+
+            item = Arrays.asList(ChatItems);
+            item = new ArrayList<>(item);
+        } else
+            return null;
+
+        return (ArrayList<NotificationModel>) item;
+    }
+
 
     public void saveAllSantri(AllSantri allSantri) {
         Gson gson = new Gson();
