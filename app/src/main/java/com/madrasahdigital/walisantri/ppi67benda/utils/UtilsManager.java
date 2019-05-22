@@ -81,7 +81,6 @@ public class UtilsManager {
         return dateFormat.format(date);
     }
 
-
     public static String convertLongToCurrencyIDv2WithoutRp(double amount){
         NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
         return n.format(amount).replace("$", "").replaceAll("\\,", "#").replaceAll("\\.", ",").replaceAll("\\#", ".").replace(",00", "");
