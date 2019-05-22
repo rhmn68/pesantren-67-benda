@@ -159,6 +159,13 @@ public class PresenceActivity extends AppCompatActivity {
             @Override
             public void onMonthChanged(Month month) {
                 Log.d(TAG, "month : " + month.getMonthName());
+                String[] monthYear = month.getMonthName().split("\\s+"); // Ex : May 2019
+                if (!UtilsManager.getMonthNumberFromMonthNameString(monthYear[0]).equals("-")) {
+                    new GetPresenceByYearAndMonth(monthYear[1], monthYear[0]).execute();
+                } else {
+                    Log.e(TAG, "month not found!!!");
+                }
+
             }
         });
     }
