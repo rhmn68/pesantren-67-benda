@@ -1,7 +1,9 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.madrasahdigital.walisantri.ppi67benda.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
