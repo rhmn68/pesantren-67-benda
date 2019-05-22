@@ -20,7 +20,9 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.SantriChooserDialog;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.SettingDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -47,6 +49,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView tvStatusPresenceToday;
     private ProgressBar progressBar;
     private ImageView ivRefresh;
+    private ImageView ivSetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,7 @@ public class HomeActivity extends AppCompatActivity {
         tvSantriActive = findViewById(R.id.tvSantriActive);
         progressBar = findViewById(R.id.progressBar);
         ivRefresh = findViewById(R.id.ivRefresh);
+        ivSetting = findViewById(R.id.ivSetting);
         tvStatusPresenceToday = findViewById(R.id.tvStatusPresenceToday);
         tvDatePresenceToday = findViewById(R.id.tvDatePresenceToday);
         tvFirstCharForImageProfil = findViewById(R.id.tvFirstCharForImageProfil);
@@ -84,6 +88,36 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getPresenceStatusToday();
+            }
+        });
+
+        ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final SettingDialog settingDialog = new SettingDialog(HomeActivity.this);
+                settingDialog.show();
+                settingDialog.setDialogResult(new SettingDialog.OnMyDialogResult() {
+                    @Override
+                    public void finish(String buttonClicked) {
+                        if (buttonClicked.equals("logout")) {
+                            settingDialog.dismiss();
+                            LogoutDialog logoutDialog = new LogoutDialog(HomeActivity.this);
+                            logoutDialog.show();
+                            logoutDialog.setDialogResult(new LogoutDialog.OnMyDialogResult() {
+                                @Override
+                                public void finish(boolean result) {
+                                    if (result) {
+                                        sharedPrefManager.resetData();
+                                        Intent intent = new Intent(HomeActivity.this, SplashScreen.class);
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                        startActivity(intent);
+                                        HomeActivity.this.finish();
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 

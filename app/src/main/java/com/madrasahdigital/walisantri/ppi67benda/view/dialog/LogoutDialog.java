@@ -1,4 +1,4 @@
-package com.neurafarm.sobattania.view.dialog;
+package com.madrasahdigital.walisantri.ppi67benda.view.dialog;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -10,15 +10,14 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.neurafarm.sobattania.R;
-
+import com.madrasahdigital.walisantri.ppi67benda.R;
 
 /**
  * Created by ghifar on 09/03/18.
  */
 
 public class LogoutDialog extends Dialog implements
-        android.view.View.OnClickListener {
+        View.OnClickListener {
 
     private Activity myActivity;
     private Button btnLogout;
@@ -43,7 +42,7 @@ public class LogoutDialog extends Dialog implements
         btnTidak = findViewById(R.id.btn_tidak);
         btnLogout.setOnClickListener(this);
         btnTidak.setOnClickListener(this);
-        tvQuestion = (TextView) findViewById(R.id.tv_question);
+        tvQuestion = findViewById(R.id.tv_question);
     }
 
     @Override

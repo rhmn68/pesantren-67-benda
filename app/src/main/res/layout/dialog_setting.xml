@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@drawable/rounded_full_white_40dp">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/tvTitle"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:background="@color/silver"
+        />
+
+    <TextView
+        android:id="@+id/tvLogout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/logout"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
+        android:layout_below="@id/view"
+        android:textColor="@color/black"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:id="@+id/tvAbout"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:text="@string/action_about"
+        android:layout_below="@id/tvLogout"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+</RelativeLayout>

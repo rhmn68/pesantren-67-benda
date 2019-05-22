@@ -8,6 +8,7 @@
     tools:context=".view.activity.HomeActivity">
 
     <ImageView
+        android:id="@+id/ivSetting"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:padding="2dp"
