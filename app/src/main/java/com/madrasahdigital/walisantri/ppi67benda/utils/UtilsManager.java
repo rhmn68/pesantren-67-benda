@@ -87,6 +87,35 @@ public class UtilsManager {
         return n.format(amount).replace("$", "").replaceAll("\\,", "#").replaceAll("\\.", ",").replaceAll("\\#", ".").replace(",00", "");
     }
 
+    public static String getMonthNumberFromMonthNameString(String monthName) {
+        if (monthName.equals("January") || monthName.equals("Januari")) {
+            return "00";
+        } else if (monthName.equals("February") || monthName.equals("Februari")) {
+            return "01";
+        } else if (monthName.equals("March") || monthName.equals("Maret")) {
+            return "02";
+        } else if (monthName.equals("April")) {
+            return "03";
+        } else if (monthName.equals("May") || monthName.equals("Mei")) {
+            return "04";
+        } else if (monthName.equals("June") || monthName.equals("Juni")) {
+            return "05";
+        } else if (monthName.equals("July") || monthName.equals("Juli")) {
+            return "06";
+        } else if (monthName.equals("August") || monthName.equals("Agustus")) {
+            return "07";
+        } else if (monthName.equals("September")) {
+            return "08";
+        } else if (monthName.equals("October") || monthName.equals("Oktober")) {
+            return "09";
+        } else if (monthName.equals("November")) {
+            return "10";
+        } else if (monthName.equals("December") || monthName.equals("Desember")) {
+            return "11";
+        }
+        return "-";
+    }
+
     public static String getMonthFromNumber(Context context, String numString) {
         int num = Integer.parseInt(numString);
         switch (num) {
