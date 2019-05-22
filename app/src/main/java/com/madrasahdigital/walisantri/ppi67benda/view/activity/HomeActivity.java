@@ -160,6 +160,11 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void gotoAnnounce(View view) {
+        Intent intent = new Intent(HomeActivity.this, NotifActivity.class);
+        startActivity(intent);
+    }
+
     private class GetPresenceToday extends AsyncTask<Void, Integer, Boolean> {
 
         private String date;
@@ -172,6 +177,7 @@ public class HomeActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             progressBar.setVisibility(View.VISIBLE);
+            ivRefresh.setVisibility(View.GONE);
             rellayTglHariIni.setVisibility(View.GONE);
             rellayTodayDetails.setVisibility(View.GONE);
         }
