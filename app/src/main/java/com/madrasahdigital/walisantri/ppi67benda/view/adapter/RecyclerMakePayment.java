@@ -5,7 +5,6 @@ import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,13 +51,13 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
                 tagihanAllVarModelList.add(tagihanAllVarModel);
             }
         }
-        sizeList = tagihanAllVarModelList.size();
+        sizeList = tagihanAllVarModelList.size() + 1;
     }
 
     @Override
     public int getItemViewType(int position) {
         super.getItemViewType(position);
-        if (position != sizeList - 1)
+        if (position < sizeList - 1)
             return TAG_NORMAL_LIST;
         else return TAG_END_LIST;
     }
@@ -69,13 +68,13 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
         View view;
         switch (viewType) {
             case TAG_NORMAL_LIST:
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_tagihan_spp, viewGroup, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_make_payment, viewGroup, false);
                 return new ViewHolderCategory(view);
             case TAG_END_LIST:
                 view = LayoutInflater.from(mContext).inflate(R.layout.item_blank, viewGroup, false);
                 return new ViewHolderCategory(view);
             default:
-                view = LayoutInflater.from(mContext).inflate(R.layout.item_tagihan_spp, viewGroup, false);
+                view = LayoutInflater.from(mContext).inflate(R.layout.item_make_payment, viewGroup, false);
                 return new ViewHolderCategory(view);
         }
     }
@@ -122,8 +121,7 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        Log.i(TAG, "size make payment : " + (sizeList + 1));
-        return sizeList + 1;
+        return sizeList;
     }
 
     private class ViewHolderCategory extends RecyclerView.ViewHolder {

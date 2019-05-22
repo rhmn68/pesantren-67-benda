@@ -12,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.MakePaymentActivity"></activity>
+        <activity android:name=".view.activity.MakePaymentActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/dopayment"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".view.activity.FinanceActivity"
             android:configChanges="locale|orientation"
