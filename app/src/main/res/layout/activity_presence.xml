@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".view.activity.PresenceActivity">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="56dp"

@@ -2,12 +2,13 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.view.fragment.PaymentFragment;
 import com.madrasahdigital.walisantri.ppi67benda.view.fragment.SppFragment;
