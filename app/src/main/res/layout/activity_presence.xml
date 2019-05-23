@@ -22,10 +22,7 @@
         android:layout_below="@id/toolbar"
         android:theme="@style/AppTheme"
         style="@style/AppTheme"
-        app:weekendDayTextColor="@color/black"
-        app:dayTextColor="@color/silver"
-        app:connectedDayIconPosition="top"
-        app:connectedDayIconRes="@drawable/ic_arrow_drop_down_blue_12dp"/>
+        app:connectedDayIconPosition="top"/>
 
     <ProgressBar
         android:id="@+id/progressBar"
@@ -33,8 +30,6 @@
         android:layout_height="30dp"
         android:visibility="gone"
         android:layout_centerInParent="true"/>
-
-
 
 
     <ScrollView

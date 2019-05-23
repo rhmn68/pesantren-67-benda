@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,6 +43,7 @@ public class RiwayatSppFragment extends Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPrefManager sharedPrefManager;
     private boolean isThreadWork = false;
+    private boolean isActivityActive;
 
     public RiwayatSppFragment() {
         // Required empty public constructor
@@ -56,6 +58,7 @@ public class RiwayatSppFragment extends Fragment {
         swipeRefreshLayout = v.findViewById(R.id.swipeRefresh);
         sharedPrefManager = new SharedPrefManager(getContext());
         riwayatSppList = new ArrayList<>();
+        isActivityActive = true;
 
         swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
@@ -64,6 +67,42 @@ public class RiwayatSppFragment extends Fragment {
 
         return v;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.w(TAG, " onStart - 543212345");
+        isActivityActive = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.w(TAG, " onResume - 543212345");
+        isActivityActive = true;
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.w(TAG, " onPause - 543212345");
+        isActivityActive = false;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.w(TAG, " onStop - 543212345");
+        isActivityActive = false;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.w(TAG, " onDestroyView - 543212345");
+        isActivityActive = false;
+    }
+
 
     private void initializationOfListener() {
         onArtikelClickListener = new RecyclerRiwayatSpp.OnArtikelClickListener() {
@@ -137,7 +176,7 @@ public class RiwayatSppFragment extends Fragment {
         protected void onPostExecute(Boolean isSuccess) {
             swipeRefreshLayout.setRefreshing(false);
             isThreadWork = false;
-            if (isSuccess) {
+            if (isSuccess && isActivityActive) {
                 initializationOfViewer();
             } else {
                 UtilsManager.showToast(getContext(), getResources().getString(R.string.cekkoneksi));

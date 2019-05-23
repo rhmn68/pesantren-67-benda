@@ -89,6 +89,7 @@ public class UtilsManager {
     public static String getTodayDateString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
+
         return dateFormat.format(date);
     }
 

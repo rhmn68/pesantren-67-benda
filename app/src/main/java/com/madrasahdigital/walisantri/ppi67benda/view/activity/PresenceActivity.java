@@ -223,9 +223,10 @@ public class PresenceActivity extends AppCompatActivity {
         connectedPermit = new ConnectedDays(daysPermit, textColor, selectedTextColor, disabledTextColor);
 
         //Connect days to calendar
-        cosmoCalendar.addConnectedDays(connectedDaysPresent);
+//        cosmoCalendar.addConnectedDays(connectedDaysPresent);
         cosmoCalendar.addConnectedDays(connectedIll);
         cosmoCalendar.addConnectedDays(connectedPermit);
+        cosmoCalendar.setConnectedDayIconRes(R.drawable.ic_add_circle_red_24dp);
     }
 
     private void getPresenceStatusToday() {
