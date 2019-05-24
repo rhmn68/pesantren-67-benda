@@ -62,5 +62,7 @@
     <string name="reg_no_telepon">Nomor Telepon</string>
     <string name="lengkapidata">Lengkapi Data Berikut</string>
     <string name="announce">Pengumuman</string>
+    <string name="sakit">Sakit</string>
+    <string name="izin">Izin</string>
 
 </resources>

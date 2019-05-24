@@ -12,10 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.NotifActivity"
+        <activity android:name=".view.activity.PresenceActivityV2"
+            android:configChanges="locale|orientation"
+            android:label="@string/Presence"
+            android:screenOrientation="portrait" ></activity>
+        <activity
+            android:name=".view.activity.NotifActivity"
             android:configChanges="locale|orientation"
             android:label="@string/announce"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity android:name=".view.activity.RegisterActivity" />
         <activity
             android:name=".view.activity.MakePaymentActivity"

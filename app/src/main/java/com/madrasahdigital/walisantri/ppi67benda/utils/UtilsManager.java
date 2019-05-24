@@ -1,6 +1,9 @@
 package com.madrasahdigital.walisantri.ppi67benda.utils;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.widget.Toast;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -18,6 +21,19 @@ import java.util.Locale;
  * Created by Alhudaghifari on 14:09 12/05/19
  */
 public class UtilsManager {
+
+    public static Drawable getRotateDrawable(final Drawable d, final float angle) {
+        final Drawable[] arD = { d };
+        return new LayerDrawable(arD) {
+            @Override
+            public void draw(final Canvas canvas) {
+                canvas.save();
+                canvas.rotate(angle, (float) d.getBounds().width() / 2, (float) d.getBounds().height() / 2);
+                super.draw(canvas);
+                canvas.restore();
+            }
+        };
+    }
 
     public static String getDateAnotherFormatFromString(String myDate) {
         try {

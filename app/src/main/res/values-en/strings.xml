@@ -50,4 +50,6 @@
     <string name="reg_tanggal_lahir">Date of Birth</string>
     <string name="lengkapidata">Complete the following data</string>
     <string name="announce">Announcement</string>
+    <string name="sakit">ill</string>
+    <string name="izin">Permit</string>
 </resources>

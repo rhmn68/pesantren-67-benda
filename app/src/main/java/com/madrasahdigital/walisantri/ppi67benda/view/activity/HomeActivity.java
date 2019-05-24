@@ -78,48 +78,39 @@ public class HomeActivity extends AppCompatActivity {
         getPresenceStatusToday();
         setNameAndImageProfil(sharedPrefManager.getIdActiveSantriInHomePage());
 
-        linlayName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        linlayName.setOnClickListener( l -> {
                 santriChooserDialog.show();
-            }
         });
 
-        ivRefresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getPresenceStatusToday();
-            }
+        ivRefresh.setOnClickListener(l -> {
+            getPresenceStatusToday();
         });
 
-        ivSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final SettingDialog settingDialog = new SettingDialog(HomeActivity.this);
-                settingDialog.show();
-                settingDialog.setDialogResult(new SettingDialog.OnMyDialogResult() {
-                    @Override
-                    public void finish(String buttonClicked) {
-                        if (buttonClicked.equals("logout")) {
-                            settingDialog.dismiss();
-                            LogoutDialog logoutDialog = new LogoutDialog(HomeActivity.this);
-                            logoutDialog.show();
-                            logoutDialog.setDialogResult(new LogoutDialog.OnMyDialogResult() {
-                                @Override
-                                public void finish(boolean result) {
-                                    if (result) {
-                                        sharedPrefManager.resetData();
-                                        Intent intent = new Intent(HomeActivity.this, SplashScreen.class);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                        startActivity(intent);
-                                        HomeActivity.this.finish();
-                                    }
+        ivSetting.setOnClickListener(l -> {
+            final SettingDialog settingDialog = new SettingDialog(HomeActivity.this);
+            settingDialog.show();
+            settingDialog.setDialogResult(new SettingDialog.OnMyDialogResult() {
+                @Override
+                public void finish(String buttonClicked) {
+                    if (buttonClicked.equals("logout")) {
+                        settingDialog.dismiss();
+                        LogoutDialog logoutDialog = new LogoutDialog(HomeActivity.this);
+                        logoutDialog.show();
+                        logoutDialog.setDialogResult(new LogoutDialog.OnMyDialogResult() {
+                            @Override
+                            public void finish(boolean result) {
+                                if (result) {
+                                    sharedPrefManager.resetData();
+                                    Intent intent = new Intent(HomeActivity.this, SplashScreen.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                    startActivity(intent);
+                                    HomeActivity.this.finish();
                                 }
-                            });
-                        }
+                            }
+                        });
                     }
-                });
-            }
+                }
+            });
         });
 
         santriChooserDialog.setDialogResult(new SantriChooserDialog.OnMyDialogResult() {
@@ -152,7 +143,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     public void gotoPresence(View view) {
-        Intent intent = new Intent(HomeActivity.this, PresenceActivity.class);
+        Intent intent = new Intent(HomeActivity.this, PresenceActivityV2.class);
         startActivity(intent);
     }
 
