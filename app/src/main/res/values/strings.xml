@@ -64,5 +64,23 @@
     <string name="announce">Pengumuman</string>
     <string name="sakit">Sakit</string>
     <string name="izin">Izin</string>
+    <string name="title_activity_home_v2" translatable="false">HomeActivityV2</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_tools">Tools</string>
+    <string name="menu_share">Share</string>
+    <string name="menu_send">Send</string>
+    <string name="welcome_msg_add_santri">Kamu belum memiliki satu pun data santri terhubung. Untuk memaksimalkan fungsi app ini, silahkan hubungkan akunmu dengan salah seorang santri terlebih dahulu dengan cara klik tombol Tambahkan Santri di bawah ini.</string>
+    <string name="tambahkan_santri">Tambahkan Santri</string>
+    <string name="addsantri_text1">Masukkan Nomor Induk Santri</string>
+    <string name="addsantri_text2">Nomor Induk Santri</string>
 
 </resources>
