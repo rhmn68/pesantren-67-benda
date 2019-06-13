@@ -1,9 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".view.activity.addsantri.AddSantriActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/tambahkan_santri"
+        app:titleTextColor="@color/black"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/addsantri_text1"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textSize="14sp"
+        android:textColor="@color/greytextcolor"
+        />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="8dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:theme="@style/AppTheme.Dark">
+
+        <EditText
+            android:id="@+id/etNomorIndukSantri"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/addsantri_text2"
+            android:inputType="text"
+            android:textColor="@color/grey" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tambahkan_santri"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:background="@drawable/btn_green_darker"
+        />
+
+    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/swipeRefresh"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/tvPleaseCheck">-->
+
+        <!--<androidx.recyclerview.widget.RecyclerView-->
+            <!--android:id="@+id/rv_numbers"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:scrollbars="vertical" />-->
+
+    <!--</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+
+</LinearLayout>

@@ -23,24 +23,34 @@ public class DetailDialog extends Dialog implements
     private TextView tvStatusPresence;
     private TextView tvTanggal;
     private TextView tvDescription;
+    private String statusPresence;
+    private String tanggal;
+    private String description;
     private Button btnOk;
 
-    public DetailDialog(Activity context) {
+    public DetailDialog(Activity context, String statusPresence, String tanggal, String description) {
         super(context);
         myActivity = context;
+        this.statusPresence = statusPresence;
+        this.tanggal = tanggal;
+        this.description = description;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.dialog_setting);
+        setContentView(R.layout.dialog_detail);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         tvStatusPresence = findViewById(R.id.tvStatusPresence);
         tvTanggal = findViewById(R.id.tvTanggal);
         tvDescription = findViewById(R.id.tvDeskripsi);
         btnOk = findViewById(R.id.btnOk);
         btnOk.setOnClickListener(this);
+
+        tvStatusPresence.setText(statusPresence);
+        tvTanggal.setText(tanggal);
+        tvDescription.setText(description);
     }
 
     @Override

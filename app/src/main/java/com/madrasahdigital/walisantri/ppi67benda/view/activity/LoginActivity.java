@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -16,6 +19,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import org.json.JSONObject;
@@ -38,11 +42,16 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
     private SharedPrefManager sharedPrefManager;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat
+                    .getColor(LoginActivity.this, R.color.colorPrimaryDark));
+        }
+
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         loadingDialog = new LoadingDialog(LoginActivity.this);
@@ -54,12 +63,15 @@ public class LoginActivity extends AppCompatActivity {
     public void gotoHomePage(View view) {
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-
-        if (!email.isEmpty() && !password.isEmpty()) {
-           new LoginToServer().execute();
-        } else {
-            UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
-        }
+        Intent intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+        finish();
+//        if (!email.isEmpty() && !password.isEmpty()) {
+//           new LoginToServer().execute();
+//        } else {
+//            UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
+//        }
     }
 
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {

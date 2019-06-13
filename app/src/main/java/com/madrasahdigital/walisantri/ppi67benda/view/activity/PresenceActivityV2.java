@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.applandeo.materialcalendarview.CalendarUtils;
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.google.gson.Gson;
@@ -21,6 +20,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.DetailDialog;
 
 import org.json.JSONObject;
 
@@ -55,6 +55,8 @@ public class PresenceActivityV2 extends AppCompatActivity {
     private SharedPrefManager sharedPrefManager;
     private CalendarView calendarView;
     private ProgressBar progressBar;
+    private List<Calendar> calendarList;
+    private List<Presence> presence;
 
     private final int TODAY = 0;
     private final int YESTERDAY = 1;
@@ -80,6 +82,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
         rellayInfoPresenceYesterday = findViewById(R.id.rellayInfoPresenceYesterday);
         sharedPrefManager = new SharedPrefManager(PresenceActivityV2.this);
         isActivityActive = true;
+        calendarList = new ArrayList<>();
         initializeListener();
 
         getPresenceStatusToday();
@@ -132,10 +135,37 @@ public class PresenceActivityV2 extends AppCompatActivity {
         calendarView.setOnDayClickListener((EventDay eventDay) -> {
             Calendar clickedDayCalendar = eventDay.getCalendar();
 
+            if (calendarList.contains(clickedDayCalendar)) {
+                int i = 0;
+                while (!calendarList.get(i).equals(clickedDayCalendar)) {
+                    i++;
+                }
+                String status = presence.get(i).getStatus();
+                DetailDialog detailDialog;
+                if (status.equals("present")) {
+                    detailDialog = new DetailDialog(PresenceActivityV2.this,
+                            "Hadir",
+                            presence.get(i).getDate(),
+                            "Deskripsi lorem ipsum dolor");
+                } else if (status.equals("ill")) {
+                    detailDialog = new DetailDialog(PresenceActivityV2.this,
+                            "Sakit",
+                            presence.get(i).getDate(),
+                            "Deskripsi lorem ipsum dolor");
+                } else {
+                    detailDialog = new DetailDialog(PresenceActivityV2.this,
+                            "Izin",
+                            presence.get(i).getDate(),
+                            "Deskripsi lorem ipsum dolor");
+                }
+
+                detailDialog.show();
+
+            }
         });
     }
 
-    private void setStatusPresenceInCalendar(List<Presence> presence) {
+    private void setStatusPresenceInCalendar() {
         Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
         List<EventDay> events = new ArrayList<>();
 
@@ -152,15 +182,14 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
                         UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presence.get(i).getDate()));
-                events.add(new EventDay(calendar, CalendarUtils.getDrawableText(PresenceActivityV2.this,
-                        getResources().getString(R.string.sakit), custom_font, R.color.red, 18)));
+                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
             } else if (presence.get(i).getStatus().equals("permit")) {
                 calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
                         UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presence.get(i).getDate()));
-                events.add(new EventDay(calendar, CalendarUtils.getDrawableText(PresenceActivityV2.this,
-                        getResources().getString(R.string.izin), custom_font, R.color.red, 14)));
+                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
             }
+            calendarList.add(calendar);
         }
 
         calendarView.setEvents(events);
@@ -178,7 +207,6 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         private String year;
         private String month;
-        private List<Presence> presences;
 
         public GetPresenceByYearAndMonth(String year, String month) {
             this.year = year;
@@ -210,11 +238,11 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
                 JSONObject jsonObject = new JSONObject(bodyString);
                 Gson gson = new Gson();
-                presences = new ArrayList<>();
+                presence = new ArrayList<>();
                 int i = 1;
                 while (jsonObject.has(String.valueOf(i))) {
                     Log.d(TAG, "date : " + jsonObject.getJSONObject(String.valueOf(i)).get("date"));
-                    presences.add(gson.fromJson(jsonObject.getString(String.valueOf(i)), Presence.class));
+                    presence.add(gson.fromJson(jsonObject.getString(String.valueOf(i)), Presence.class));
                     i++;
                 }
 
@@ -230,7 +258,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
         protected void onPostExecute(Boolean isSuccess) {
             progressBar.setVisibility(View.GONE);
             if (isSuccess) {
-                setStatusPresenceInCalendar(presences);
+                setStatusPresenceInCalendar();
             }
         }
     }
