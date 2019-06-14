@@ -94,5 +94,6 @@
     <string name="menu_add_santri">Tambah Santri</string>
     <string name="menu_about">Tentang Aplikasi</string>
     <string name="menu_logout">Keluar</string>
+    <string name="home_text6">Masuk</string>
 
 </resources>
