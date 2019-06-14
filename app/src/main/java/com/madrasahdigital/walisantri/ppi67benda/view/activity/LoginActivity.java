@@ -19,7 +19,6 @@ import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
-import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import org.json.JSONObject;
@@ -63,15 +62,15 @@ public class LoginActivity extends AppCompatActivity {
     public void gotoHomePage(View view) {
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-        Intent intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-        finish();
-//        if (!email.isEmpty() && !password.isEmpty()) {
-//           new LoginToServer().execute();
-//        } else {
-//            UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
-//        }
+//        Intent intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        startActivity(intent);
+//        finish();
+        if (!email.isEmpty() && !password.isEmpty()) {
+           new LoginToServer().execute();
+        } else {
+            UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
+        }
     }
 
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
@@ -148,7 +147,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (isSuccess) {
                     sharedPrefManager.setLogin(true);
                     sharedPrefManager.setToken(jsonObject.getString("token"));
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent intent = new Intent(LoginActivity.this, HomeActivityV2.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();

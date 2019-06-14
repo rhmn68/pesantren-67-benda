@@ -81,7 +81,7 @@ public class SplashScreen extends AppCompatActivity {
                         activity.finish();
                         break;
                     case GOTOHOMEPAGE:
-                        intentpindah = new Intent(activity, HomeActivity.class);
+                        intentpindah = new Intent(activity, HomeActivityV2.class);
                         activity.startActivity(intentpindah);
                         activity.finish();
                         break;
