@@ -23,6 +23,15 @@ public class Presence {
     @SerializedName("url")
     @Expose
     private String url;
+    private String santriName;
+
+    public String getSantriName() {
+        return santriName;
+    }
+
+    public void setSantriName(String santriName) {
+        this.santriName = santriName;
+    }
 
     public String getDate() {
         return date;
