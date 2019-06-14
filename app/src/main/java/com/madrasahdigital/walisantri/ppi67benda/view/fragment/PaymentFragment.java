@@ -5,16 +5,17 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.fragment.app.Fragment;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -76,11 +77,8 @@ public class PaymentFragment extends Fragment {
     }
 
     private void initializationOfListener() {
-        onArtikelClickListener = new RecyclerPayment.OnArtikelClickListener() {
-            @Override
-            public void onClick(int posisi, PaymentModel paymentModel) {
+        onArtikelClickListener = (posisi, paymentModel) -> {
 
-            }
         };
 
         rellayPembayaran.setOnClickListener(new View.OnClickListener() {
