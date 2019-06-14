@@ -72,7 +72,7 @@
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
 
-    <string name="menu_home">Home</string>
+    <string name="menu_home">Halaman Utama</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_tools">Tools</string>
@@ -82,5 +82,17 @@
     <string name="tambahkan_santri">Tambahkan Santri</string>
     <string name="addsantri_text1">Masukkan Nomor Induk Santri</string>
     <string name="addsantri_text2">Nomor Induk Santri</string>
+    <string name="ahlanwasahlan">Ahlan wa Sahlan</string>
+    <string name="home_text1">Kehadiran Hari ini,</string>
+    <string name="home_text2">Belum ada santri yang ditambahkan</string>
+    <string name="home_text3">Tagihan Pembayaran</string>
+    <string name="home_text4">Total Tagihan</string>
+    <string name="home_text5">Berita Terbaru dari Pesantren</string>
+    <string name="menu_presence">Presensi</string>
+    <string name="menu_payment">Pembayaran</string>
+    <string name="menu_news">Berita dari Pesantren</string>
+    <string name="menu_add_santri">Tambah Santri</string>
+    <string name="menu_about">Tentang Aplikasi</string>
+    <string name="menu_logout">Keluar</string>
 
 </resources>

@@ -14,15 +14,16 @@
     <color name="silver">#bcbdbd</color>
     <color name="silverstrong">#a9a9a9</color>
     <color name="lightsilver">#E5E5E5</color>
-    <color name="bluestrong">#0084ff</color>
-    <color name="bluestrongchild">#0084ff</color>
-    <color name="bluestrongtwo">#004d96</color>
-    <color name="bluelow">#59afff</color>
+    <color name="blue">#59afff</color>
+    <color name="blue1">#0084ff</color>
+    <color name="blue2">#0084ff</color>
+    <color name="blue3">#004d96</color>
     <color name="blackandblue">#00343d</color>
     <color name="grey">#414141</color>
     <color name="green">#3E5621</color>
     <color name="green_splash">#0faf45</color>
     <color name="greytextcolor">#727073</color>
+    <color name="greytextcolor2">#636264</color>
     <color name="red">#D32F2F</color>
 
     <!--Presence color-->

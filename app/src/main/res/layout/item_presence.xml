@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:padding="10dp"
+    android:background="@color/white">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civProfPic"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:padding="10dp"
+        app:srcCompat="@drawable/ic_person_white_64dp"
+        android:background="@drawable/circle_green"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/civProfPic"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/tvSantriName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Farhan Ghifari"
+            android:textColor="@color/greytextcolor2"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/tvStatusPresence"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Masuk"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:background="@drawable/btn_green"
+            android:layout_below="@id/tvSantriName"
+            />
+
+        <TextView
+            android:id="@+id/tvKeteranganAbsen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvSantriName"
+            android:layout_toEndOf="@id/tvStatusPresence"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="Tanpa Keterangan"
+            android:textColor="@color/red"
+            android:textSize="14sp"
+            />
+
+    </RelativeLayout>
+    
+</RelativeLayout>

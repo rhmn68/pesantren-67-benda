@@ -57,4 +57,17 @@
     <string name="tambahkan_santri">Add Santri</string>
     <string name="addsantri_text1">Please Insert Santri Number</string>
     <string name="addsantri_text2">Nomor Induk Santri</string>
+    <string name="ahlanwasahlan">Ahlan wa Sahlan</string>
+    <string name="home_text1">"Presence Today, "</string>
+    <string name="home_text2">No santri added</string>
+    <string name="home_text3">Payment Bill</string>
+    <string name="home_text4">Total Bill</string>
+    <string name="home_text5">Latest News from Pesantren</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_presence">Presence</string>
+    <string name="menu_payment">Payment</string>
+    <string name="menu_news">News from Pesantren</string>
+    <string name="menu_add_santri">Add Santri</string>
+    <string name="menu_about">About</string>
+    <string name="menu_logout">Logout</string>
 </resources>

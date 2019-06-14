@@ -3,8 +3,8 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -23,20 +23,24 @@ public class HomeActivityV2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // open right drawer
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
+                drawer.openDrawer(GravityCompat.END);
+            }
+        });
+
         NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (drawer.isDrawerOpen(GravityCompat.END)) {
+            drawer.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }
@@ -72,20 +76,22 @@ public class HomeActivityV2 extends AppCompatActivity
 
         if (id == R.id.nav_home) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_presensi) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_payment) {
 
-        } else if (id == R.id.nav_tools) {
+        } else if (id == R.id.nav_news) {
 
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_add_santri) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_logout) {
 
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        drawer.closeDrawer(GravityCompat.END);
         return true;
     }
 }

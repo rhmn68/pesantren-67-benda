@@ -53,6 +53,7 @@
         android:textColor="@color/white"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:onClick="AddSantri"
         android:background="@drawable/btn_green_darker"
         />
 
