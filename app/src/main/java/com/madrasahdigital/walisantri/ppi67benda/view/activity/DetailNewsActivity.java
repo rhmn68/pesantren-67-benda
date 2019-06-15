@@ -2,6 +2,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,5 +31,15 @@ public class DetailNewsActivity extends AppCompatActivity {
         aksibar = DetailNewsActivity.this.getSupportActionBar();
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
