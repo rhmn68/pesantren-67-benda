@@ -24,18 +24,72 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="90dp"
+                android:layout_gravity="center_horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/rellayCiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civProfPic"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:padding="10dp"
+                        android:background="@drawable/circle_green"/>
+
+                    <TextView
+                        android:id="@+id/tvFirstCharForImageProfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:layout_centerInParent="true"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/rellayCiv"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/tvSantriName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Farhan Ghifari"
+                        android:textColor="@color/greytextcolor2"
+                        android:textSize="14sp"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
             <com.applandeo.materialcalendarview.CalendarView
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:headerColor="@color/colorPrimary"/>
+                app:headerColor="@color/white"
+                app:headerLabelColor="@color/greytextcolor3"
+                app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_green_24dp"
+                app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_green_24dp"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
                 android:background="@drawable/border_black">
 
                 <ProgressBar

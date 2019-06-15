@@ -1,6 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@color/white">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rellayCiv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_centerVertical="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civProfPic"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:padding="10dp"
+            android:background="@drawable/circle_green"/>
+
+        <TextView
+            android:id="@+id/tvFirstCharForImageProfil"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="6"
+            android:layout_centerInParent="true"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/rellayCiv"
+        android:layout_marginStart="10dp">
+
+        <TextView
+            android:id="@+id/tvSantriName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Farhan Ghifari"
+            android:textColor="@color/greytextcolor2"
+            android:textSize="14sp"
+            />
+
+        <TextView
+            android:id="@+id/tvNomorIndukSiswa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="181910001"
+            android:layout_marginTop="5dp"
+            android:textColor="@color/greytextcolor"
+            android:textSize="14sp"
+            android:layout_below="@id/tvSantriName"
+            />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silverlow"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

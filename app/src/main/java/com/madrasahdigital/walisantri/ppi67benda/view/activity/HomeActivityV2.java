@@ -29,6 +29,8 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.AddSantriActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.ChooseSantriPresenceActivity;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
 
@@ -97,8 +99,6 @@ public class HomeActivityV2 extends AppCompatActivity
                 new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();
             }
         }
-
-
     }
 
     private void initializeListener() {
@@ -108,7 +108,9 @@ public class HomeActivityV2 extends AppCompatActivity
         };
 
         onArtikelClickListener = (posisi, presence) -> {
-
+            Intent intent = new Intent(HomeActivityV2.this, PresenceActivityV2.class);
+            intent.putExtra("namasantri", presence.getSantriName());
+            startActivity(intent);
         };
 
         findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
@@ -175,7 +177,8 @@ public class HomeActivityV2 extends AppCompatActivity
         if (id == R.id.nav_home) {
             // Handle the camera action
         } else if (id == R.id.nav_presensi) {
-
+            Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPresenceActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_payment) {
 
         } else if (id == R.id.nav_news) {

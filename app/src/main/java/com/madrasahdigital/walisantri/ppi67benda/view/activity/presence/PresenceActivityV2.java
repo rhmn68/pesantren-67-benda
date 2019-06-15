@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.presence;
 
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class PresenceActivityV2 extends AppCompatActivity {
     private TextView tvDateYesterday;
     private TextView tvStatusPresenceToday;
     private TextView tvStatusPresenceYesterday;
+    private TextView tvSantriName;
+    private TextView tvFirstCharForImageProfil;
     private RelativeLayout rellayTglHariIni;
     private RelativeLayout rellayTglYesterday;
     private RelativeLayout rellayInfoPresenceToday;
@@ -74,7 +77,9 @@ public class PresenceActivityV2 extends AppCompatActivity {
         tvDateToday = findViewById(R.id.tvDateToday);
         tvDateYesterday = findViewById(R.id.tvDateYesterday);
         tvStatusPresenceToday = findViewById(R.id.tvStatusPresenceToday);
+        tvSantriName = findViewById(R.id.tvSantriName);
         tvStatusPresenceYesterday = findViewById(R.id.tvStatusPresenceYesterday);
+        tvFirstCharForImageProfil = findViewById(R.id.tvFirstCharForImageProfil);
         rellayTglHariIni = findViewById(R.id.rellayTglHariIni);
         rellayTglYesterday = findViewById(R.id.rellayTglYesterday);
         calendarView = findViewById(R.id.calendarView);
@@ -83,6 +88,14 @@ public class PresenceActivityV2 extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(PresenceActivityV2.this);
         isActivityActive = true;
         calendarList = new ArrayList<>();
+
+        Intent intent = getIntent();
+        String namaSantri = intent.getStringExtra("namasantri");
+        tvSantriName.setText(namaSantri);
+        if (namaSantri.length() > 0) {
+            tvFirstCharForImageProfil.setText(namaSantri.substring(0,1));
+        }
+
         initializeListener();
 
         getPresenceStatusToday();
@@ -124,13 +137,9 @@ public class PresenceActivityV2 extends AppCompatActivity {
     }
 
     private void initializeListener() {
-        ivRefreshToday.setOnClickListener(l -> {
-            getPresenceStatusToday();
-        });
+        ivRefreshToday.setOnClickListener(l -> getPresenceStatusToday());
 
-        ivRefreshYesterday.setOnClickListener(l -> {
-            getPresenceStatusYesterday();
-        });
+        ivRefreshYesterday.setOnClickListener(l -> getPresenceStatusYesterday());
 
         calendarView.setOnDayClickListener((EventDay eventDay) -> {
             Calendar clickedDayCalendar = eventDay.getCalendar();
