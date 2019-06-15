@@ -21,6 +21,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.SantriChooserDialog;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.SettingDialog;

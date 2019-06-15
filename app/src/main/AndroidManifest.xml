@@ -12,11 +12,13 @@
         android:roundIcon="@drawable/icon_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.DetailNewsActivity"
+        <activity android:name=".view.activity.presence.ChooseSantriPresenceActivity"></activity>
+        <activity
+            android:name=".view.activity.DetailNewsActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.addsantri.AddSantriActivity"
             android:configChanges="locale|orientation"
@@ -37,7 +39,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.activity.PresenceActivityV2"
+            android:name=".view.activity.presence.PresenceActivityV2"
             android:configChanges="locale|orientation"
             android:label="@string/Presence"
             android:screenOrientation="portrait" />
