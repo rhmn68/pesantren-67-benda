@@ -83,7 +83,7 @@
     <string name="addsantri_text1">Masukkan Nomor Induk Santri</string>
     <string name="addsantri_text2">Nomor Induk Santri</string>
     <string name="ahlanwasahlan">Ahlan wa Sahlan</string>
-    <string name="home_text1">"Kehadiran Hari ini, "</string>
+    <string name="home_text1" translatable="false">"Kehadiran Hari ini, "</string>
     <string name="home_text2">Belum ada santri yang ditambahkan</string>
     <string name="home_text3">Tagihan Pembayaran</string>
     <string name="home_text4">Total Tagihan</string>
@@ -96,6 +96,9 @@
     <string name="menu_logout">Keluar</string>
     <string name="home_text6">Masuk</string>
     <string name="loremipsum" translatable="false">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+    <string name="loremipsumlong" translatable="false">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</string>
+
     <string name="home_text7_selengkapnya">Selengkapnya</string>
+    <string name="detailnews">Detail Berita</string>
 
 </resources>

@@ -1,6 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 
 import android.content.Context;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +47,15 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
         final NotificationModel notificationModel = notifList.get(position);
 
         viewHolderCategory.tvTitleNews.setText(notificationModel.getSubject());
+        viewHolderCategory.mViewContainer.setOnClickListener(view -> {
+            if (mOnArtikelClickListener != null) {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    if (mOnArtikelClickListener != null)
+                        mOnArtikelClickListener.onClick(position, notificationModel);
+                }, 250);
+            }
+        });
     }
 
     @Override

@@ -102,6 +102,11 @@ public class HomeActivityV2 extends AppCompatActivity
     }
 
     private void initializeListener() {
+        onArtikelClickListenerNewsHome = (posisi, notificationModel) -> {
+            Intent intent = new Intent(HomeActivityV2.this, DetailNewsActivity.class);
+            startActivity(intent);
+        };
+
         onArtikelClickListener = (posisi, presence) -> {
 
         };

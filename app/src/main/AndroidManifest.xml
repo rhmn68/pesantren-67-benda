@@ -12,23 +12,30 @@
         android:roundIcon="@drawable/icon_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.addsantri.AddSantriActivity"
+        <activity android:name=".view.activity.DetailNewsActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/tambahkan_santri"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.addsantri.AddSantriActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysHidden"></activity>
-        <activity android:name=".view.activity.addsantri.WelcomeMsgAddSantri"
+            android:windowSoftInputMode="stateAlwaysHidden" />
+        <activity
+            android:name=".view.activity.addsantri.WelcomeMsgAddSantri"
             android:configChanges="locale|orientation"
             android:label="@string/title_activity_finance"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.activity.HomeActivityV2"
-            android:label="@string/title_activity_home_v2"
-            android:theme="@style/AppTheme.NoActionBar"
             android:configChanges="locale|orientation"
-            android:screenOrientation="portrait"/>
+            android:label="@string/title_activity_home_v2"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.PresenceActivityV2"
             android:configChanges="locale|orientation"
