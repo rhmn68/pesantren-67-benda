@@ -21,4 +21,7 @@ public class Constant {
 
     public static final String Authorization = "Authorization";
 
+    public static final int TYPE_NEWS_HOME = 0;
+    public static final int TYPE_NEWS_PAGE = 1;
+
 }

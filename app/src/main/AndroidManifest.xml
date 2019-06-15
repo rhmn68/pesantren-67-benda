@@ -12,11 +12,17 @@
         android:roundIcon="@drawable/icon_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.AboutActivity"
+        <activity android:name=".view.activity.NewsFromPesantrenActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/tambahkan_santri"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.presence.ChooseSantriPresenceActivity"
             android:configChanges="locale|orientation"

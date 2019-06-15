@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
+import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 
 import java.util.List;
 
@@ -26,17 +27,22 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
     private List<NotificationModel> notifList;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
+    private int type;
 
-    public RecyclerNewsHome(Context context, List<NotificationModel> notifList) {
+    public RecyclerNewsHome(Context context, List<NotificationModel> notifList, int type) {
         mContext = context;
         this.notifList = notifList;
+        this.type = type;
     }
     
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+        if (type == Constant.TYPE_NEWS_HOME)
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+        else
+            view = LayoutInflater.from(mContext).inflate(R.layout.item_news_large, parent, false);
         return new ViewHolderCategory(view);
     }
 

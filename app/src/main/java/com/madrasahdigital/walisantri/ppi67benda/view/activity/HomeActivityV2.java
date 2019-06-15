@@ -185,7 +185,9 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (id == R.id.nav_payment) {
 
         } else if (id == R.id.nav_news) {
-
+            Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
+            startActivity(intent);
+            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_add_santri) {
             Intent intent;
             if (allSantri.getTotal() == 0) {
@@ -226,7 +228,7 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_news.setLayoutManager(mLinearLayoutManager);
         rv_news.setHasFixedSize(true);
 
-        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, notificationModelList);
+        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, notificationModelList, Constant.TYPE_NEWS_HOME);
         recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
 
         rv_news.setAdapter(recyclerNewsHome);
