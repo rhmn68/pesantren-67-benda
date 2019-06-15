@@ -7,6 +7,7 @@
 
     <!--Public color-->
     <color name="white">#ffffff</color>
+    <color name="white2">#F5F5F5</color>
     <color name="whitetransparant">#ffffffff</color>
     <color name="black">#000000</color>
     <color name="silverlow">#E2E2E2</color>
