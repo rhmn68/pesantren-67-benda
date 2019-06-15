@@ -3,15 +3,19 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity.presence;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
@@ -60,6 +64,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
     private ProgressBar progressBar;
     private List<Calendar> calendarList;
     private List<Presence> presence;
+    private ActionBar aksibar;
 
     private final int TODAY = 0;
     private final int YESTERDAY = 1;
@@ -89,6 +94,15 @@ public class PresenceActivityV2 extends AppCompatActivity {
         isActivityActive = true;
         calendarList = new ArrayList<>();
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat
+                    .getColor(PresenceActivityV2.this, R.color.colorPrimaryDark));
+        }
+
+        aksibar = PresenceActivityV2.this.getSupportActionBar();
+        assert aksibar != null;
+        aksibar.setDisplayHomeAsUpEnabled(true);
+
         Intent intent = getIntent();
         String namaSantri = intent.getStringExtra("namasantri");
         tvSantriName.setText(namaSantri);
@@ -101,6 +115,16 @@ public class PresenceActivityV2 extends AppCompatActivity {
         getPresenceStatusToday();
 
         new GetPresenceByYearAndMonth(UtilsManager.getYear(), UtilsManager.getMonth()).execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
