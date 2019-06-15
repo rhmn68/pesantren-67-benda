@@ -22,15 +22,18 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.AddSantriActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
+import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -45,12 +48,18 @@ public class HomeActivityV2 extends AppCompatActivity
     private SharedPrefManager sharedPrefManager;
     private AllSantri allSantri;
     private List<Presence> presenceList;
+    private List<NotificationModel> notificationModelList ;
     private ProgressBar progressBarToday;
+    private ProgressBar progressBarNews;
     private ImageView ivRefreshPresenceToday;
     private RecyclerView rv_presence_today;
+    private RecyclerView rv_news;
     private RecyclerPresenceHome recyclerListChat;
     private RecyclerPresenceHome.OnArtikelClickListener onArtikelClickListener;
+    private RecyclerNewsHome recyclerNewsHome;
+    private RecyclerNewsHome.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private TextView tvBelumAdaSantri;
+    private TextView tvTitleToday;
     private Button btnTambahkanSantri;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
@@ -64,17 +73,22 @@ public class HomeActivityV2 extends AppCompatActivity
         setContentView(R.layout.activity_home_v2);
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBarToday = findViewById(R.id.progressBarToday);
+        rv_news = findViewById(R.id.rv_news);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
         tvBelumAdaSantri = findViewById(R.id.tvBelumAdaSantri);
         btnTambahkanSantri = findViewById(R.id.btnTambahkanSantri);
+        progressBarNews = findViewById(R.id.progressBarNews);
+        tvTitleToday = findViewById(R.id.tvTitleToday);
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
         allSantri = sharedPrefManager.getAllSantri();
         presenceList = new ArrayList<>();
+        tvTitleToday.setText(getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateString());
 
         initializeListener();
+        new GetNews().execute();
 
         if (allSantri.getTotal() == 0) {
            setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
@@ -186,6 +200,18 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_presence_today.setAdapter(recyclerListChat);
     }
 
+    private void initializationOfNewsViewer() {
+        final LinearLayoutManager mLinearLayoutManager =
+                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        rv_news.setLayoutManager(mLinearLayoutManager);
+        rv_news.setHasFixedSize(true);
+
+        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, notificationModelList);
+        recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
+
+        rv_news.setAdapter(recyclerNewsHome);
+    }
+
     private void setView(int type) {
         if (type == TYPE_LOAD_PRESENCE_TODAY) {
             btnTambahkanSantri.setVisibility(View.GONE);
@@ -214,6 +240,54 @@ public class HomeActivityV2 extends AppCompatActivity
         }
     }
 
+    private class GetNews extends AsyncTask<Void, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_NOTIFICATION)
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                NotificationModel[] paymentModel =
+                        gson.fromJson(bodyString, NotificationModel[].class);
+
+                notificationModelList = new ArrayList<>();
+                notificationModelList.addAll(Arrays.asList(paymentModel));
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            progressBarNews.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            progressBarNews.setVisibility(View.GONE);
+            if (isSuccess) {
+                initializationOfNewsViewer();
+            } else {
+                UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
+            }
+        }
+    }
 
     private class GetPresenceToday extends AsyncTask<Void, Integer, Boolean> {
 

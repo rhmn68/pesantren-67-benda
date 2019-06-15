@@ -1,6 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="220dp"
+    android:layout_height="300dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginBottom="5dp"
+    app:cardCornerRadius="8dp"
+    android:background="@drawable/rounded_full_white_40dp">
 
-</LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/ivThumbnailNews"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_news"
+            android:background="@drawable/rounded_full_white_40dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:padding="20dp"
+            android:background="@drawable/rounded_full_white_20dp">
+
+            <TextView
+                android:id="@+id/tvTitleNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Persiapan Menghadapi Ujian"
+                android:textColor="@color/greytextcolor2"
+                android:textSize="14sp"/>
+
+            <TextView
+                android:id="@+id/tvDescriptionNews"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:text="@string/loremipsum"
+                android:layout_below="@id/tvTitleNews"/>
+
+            <Button
+                android:id="@+id/btnMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_text7_selengkapnya"
+                android:background="@drawable/btn_green"
+                android:textColor="@color/white"
+                android:padding="5dp"
+                android:textSize="12sp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/tvDescriptionNews"/>
+
+        </RelativeLayout>
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
