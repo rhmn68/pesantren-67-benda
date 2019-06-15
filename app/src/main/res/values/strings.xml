@@ -103,5 +103,6 @@
     <string name="pil_presensi_santri">Pilih Presensi Santri</string>
     <string name="choose_santri_1">Belum ada Santri yang ditambahkan</string>
     <string name="choose_santri_2">Kehadiran Hari Ini</string>
+    <string name="tentang_app_description" translatable="false">67Benda merupakan aplikasi berbasis Android yang dikembangkan untuk membantu para wali santri memantau aktivitas buah hatinya yang dititipkan di Pesantren Persatuan Islam 67 Benda Tasikmalaya</string>
 
 </resources>

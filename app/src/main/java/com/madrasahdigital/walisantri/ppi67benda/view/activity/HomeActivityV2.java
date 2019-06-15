@@ -63,6 +63,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private TextView tvBelumAdaSantri;
     private TextView tvTitleToday;
     private Button btnTambahkanSantri;
+    private NavigationView navigationView;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
@@ -123,7 +124,7 @@ public class HomeActivityV2 extends AppCompatActivity
             }
         });
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         btnTambahkanSantri.setOnClickListener(l -> {
@@ -180,14 +181,24 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (id == R.id.nav_presensi) {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPresenceActivity.class);
             startActivity(intent);
+            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_payment) {
 
         } else if (id == R.id.nav_news) {
 
         } else if (id == R.id.nav_add_santri) {
-
+            Intent intent;
+            if (allSantri.getTotal() == 0) {
+                intent = new Intent(HomeActivityV2.this, WelcomeMsgAddSantri.class);
+            } else {
+                intent = new Intent(HomeActivityV2.this, AddSantriActivity.class);
+            }
+            startActivity(intent);
+            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_about) {
-
+            Intent intent = new Intent(HomeActivityV2.this, AboutActivity.class);
+            startActivity(intent);
+            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_logout) {
 
         }
