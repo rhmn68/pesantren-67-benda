@@ -73,4 +73,7 @@
     <string name="home_text6">Present</string>
     <string name="home_text7_selengkapnya">More</string>
     <string name="detailnews">Detail News</string>
+    <string name="pil_presensi_santri">Select Santri Presence</string>
+    <string name="choose_santri_1">No Santri Added</string>
+    <string name="choose_santri_2">Presence Today</string>
 </resources>
