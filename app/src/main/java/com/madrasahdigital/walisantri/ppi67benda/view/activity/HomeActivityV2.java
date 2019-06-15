@@ -87,7 +87,8 @@ public class HomeActivityV2 extends AppCompatActivity
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
         allSantri = sharedPrefManager.getAllSantri();
         presenceList = new ArrayList<>();
-        tvTitleToday.setText(getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateString());
+        String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
+        tvTitleToday.setText(titleToday);
 
         initializeListener();
         new GetNews().execute();

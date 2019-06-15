@@ -102,6 +102,16 @@ public class UtilsManager {
         return dateFormat.format(yesterday());
     }
 
+    public static String getTodayDateStringMonthLinguistik(Context context) {
+        String myDate = "";
+        DateFormat dateFormat = new SimpleDateFormat("dd");
+        Date date = new Date();
+        myDate = dateFormat.format(date) + " ";
+        myDate += getMonthFromNumber(context, getMonth()) + " ";
+        myDate += getYear();
+        return myDate;
+    }
+
     public static String getTodayDateString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         Date date = new Date();
