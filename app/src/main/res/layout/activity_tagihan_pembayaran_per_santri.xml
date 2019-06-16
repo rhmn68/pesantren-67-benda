@@ -1,9 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
     tools:context=".view.activity.payment.TagihanPembayaranPerSantriActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/tagihan_pembayaran_per_santri"
+        app:titleTextColor="@color/black"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="90dp">
+
+                <RelativeLayout
+                    android:id="@+id/rellayCiv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/civProfPic"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:padding="10dp"
+                        android:background="@drawable/circle_green"/>
+
+                    <TextView
+                        android:id="@+id/tvFirstCharForImageProfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="6"
+                        android:layout_centerInParent="true"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/rellayCiv"
+                    android:layout_marginStart="10dp">
+
+                    <TextView
+                        android:id="@+id/tvSantriName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Farhan Ghifari"
+                        android:textColor="@color/greytextcolor2"
+                        android:textSize="14sp"
+                        />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/linlayTagihan1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Spp Bulan Juni 2019"
+                    android:layout_marginTop="10dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/greytextcolor3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 200.000"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/greytextcolor"/>
+            </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linlayTagihan2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Spp Bulan Mei 2019"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/greytextcolor3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 200.000"
+                android:textSize="14sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/greytextcolor"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linlayTagihan3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Biaya PLKJ"
+                android:layout_marginTop="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/greytextcolor3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 100.000"
+                android:textSize="14sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/greytextcolor"/>
+
+        </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:layout_marginTop="30dp"
+                    android:textSize="22sp"
+                    android:textColor="@color/greytextcolor3"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 500.000"
+                    android:layout_marginTop="30dp"
+                    android:textSize="22sp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/greytextcolor3"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</LinearLayout>

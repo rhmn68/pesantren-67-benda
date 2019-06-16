@@ -1,9 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white2"
     tools:context=".view.activity.payment.ChooseSantriPaymentActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/pilih_pembayaran_santri"
+        app:titleTextColor="@color/black"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/linlayBottom"
+        android:layout_below="@id/toolbar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/tvTitleToday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tagihan_pembayaran"
+                android:textColor="@color/greytextcolor"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tvNoBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitleToday"
+                android:text="@string/no_bill"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_numbers"
+                android:layout_below="@id/tvTitleToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_numbers"
+                android:text="Total"
+                android:layout_marginTop="30dp"
+                android:textSize="22sp"
+                android:textColor="@color/greytextcolor3"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_numbers"
+                android:text="Rp 3.000.000"
+                android:layout_marginTop="30dp"
+                android:textSize="22sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/greytextcolor3"/>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:id="@+id/linlayBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dopayment"
+            android:textColor="@color/white"
+            android:onClick="gotoMakePayment"
+            android:background="@drawable/btn_green"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@color/greytextcolor3"
+            android:text="@string/riwayat_pembayaran"
+            android:onClick="gotoRiwayatPembayaran"
+            android:background="@drawable/btn_silver"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

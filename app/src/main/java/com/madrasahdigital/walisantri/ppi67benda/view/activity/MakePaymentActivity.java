@@ -3,12 +3,13 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import android.util.Log;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import android.util.Log;
-import android.widget.TextView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -91,7 +92,6 @@ public class MakePaymentActivity extends AppCompatActivity {
         recyclerMakePayment.setCheckBoxClickListener(onCheckBoxClickListener);
         mRecyclerView.setAdapter(recyclerMakePayment);
     }
-
 
     private class GetTagihanSpp extends AsyncTask<Void, Integer, Boolean> {
 

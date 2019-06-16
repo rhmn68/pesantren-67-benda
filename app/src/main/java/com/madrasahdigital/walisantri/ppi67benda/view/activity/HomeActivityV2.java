@@ -29,10 +29,12 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.AddSantriActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.payment.ChooseSantriPaymentActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.ChooseSantriPresenceActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -175,19 +177,17 @@ public class HomeActivityV2 extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        navigationView.getMenu().getItem(0).setChecked(true);
 
-        if (id == R.id.nav_home) {
-            // Handle the camera action
-        } else if (id == R.id.nav_presensi) {
+        if (id == R.id.nav_presensi) {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPresenceActivity.class);
             startActivity(intent);
-            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_payment) {
-
+            Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPaymentActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_news) {
             Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
             startActivity(intent);
-            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_add_santri) {
             Intent intent;
             if (allSantri.getTotal() == 0) {
@@ -196,13 +196,21 @@ public class HomeActivityV2 extends AppCompatActivity
                 intent = new Intent(HomeActivityV2.this, AddSantriActivity.class);
             }
             startActivity(intent);
-            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(HomeActivityV2.this, AboutActivity.class);
             startActivity(intent);
-            navigationView.getMenu().getItem(0).setChecked(true);
         } else if (id == R.id.nav_logout) {
-
+            LogoutDialog logoutDialog = new LogoutDialog(HomeActivityV2.this);
+            logoutDialog.show();
+            logoutDialog.setDialogResult(result -> {
+                if (result) {
+                    sharedPrefManager.resetData();
+                    Intent intent = new Intent(HomeActivityV2.this, SplashScreen.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                    HomeActivityV2.this.finish();
+                }
+            });
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

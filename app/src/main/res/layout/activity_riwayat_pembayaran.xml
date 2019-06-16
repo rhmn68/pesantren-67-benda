@@ -1,10 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".view.activity.payment.RiwayatPembayaranActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/riwayat_pembayaran"
+        app:titleTextColor="@color/black"/>
+
+    <TextView
+        android:id="@+id/tvTitleToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/pembayaran_telah_dilakukan"
+        android:textColor="@color/greytextcolor"
+        android:textSize="16sp" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/toolbar">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_numbers"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</LinearLayout>
