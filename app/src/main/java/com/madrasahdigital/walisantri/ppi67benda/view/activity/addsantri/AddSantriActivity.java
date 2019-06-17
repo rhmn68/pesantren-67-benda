@@ -52,5 +52,6 @@ public class AddSantriActivity extends AppCompatActivity {
     public void AddSantri(View view) {
         Intent intent = new Intent(AddSantriActivity.this, HomeActivityV2.class);
         startActivity(intent);
+        finish();
     }
 }

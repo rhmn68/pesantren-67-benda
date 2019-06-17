@@ -26,5 +26,6 @@ public class WelcomeMsgAddSantri extends AppCompatActivity {
     public void gotoAddSantriActivity(View view) {
         Intent intent = new Intent(WelcomeMsgAddSantri.this, AddSantriActivity.class);
         startActivity(intent);
+        finish();
     }
 }

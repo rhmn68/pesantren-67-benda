@@ -1,12 +1,16 @@
-package com.madrasahdigital.walisantri.ppi67benda.view.activity;
+package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -41,6 +45,7 @@ public class MakePaymentActivity extends AppCompatActivity {
     private TextView tvTotalNominal;
     private double totalPayment;
     private boolean isThreadWork = false;
+    private ActionBar aksibar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +61,27 @@ public class MakePaymentActivity extends AppCompatActivity {
         swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
         totalPayment = 0;
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat
+                    .getColor(MakePaymentActivity.this, R.color.colorPrimaryDark));
+        }
+
+        aksibar = MakePaymentActivity.this.getSupportActionBar();
+        assert aksibar != null;
+        aksibar.setDisplayHomeAsUpEnabled(true);
+
         initializationOfListener();
         new GetTagihanSpp().execute();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializationOfListener() {

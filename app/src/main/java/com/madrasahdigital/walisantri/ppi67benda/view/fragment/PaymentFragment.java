@@ -23,7 +23,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.payment.PaymentModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
-import com.madrasahdigital.walisantri.ppi67benda.view.activity.MakePaymentActivity;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.payment.MakePaymentActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPayment;
 
 import java.util.ArrayList;

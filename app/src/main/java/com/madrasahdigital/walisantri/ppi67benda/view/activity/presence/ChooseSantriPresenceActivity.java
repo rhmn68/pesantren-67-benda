@@ -36,7 +36,6 @@ public class ChooseSantriPresenceActivity extends AppCompatActivity {
         setContentView(R.layout.activity_choose_santri_presence);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.black));
-        toolbar.setTitle(getResources().getString(R.string.tambahkan_santri));
         setSupportActionBar(toolbar);
 
         tvKeteranganTidakAdaSantri = findViewById(R.id.tvKeteranganTidakAdaSantri);

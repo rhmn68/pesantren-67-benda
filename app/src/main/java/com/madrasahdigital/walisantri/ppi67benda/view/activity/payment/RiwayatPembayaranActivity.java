@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -86,7 +87,8 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
 
     private void initializationOfListener() {
         onArtikelClickListener = (posisi, paymentModel) -> {
-
+            Intent intent = new Intent(RiwayatPembayaranActivity.this, DetailTagihanActivity.class);
+            startActivity(intent);
         };
 
         swipeRefreshLayout.setOnRefreshListener(() -> {

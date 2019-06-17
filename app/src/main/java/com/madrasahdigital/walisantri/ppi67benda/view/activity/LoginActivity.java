@@ -19,6 +19,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.WelcomeMsgAddSantri;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import org.json.JSONObject;
@@ -67,7 +68,7 @@ public class LoginActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        finish();
         if (!email.isEmpty() && !password.isEmpty()) {
-           new LoginToServer().execute();
+            new LoginToServer().execute();
         } else {
             UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
         }
@@ -76,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
 
         private JSONObject jsonObject;
+        private int statusSuccess;
 
         @Override
         protected void onPreExecute() {
@@ -129,7 +131,13 @@ public class LoginActivity extends AppCompatActivity {
                             gson.fromJson(bodyString, AllSantri.class);
 
                     sharedPrefManager.saveAllSantri(allSantri);
-                    sharedPrefManager.setIdActiveSantriInHomePage(allSantri.getSantri().get(0).getId());
+
+                    if (allSantri.getTotal() == 0) {
+                        statusSuccess = 0;
+                    } else {
+                        sharedPrefManager.setIdActiveSantriInHomePage(allSantri.getSantri().get(0).getId());
+                        statusSuccess = 1;
+                    }
 
                     return true;
                 } catch (Exception e) {
@@ -147,7 +155,11 @@ public class LoginActivity extends AppCompatActivity {
                 if (isSuccess) {
                     sharedPrefManager.setLogin(true);
                     sharedPrefManager.setToken(jsonObject.getString("token"));
-                    Intent intent = new Intent(LoginActivity.this, HomeActivityV2.class);
+                    Intent intent;
+                    if (statusSuccess == 1)
+                        intent = new Intent(LoginActivity.this, HomeActivityV2.class);
+                    else
+                        intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                     finish();

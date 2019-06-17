@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -66,6 +67,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private TextView tvTitleToday;
     private Button btnTambahkanSantri;
     private NavigationView navigationView;
+    private RelativeLayout rellayTotalTagihan;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
@@ -79,6 +81,7 @@ public class HomeActivityV2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBarToday = findViewById(R.id.progressBarToday);
         rv_news = findViewById(R.id.rv_news);
+        rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
         tvBelumAdaSantri = findViewById(R.id.tvBelumAdaSantri);
@@ -106,6 +109,11 @@ public class HomeActivityV2 extends AppCompatActivity
     }
 
     private void initializeListener() {
+        rellayTotalTagihan.setOnClickListener(l -> {
+            Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPaymentActivity.class);
+            startActivity(intent);
+        });
+
         onArtikelClickListenerNewsHome = (posisi, notificationModel) -> {
             Intent intent = new Intent(HomeActivityV2.this, DetailNewsActivity.class);
             startActivity(intent);
@@ -213,6 +221,7 @@ public class HomeActivityV2 extends AppCompatActivity
             });
         }
 
+        navigationView.getMenu().getItem(0).setChecked(true);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
         return true;

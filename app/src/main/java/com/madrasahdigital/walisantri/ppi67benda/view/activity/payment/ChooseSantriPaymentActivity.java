@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
-import com.madrasahdigital.walisantri.ppi67benda.view.activity.MakePaymentActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPaymentBill;
 
 public class ChooseSantriPaymentActivity extends AppCompatActivity {
@@ -26,6 +25,8 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
     private SharedPrefManager sharedPrefManager;
     private AllSantri allSantri;
     private TextView tvNoBill;
+    private TextView tvTotalText;
+    private TextView tvTotalNominal;
     private RecyclerView rv_numbers;
     private RecyclerPaymentBill recyclerPaymentBill;
     private RecyclerPaymentBill.OnArtikelClickListener onArtikelClickListener;
@@ -39,6 +40,8 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         tvNoBill = findViewById(R.id.tvNoBill);
         rv_numbers = findViewById(R.id.rv_numbers);
+        tvTotalNominal = findViewById(R.id.tvTotalNominal);
+        tvTotalText = findViewById(R.id.tvTotalText);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
@@ -54,6 +57,8 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
 
         if (allSantri.getTotal() == 0) {
             tvNoBill.setVisibility(View.VISIBLE);
+            tvTotalText.setVisibility(View.GONE);
+            tvTotalNominal.setVisibility(View.GONE);
             rv_numbers.setVisibility(View.GONE);
         } else {
             tvNoBill.setVisibility(View.GONE);
@@ -77,6 +82,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
     private void initializationOfListener() {
         onArtikelClickListener = (posisi, santri) -> {
             Intent intent = new Intent(ChooseSantriPaymentActivity.this, TagihanPembayaranPerSantriActivity.class);
+            intent.putExtra("santriname", santri.getFullname());
             startActivity(intent);
         };
     }

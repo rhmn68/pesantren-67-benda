@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +20,7 @@ public class TagihanPembayaranPerSantriActivity extends AppCompatActivity {
     private LinearLayout linlayTagihan1;
     private LinearLayout linlayTagihan2;
     private LinearLayout linlayTagihan3;
+    private TextView tvSantriName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class TagihanPembayaranPerSantriActivity extends AppCompatActivity {
         linlayTagihan1 = findViewById(R.id.linlayTagihan1);
         linlayTagihan2 = findViewById(R.id.linlayTagihan2);
         linlayTagihan3 = findViewById(R.id.linlayTagihan3);
+        tvSantriName = findViewById(R.id.tvSantriName);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
@@ -55,6 +58,10 @@ public class TagihanPembayaranPerSantriActivity extends AppCompatActivity {
             Intent intent = new Intent(TagihanPembayaranPerSantriActivity.this, DetailTagihanActivity.class);
             startActivity(intent);
         });
+
+        Intent intent = getIntent();
+        String santriname = intent.getStringExtra("santriname");
+        tvSantriName.setText(santriname);
     }
 
     @Override
