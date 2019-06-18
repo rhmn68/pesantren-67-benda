@@ -64,10 +64,10 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etKonfirmasiPassword = findViewById(R.id.etPasswordKonfirmasi);
+
         loadingDialog = new LoadingDialog(RegisterActivity.this);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
