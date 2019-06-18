@@ -5,7 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".view.activity.RegisterActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="@string/registrasi"
+        app:titleTextColor="@color/black"/>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -22,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/lengkapidata"
                 android:textSize="18sp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/black"/>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -43,7 +54,69 @@
                     android:textColor="@color/grey" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:theme="@style/AppTheme.Dark"
+                app:errorEnabled="true">
 
+                <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/grey" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:theme="@style/AppTheme.Dark"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:hint="Password"
+                    android:inputType="textPassword"
+                    android:textColor="@color/grey" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPasswordKonfirmasi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="8dp"
+                android:theme="@style/AppTheme.Dark"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/etPasswordKonfirmasi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:hint="Ketik ulang password"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/grey" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnLanjut"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_green"
+                android:text="Register"
+                android:onClick="registerData"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
 

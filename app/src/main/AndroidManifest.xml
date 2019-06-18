@@ -88,7 +88,11 @@
             android:configChanges="locale|orientation"
             android:label="@string/announce"
             android:screenOrientation="portrait" />
-        <activity android:name=".view.activity.RegisterActivity" />
+        <activity android:name=".view.activity.RegisterActivity"
+            android:configChanges="locale|orientation"
+            android:label="@string/tambahkan_santri"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".view.activity.payment.MakePaymentActivity"
             android:configChanges="locale|orientation"
