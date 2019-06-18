@@ -63,15 +63,19 @@ public class LoginActivity extends AppCompatActivity {
     public void gotoHomePage(View view) {
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
-//        Intent intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        startActivity(intent);
-//        finish();
+
         if (!email.isEmpty() && !password.isEmpty()) {
+            if (!email.equals("admin@admin.com"))
+                password = UtilsManager.md5(password);
             new LoginToServer().execute();
         } else {
             UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));
         }
+    }
+
+    public void gotoRegister(View view) {
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
     }
 
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
