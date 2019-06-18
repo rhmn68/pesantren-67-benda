@@ -53,7 +53,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private SharedPrefManager sharedPrefManager;
     private AllSantri allSantri;
     private List<Presence> presenceList;
-    private List<NotificationModel> notificationModelList ;
+    private List<NotificationModel> notificationModelList;
     private ProgressBar progressBarToday;
     private ProgressBar progressBarNews;
     private ImageView ivRefreshPresenceToday;
@@ -65,6 +65,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private RecyclerNewsHome.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private TextView tvBelumAdaSantri;
     private TextView tvTitleToday;
+    private TextView tvTotalTagihan;
     private Button btnTambahkanSantri;
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
@@ -88,6 +89,7 @@ public class HomeActivityV2 extends AppCompatActivity
         btnTambahkanSantri = findViewById(R.id.btnTambahkanSantri);
         progressBarNews = findViewById(R.id.progressBarNews);
         tvTitleToday = findViewById(R.id.tvTitleToday);
+        tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
@@ -99,13 +101,7 @@ public class HomeActivityV2 extends AppCompatActivity
         initializeListener();
         new GetNews().execute();
 
-        if (allSantri.getTotal() == 0) {
-           setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
-        } else {
-            for (int i=0;i<allSantri.getTotal();i++) {
-                new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();
-            }
-        }
+        new GetDataSantri().execute();
     }
 
     private void initializeListener() {
@@ -386,6 +382,56 @@ public class HomeActivityV2 extends AppCompatActivity
                 }
             } else {
                 setView(TYPE_FAIL_PRESENCE_TODAY);
+            }
+        }
+    }
+
+
+    private class GetDataSantri extends AsyncTask<Void, Integer, Boolean> {
+
+        @Override
+        protected void onPreExecute() {
+            setView(TYPE_LOAD_PRESENCE_TODAY);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_ALL_SANTRI)
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                allSantri =
+                        gson.fromJson(bodyString, AllSantri.class);
+
+                sharedPrefManager.saveAllSantri(allSantri);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            if (allSantri.getTotal() == 0) {
+                setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
+                tvTotalTagihan.setText("Rp 0,-");
+            } else {
+                for (int i = 0; i < allSantri.getTotal(); i++) {
+                    new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();
+                }
             }
         }
     }
