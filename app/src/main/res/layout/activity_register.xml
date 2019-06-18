@@ -31,15 +31,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/lengkapidata"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/greytextcolor3"/>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilInputNama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="8dp"
                 android:theme="@style/AppTheme.Dark"
                 app:errorEnabled="true">

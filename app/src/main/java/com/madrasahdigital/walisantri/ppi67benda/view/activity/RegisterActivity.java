@@ -149,7 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
             if (password.equals(konfirmasiPassword)) {
                 if (isEmailTrue) {
                     password = UtilsManager.md5(password);
-                    new LoginToServer(nama, email, password, password).execute();
+                    new RegisterToServer(nama, email, password, password).execute();
                 }
             } else {
                 etKonfirmasiPassword.setError("Samakan password");
@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
-    private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
+    private class RegisterToServer extends AsyncTask<Void, Integer, Boolean> {
 
         private String nama;
         private String email;
@@ -176,7 +176,7 @@ public class RegisterActivity extends AppCompatActivity {
         private String konfirmasiPassword;
         private String message = "";
 
-        public LoginToServer(String nama, String email, String password, String konfirmasiPassword) {
+        public RegisterToServer(String nama, String email, String password, String konfirmasiPassword) {
             this.nama = nama;
             this.email = email;
             this.password = password;
