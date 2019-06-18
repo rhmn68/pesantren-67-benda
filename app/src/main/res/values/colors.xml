@@ -7,6 +7,7 @@
 
     <!--Public color-->
     <color name="white">#ffffff</color>
+    <color name="white1">#FBF9FA</color>
     <color name="white2">#F5F5F5</color>
     <color name="whitetransparant">#ffffffff</color>
     <color name="black">#000000</color>
@@ -15,6 +16,7 @@
     <color name="silver">#bcbdbd</color>
     <color name="silverstrong">#a9a9a9</color>
     <color name="lightsilver">#E5E5E5</color>
+    <color name="bluebuttondesign">#57B8D8</color>
     <color name="blue">#59afff</color>
     <color name="blue1">#0084ff</color>
     <color name="blue2">#0084ff</color>

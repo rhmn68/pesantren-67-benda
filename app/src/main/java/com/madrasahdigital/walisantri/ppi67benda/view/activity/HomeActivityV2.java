@@ -217,9 +217,9 @@ public class HomeActivityV2 extends AppCompatActivity
             });
         }
 
-        navigationView.getMenu().getItem(0).setChecked(true);
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
+        navigationView.getMenu().getItem(0).setChecked(true);
         return true;
     }
 

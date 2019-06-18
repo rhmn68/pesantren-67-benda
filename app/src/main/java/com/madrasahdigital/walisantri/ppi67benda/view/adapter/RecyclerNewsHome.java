@@ -62,6 +62,16 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
                 }, 250);
             }
         });
+
+        viewHolderCategory.btnMore.setOnClickListener(view -> {
+            if (mOnArtikelClickListener != null) {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    if (mOnArtikelClickListener != null)
+                        mOnArtikelClickListener.onClick(position, notificationModel);
+                }, 250);
+            }
+        });
     }
 
     @Override
