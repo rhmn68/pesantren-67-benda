@@ -95,7 +95,7 @@ public class NotifActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_NOTIFICATION)
                     .get()
-                    .addHeader("Authorization", sharedPrefManager.getToken())
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
 
             try {
