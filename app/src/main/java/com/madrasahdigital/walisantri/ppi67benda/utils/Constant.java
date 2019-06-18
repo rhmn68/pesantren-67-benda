@@ -10,6 +10,7 @@ public class Constant {
     public static final String LINK_REGISTER = SERVER_LINK + "api/user/auth/register";
     public static final String LINK_LOGIN = SERVER_LINK + "api/user/auth/login";
     public static final String LINK_FORGOT_PASSWORD = SERVER_LINK + "api/user/auth/reset_password";
+    public static final String LINK_ASSIGN_SANTRI = SERVER_LINK + "api/santri/assign";
     public static final String LINK_GET_ALL_SANTRI = SERVER_LINK + "api/santri";
     public static final String LINK_GET_PAYMENT_INFO = SERVER_LINK + "api/payment";
     public static final String LINK_GET_RIWAYAT_SPP = SERVER_LINK + "api/santri/1/spp";
