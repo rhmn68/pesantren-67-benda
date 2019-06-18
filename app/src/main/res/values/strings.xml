@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name" translatable="false">67 Benda</string>
 
-    <string name="lupakatasandi" translatable="false">Lupa kata sandi? Klik disini</string>
+    <string name="lupakatasandi" translatable="false">Lupa kata sandi?</string>
     <string name="login" translatable="false">masuk</string>
     <string name="email" translatable="false">Email</string>
     <string name="password" translatable="false">Password</string>
