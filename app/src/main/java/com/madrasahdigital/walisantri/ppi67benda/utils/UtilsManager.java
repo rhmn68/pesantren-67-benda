@@ -224,6 +224,6 @@ public class UtilsManager {
     }
 
     public static void showToast(Context context, String s) {
-        Toast.makeText(context,s, Toast.LENGTH_LONG).show();
+        Toast.makeText(context, s, Toast.LENGTH_LONG).show();
     }
 }
