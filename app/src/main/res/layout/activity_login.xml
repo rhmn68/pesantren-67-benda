@@ -65,15 +65,31 @@
                         android:textColor="@color/grey" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/tvLupaSandi"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:layout_marginTop="15dp"
-                    android:gravity="right"
-                    android:textColor="@color/colorPrimary"
-                    android:text="@string/lupakatasandi" />
+                    android:layout_height="40dp"
+                    android:layout_gravity="end"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorPrimary"
+                        android:text="@string/lupakatasandi" />
+
+                    <TextView
+                        android:id="@+id/tvLupaSandi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="5dp"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:onClick="gotoLupaSandi"
+                        android:textColor="@color/colorPrimaryDark"
+                        android:text="Klik Disini" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

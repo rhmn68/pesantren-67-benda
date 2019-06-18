@@ -78,6 +78,11 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void gotoLupaSandi(View view) {
+        Intent intent = new Intent(LoginActivity.this, LupaSandiActivity.class);
+        startActivity(intent);
+    }
+
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
 
         private JSONObject jsonObject;
