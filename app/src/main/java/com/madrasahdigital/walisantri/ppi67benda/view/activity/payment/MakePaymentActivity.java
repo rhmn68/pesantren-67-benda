@@ -3,7 +3,6 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
 
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+import com.madrasahdigital.walisantri.ppi67benda.model.PaymentSelectedModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp.TagihanSppModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
@@ -37,6 +37,7 @@ public class MakePaymentActivity extends AppCompatActivity {
     private RecyclerMakePayment recyclerMakePayment;
     private RecyclerMakePayment.OnCheckBoxClickListener onCheckBoxClickListener;
     private List<TagihanSppModel> tagihanSppModelList;
+    private List<PaymentSelectedModel> paymentSelectedModelList;
     private RecyclerView mRecyclerView;
     private SharedPrefManager sharedPrefManager;
     private TextView tvTotalNominal;
@@ -67,6 +68,7 @@ public class MakePaymentActivity extends AppCompatActivity {
         aksibar.setDisplayHomeAsUpEnabled(true);
 
         tagihanAllSantriModel = sharedPrefManager.getTagihanAllSantri();
+        paymentSelectedModelList = new ArrayList<>();
 
         initializationOfListener();
         initializationOfViewer();
@@ -84,12 +86,21 @@ public class MakePaymentActivity extends AppCompatActivity {
 
     private void initializationOfListener() {
         onCheckBoxClickListener = (posisi, isCheckBoxChecked, tagihanAllVarModel) -> {
-            Log.d(TAG, "posisi : " + posisi + " isCheckBoxChecked : " + isCheckBoxChecked +
-                            " nama : " + tagihanAllVarModel.getFullname());
-            if (isCheckBoxChecked)
+            PaymentSelectedModel paymentSelectedModel =
+                    new PaymentSelectedModel(tagihanAllVarModel.getSantriId(), tagihanAllVarModel.getIdBill());
+            if (isCheckBoxChecked) {
                 totalPayment += Double.parseDouble(tagihanAllVarModel.getNominal());
-            else
+                paymentSelectedModelList.add(paymentSelectedModel);
+            } else {
                 totalPayment -= Double.parseDouble(tagihanAllVarModel.getNominal());
+                paymentSelectedModelList.remove(paymentSelectedModel);
+                int i = 0;
+                while (i < paymentSelectedModelList.size()-1 &&
+                        !paymentSelectedModelList.get(i).getBillingId().equals(tagihanAllVarModel.getIdBill())) {
+                    i++;
+                }
+                paymentSelectedModelList.remove(i);
+            }
             tvTotalNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(totalPayment));
         };
     }

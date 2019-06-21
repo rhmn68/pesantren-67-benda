@@ -38,8 +38,8 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
         tagihanAllVarModelList = new ArrayList<>();
         TagihanAllVarModel tagihanAllVarModel;
         for (int i = 0; i < tagihanAllSantriModel.getStudents().size(); i++) {
-            tagihanAllVarModel = new TagihanAllVarModel();
             for (int j = 0; j < tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().size(); j++) {
+                tagihanAllVarModel = new TagihanAllVarModel();
                 tagihanAllVarModel.setSantriId(tagihanAllSantriModel.getStudents().get(i).getId());
                 tagihanAllVarModel.setFullname(tagihanAllSantriModel.getStudents().get(i).getFullname());
                 tagihanAllVarModel.setKelas(tagihanAllSantriModel.getStudents().get(i).getClassName());
@@ -85,7 +85,7 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
         int viewCode = getItemViewType(i);
         if (viewCode == TAG_NORMAL_LIST) {
             final ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
-            final TagihanAllVarModel tagihanSppModel = tagihanAllVarModelList.get(i);
+            final TagihanAllVarModel tagihanSppModel = tagihanAllVarModelList.get(position);
 
             String date = "Batas akhir : " + UtilsManager.getDateAnotherFormatFromString2(tagihanSppModel.getDueDate());
             String status;

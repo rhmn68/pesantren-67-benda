@@ -37,7 +37,10 @@
             android:layout_height="56dp"
             android:background="@drawable/border_black"
             android:elevation="4dp"
-            android:padding="15dp">
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
 
             <TextView
                 android:layout_width="wrap_content"
