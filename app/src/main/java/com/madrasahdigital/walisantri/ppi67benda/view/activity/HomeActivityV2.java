@@ -322,6 +322,7 @@ public class HomeActivityV2 extends AppCompatActivity
         protected void onPostExecute(Boolean isSuccess) {
             if (isSuccess) {
                 sharedPrefManager.saveTagihanAllSantri(tagihanAllSantriModel);
+                sharedPrefManager.setTotalTagihan(String.valueOf(tagihanAllSantriModel.getTotal()));
                 String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(tagihanAllSantriModel.getTotal());
                 tvTotalTagihan.setText(tot);
             }

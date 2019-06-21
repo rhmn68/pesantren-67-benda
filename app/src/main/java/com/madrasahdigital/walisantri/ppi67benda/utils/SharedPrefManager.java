@@ -36,6 +36,7 @@ public class SharedPrefManager {
     private final String KEY_DATA_NOTIF = "datanotif323";
     private final String KEY_TOTAL_TAGIHAN = "tottagihan21";
     private final String KEY_TAGIHAN_ALL_SANTRI = "tagihanallsantri32";
+    private final String KEY_IS_GUIDE_SHOWED = "isguideshw32";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -161,6 +162,16 @@ public class SharedPrefManager {
                 TagihanAllSantriModel.class);
 
         return tagihanAllSantriModel;
+    }
+
+    public void setFirstTimeLaunch(boolean isFirstTime) {
+        editor = pref.edit();
+        editor.putBoolean(KEY_IS_GUIDE_SHOWED, isFirstTime);
+        editor.apply();
+    }
+
+    public boolean isFirstTimeLaunch() {
+        return pref.getBoolean(KEY_IS_GUIDE_SHOWED, true);
     }
 
     public void resetData() {

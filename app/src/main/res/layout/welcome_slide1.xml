@@ -16,14 +16,13 @@
             android:layout_height="@dimen/img_width_height"
             android:src="@drawable/icon_green" />
 
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:paddingLeft="@dimen/desc_padding"
             android:paddingRight="@dimen/desc_padding"
-            android:text="@string/slide_2_desc"
+            android:text="@string/slide_1_desc"
             android:textAlignment="center"
             android:textColor="@color/greytextcolor3"
             android:textSize="@dimen/slide_desc" />

@@ -20,6 +20,7 @@ public class SplashScreen extends AppCompatActivity {
     private final String TAG = SplashScreen.class.getSimpleName();
 
     private static final long SPLASHTIME = 500;//time in milliseconds
+    private static final int GOTOGUIDEPAGE = 0;
     private static final int GOTOLOGINPAGE = 1;
     private static final int GOTOHOMEPAGE = 2;
 
@@ -50,10 +51,15 @@ public class SplashScreen extends AppCompatActivity {
     private void continueTask() {
         Message msg = new Message();
 
-        if (session.isLoggedIn())
-            msg.what = GOTOHOMEPAGE;
-        else
-            msg.what = GOTOLOGINPAGE;
+        if (session.isFirstTimeLaunch()) {
+            msg.what = GOTOGUIDEPAGE;
+            session.setFirstTimeLaunch(false);
+        } else {
+            if (session.isLoggedIn())
+                msg.what = GOTOHOMEPAGE;
+            else
+                msg.what = GOTOLOGINPAGE;
+        }
 
         mHandler.sendMessageDelayed(msg, SPLASHTIME);
     }
@@ -75,6 +81,11 @@ public class SplashScreen extends AppCompatActivity {
             if (activity != null) {
                 Intent intentpindah;
                 switch (msg.what) {
+                    case GOTOGUIDEPAGE:
+                        intentpindah = new Intent(activity, WelcomeGuideActivity.class);
+                        activity.startActivity(intentpindah);
+                        activity.finish();
+                        break;
                     case GOTOLOGINPAGE:
                         intentpindah = new Intent(activity, LoginActivity.class);
                         activity.startActivity(intentpindah);

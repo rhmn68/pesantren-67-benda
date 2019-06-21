@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">67 Benda</string>
+    <string name="app_name" translatable="false">67Benda</string>
 
     <string name="lupakatasandi" translatable="false">Lupa kata sandi?</string>
     <string name="login" translatable="false">masuk</string>
@@ -114,5 +114,17 @@
     <string name="tagihan_pembayaran_per_santri" translatable="false">Tagihan Pembayaran</string>
     <string name="detail_tagihan">Detail Tagihan</string>
     <string name="registrasi">Registrasi</string>
+
+    <string name="next">Lanjut</string>
+    <string name="skip">Lewati</string>
+    <string name="start">Mulai</string>
+
+    <string name="slide_1_desc">67Benda merupakan aplikasi berbasis Android yang dikembangkan untuk membantu para wali santri memantau aktivitas buah hatinya yang dititipkan di Pesantren Persatuan Islam 67 Benda Tasikmalaya</string>
+    <string name="slide_2_desc">Melalui aplikasi 67Benda, wali santri bisa memantau kehadiran santrinya dalam menjalani proses belajar mengajar di pesantren dan langsung mengetahui jika buah hatinya tidak masuk sekolah dikarenakan sakit atau yang lainnya</string>
+    <string name="slide_3_desc">Melalui aplikasi 67Benda, wali santri bisa melakukan pembayaran SPP dan bayaran lainnya yang harus dibayarkan serta memantau status pembayarannya</string>
+    <string name="slide_4_desc">Melalui aplikasi 67Benda, wali santri bisa mendapatkan pengumuman terbaru dari pesantren dan memantau segala kegiatan dan aktivitas yang diselenggarakan oleh pesantren</string>
+
+    <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
+    <string name="play_again">Play Again</string>
 
 </resources>
