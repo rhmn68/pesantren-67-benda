@@ -25,6 +25,7 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
+import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
@@ -100,8 +101,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
         initializeListener();
         new GetNews().execute();
-
         new GetDataSantri().execute();
+        new GetTagihanAlLSantri().execute();
     }
 
     private void initializeListener() {
@@ -275,6 +276,54 @@ public class HomeActivityV2 extends AppCompatActivity
         }
     }
 
+    private class GetTagihanAlLSantri extends AsyncTask<Void, Integer, Boolean> {
+
+        private TagihanAllSantriModel tagihanAllSantriModel;
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_TAGIHAN_ALL_SANTRI)
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                tagihanAllSantriModel =
+                        gson.fromJson(bodyString, TagihanAllSantriModel.class);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
+            tvTotalTagihan.setText(tot);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            if (isSuccess) {
+                sharedPrefManager.setToken(String.valueOf(tagihanAllSantriModel.getTotal()));
+                String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(tagihanAllSantriModel.getTotal());
+                tvTotalTagihan.setText(tot);
+            }
+        }
+    }
+
     private class GetNews extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -427,7 +476,6 @@ public class HomeActivityV2 extends AppCompatActivity
         protected void onPostExecute(Boolean isSuccess) {
             if (allSantri.getTotal() == 0) {
                 setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
-                tvTotalTagihan.setText("Rp 0,-");
             } else {
                 for (int i = 0; i < allSantri.getTotal(); i++) {
                     new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();

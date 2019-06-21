@@ -33,6 +33,7 @@ public class SharedPrefManager {
     private final String KEY_ALL_SANTRI = "allsantri321";
     private final String KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE = "santriactive231";
     private final String KEY_DATA_NOTIF = "datanotif323";
+    private final String KEY_TOTAL_TAGIHAN = "tottagihan21";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -83,6 +84,16 @@ public class SharedPrefManager {
     public void setIdActiveSantriInHomePage(String idActiveSantri) {
         editor = pref.edit();
         editor.putString(KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE, idActiveSantri);
+        editor.apply();
+    }
+
+    public String getTotalTagihan() {
+        return pref.getString(KEY_TOTAL_TAGIHAN, "0");
+    }
+
+    public void setTotalTagihan(String totalTagihan) {
+        editor = pref.edit();
+        editor.putString(KEY_TOTAL_TAGIHAN, totalTagihan);
         editor.apply();
     }
 
