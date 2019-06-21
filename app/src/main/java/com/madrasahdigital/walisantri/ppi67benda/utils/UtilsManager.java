@@ -45,6 +45,17 @@ public class UtilsManager {
         };
     }
 
+    public static String getDateAnotherFormatFromString2(String myDate) {
+        try {
+            Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(myDate);
+            DateFormat dateFormat = new SimpleDateFormat("dd MMMM yyyy");
+            return dateFormat.format(date);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
     public static String getDateAnotherFormatFromString(String myDate) {
         try {
             Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm").parse(myDate);
@@ -127,6 +138,11 @@ public class UtilsManager {
         Date date = new Date();
 
         return dateFormat.format(date);
+    }
+
+    public static String getRupiahMoney(String amount) {
+        String rupiah = "Rp " + convertLongToCurrencyIDv2WithoutRp(Double.valueOf(amount));
+        return rupiah;
     }
 
     public static String convertLongToCurrencyIDv2WithoutRp(double amount){

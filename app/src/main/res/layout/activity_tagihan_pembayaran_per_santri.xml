@@ -77,81 +77,30 @@
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/linlayTagihan1"
+
+            <TextView
+                android:id="@+id/tvNoBill"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvTitleToday"
+                android:text="@string/no_bill"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_numbers"
+                android:layout_below="@id/tvTitleToday"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Spp Bulan Juni 2019"
-                    android:layout_marginTop="10dp"
-                    android:textSize="16sp"
-                    android:textColor="@color/greytextcolor3"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Rp 200.000"
-                    android:textSize="14sp"
-                    android:layout_alignParentRight="true"
-                    android:textColor="@color/greytextcolor"/>
-            </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linlayTagihan2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Spp Bulan Mei 2019"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/greytextcolor3"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 200.000"
-                android:textSize="14sp"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/greytextcolor"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linlayTagihan3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Biaya PLKJ"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                android:textColor="@color/greytextcolor3"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rp 100.000"
-                android:textSize="14sp"
-                android:layout_alignParentRight="true"
-                android:textColor="@color/greytextcolor"/>
-
-        </LinearLayout>
+                android:layout_marginTop="2dp"
+                android:scrollbars="vertical" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:id="@+id/tvTotalText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total"
@@ -160,6 +109,7 @@
                     android:textColor="@color/greytextcolor3"/>
 
                 <TextView
+                    android:id="@+id/tvTotalNominal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp 500.000"

@@ -42,7 +42,7 @@
                 android:id="@+id/tvKelas"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Kelas XA"
+                android:text="1827281"
                 android:layout_toEndOf="@id/ivCheck"
                 android:textColor="@color/greytextcolor"
                 android:textSize="14sp" />

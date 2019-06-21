@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 public class TagihanAllVarModel {
     @SerializedName("santri_id")
     @Expose
-    private Integer santriId;
+    private String santriId;
     @SerializedName("fullname")
     @Expose
     private String fullname;
@@ -18,7 +18,7 @@ public class TagihanAllVarModel {
     private String kelas;
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private String idBill;
     @SerializedName("status")
     @Expose
     private Boolean status;
@@ -34,15 +34,24 @@ public class TagihanAllVarModel {
     @SerializedName("url")
     @Expose
     private String url;
+    private String dueDate;
 
     public TagihanAllVarModel() {
     }
 
-    public Integer getSantriId() {
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public String getSantriId() {
         return santriId;
     }
 
-    public void setSantriId(Integer santriId) {
+    public void setSantriId(String santriId) {
         this.santriId = santriId;
     }
 
@@ -62,12 +71,12 @@ public class TagihanAllVarModel {
         this.kelas = kelas;
     }
 
-    public Integer getId() {
-        return id;
+    public String getIdBill() {
+        return idBill;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setIdBill(String id) {
+        this.idBill = id;
     }
 
     public Boolean getStatus() {

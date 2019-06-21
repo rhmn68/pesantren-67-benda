@@ -1,14 +1,15 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 
 import android.content.Context;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp.TagihanAllVarModel;
@@ -21,6 +22,7 @@ import java.util.List;
 /**
  * Created by Alhudaghifari on 0:19 14/05/19
  */
+@Deprecated
 public class RecyclerTagihanSpp extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static String TAG = RecyclerTagihanSpp.class.getSimpleName();
@@ -31,21 +33,21 @@ public class RecyclerTagihanSpp extends RecyclerView.Adapter<RecyclerView.ViewHo
         mContext = context;
         tagihanAllVarModelList = new ArrayList<>();
         TagihanAllVarModel tagihanAllVarModel;
-        for (int i=0;i<riwayatSpps.size();i++) {
-            tagihanAllVarModel = new TagihanAllVarModel();
-            for (int j=0;j<riwayatSpps.get(i).getUnpaid().size();j++) {
-                tagihanAllVarModel.setSantriId(riwayatSpps.get(i).getSantriId());
-                tagihanAllVarModel.setFullname(riwayatSpps.get(i).getFullname());
-                tagihanAllVarModel.setKelas(riwayatSpps.get(i).getKelas());
-                tagihanAllVarModel.setId(riwayatSpps.get(i).getUnpaid().get(j).getId());
-                tagihanAllVarModel.setStatus(riwayatSpps.get(i).getUnpaid().get(j).getStatus());
-                tagihanAllVarModel.setNominal(riwayatSpps.get(i).getUnpaid().get(j).getNominal());
-                tagihanAllVarModel.setPeriode(riwayatSpps.get(i).getUnpaid().get(j).getPeriode());
-                tagihanAllVarModel.setBulan(riwayatSpps.get(i).getUnpaid().get(j).getBulan());
-                tagihanAllVarModel.setUrl(riwayatSpps.get(i).getUnpaid().get(j).getUrl());
-                tagihanAllVarModelList.add(tagihanAllVarModel);
-            }
-        }
+//        for (int i=0;i<riwayatSpps.size();i++) {
+//            tagihanAllVarModel = new TagihanAllVarModel();
+//            for (int j=0;j<riwayatSpps.get(i).getUnpaid().size();j++) {
+//                tagihanAllVarModel.setSantriId(riwayatSpps.get(i).getSantriId());
+//                tagihanAllVarModel.setFullname(riwayatSpps.get(i).getFullname());
+//                tagihanAllVarModel.setKelas(riwayatSpps.get(i).getKelas());
+//                tagihanAllVarModel.setIdBill(riwayatSpps.get(i).getUnpaid().get(j).getId());
+//                tagihanAllVarModel.setStatus(riwayatSpps.get(i).getUnpaid().get(j).getStatus());
+//                tagihanAllVarModel.setNominal(riwayatSpps.get(i).getUnpaid().get(j).getNominal());
+//                tagihanAllVarModel.setPeriode(riwayatSpps.get(i).getUnpaid().get(j).getPeriode());
+//                tagihanAllVarModel.setBulan(riwayatSpps.get(i).getUnpaid().get(j).getBulan());
+//                tagihanAllVarModel.setUrl(riwayatSpps.get(i).getUnpaid().get(j).getUrl());
+//                tagihanAllVarModelList.add(tagihanAllVarModel);
+//            }
+//        }
     }
 
     @NonNull

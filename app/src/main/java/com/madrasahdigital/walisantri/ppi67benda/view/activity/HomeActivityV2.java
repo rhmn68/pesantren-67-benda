@@ -106,6 +106,10 @@ public class HomeActivityV2 extends AppCompatActivity
     }
 
     private void initializeListener() {
+        ivRefreshPresenceToday.setOnClickListener(l -> {
+            new GetDataSantri().execute();
+        });
+
         rellayTotalTagihan.setOnClickListener(l -> {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPaymentActivity.class);
             startActivity(intent);
@@ -317,7 +321,7 @@ public class HomeActivityV2 extends AppCompatActivity
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             if (isSuccess) {
-                sharedPrefManager.setToken(String.valueOf(tagihanAllSantriModel.getTotal()));
+                sharedPrefManager.saveTagihanAllSantri(tagihanAllSantriModel);
                 String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(tagihanAllSantriModel.getTotal());
                 tvTotalTagihan.setText(tot);
             }

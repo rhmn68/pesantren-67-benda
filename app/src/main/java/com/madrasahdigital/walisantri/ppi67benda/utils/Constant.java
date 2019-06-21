@@ -12,7 +12,7 @@ public class Constant {
     public static final String LINK_FORGOT_PASSWORD = SERVER_LINK + "api/user/auth/reset_password";
     public static final String LINK_ASSIGN_SANTRI = SERVER_LINK + "api/santri/assign";
     public static final String LINK_GET_ALL_SANTRI = SERVER_LINK + "api/santri";
-    public static final String LINK_GET_PAYMENT_INFO = SERVER_LINK + "api/payment";
+    public static final String LINK_GET_PAYMENT_INFO = SERVER_LINK + "api/tagihan/payment";
     public static final String LINK_GET_RIWAYAT_SPP = SERVER_LINK + "api/santri/1/spp";
     public static final String LINK_GET_TAGIHAN_SPP = SERVER_LINK + "api/spp/unpaid";
     public static final String LINK_GET_PRESENCE_TODAY = SERVER_LINK + "api/santri/1/presensi/"; // add date in the last, example api/santri/1/presensi/20190515

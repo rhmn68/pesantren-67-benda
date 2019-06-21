@@ -16,19 +16,11 @@
         android:textColor="@color/black"
         android:textSize="14sp" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipeRefresh"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_numbers"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tvPleaseCheck">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_numbers"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="vertical" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+        android:scrollbars="vertical" />
 
 
     <LinearLayout

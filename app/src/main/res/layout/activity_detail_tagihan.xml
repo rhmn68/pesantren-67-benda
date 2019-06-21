@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
     tools:context=".view.activity.payment.DetailTagihanActivity">
 
@@ -17,56 +16,86 @@
         app:title="@string/detail_tagihan"
         app:titleTextColor="@color/black"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Biaya PLKJ"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="22sp"
-        android:textColor="@color/greytextcolor3"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Batas Pembayaran 16 Juni 2019"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginTop="10dp"
-        android:textSize="16sp"
-        android:textColor="@color/blue1"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Biaya untuk mengikuti Program Latihan Khidmah Jamiyah (PLKJ) sebagai program akhir sekolah"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:textSize="14sp"
-        android:textColor="@color/greytextcolor3"/>
-
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/linlayContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp">
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:orientation="vertical">
+
+
         <TextView
+            android:id="@+id/tvTitlePayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Total"
-            android:layout_marginTop="30dp"
+            android:text="Biaya PLKJ"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
             android:textSize="22sp"
             android:textColor="@color/greytextcolor3"/>
 
         <TextView
+            android:id="@+id/tvBatasPembayaran"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Rp 500.000"
-            android:layout_marginTop="30dp"
-            android:textSize="22sp"
-            android:layout_alignParentRight="true"
+            android:text="Batas Pembayaran 16 Juni 2019"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/blue1"/>
+
+        <TextView
+            android:id="@+id/tvDeskripsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Biaya untuk mengikuti Program Latihan Khidmah Jamiyah (PLKJ) sebagai program akhir sekolah"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:textSize="14sp"
             android:textColor="@color/greytextcolor3"/>
 
-    </RelativeLayout>
-</LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp">
+            <TextView
+                android:id="@+id/tvTotalText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total"
+                android:layout_marginTop="30dp"
+                android:textSize="22sp"
+                android:textColor="@color/greytextcolor3"/>
+
+            <TextView
+                android:id="@+id/tvTotalNominal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rp 500.000"
+                android:layout_marginTop="30dp"
+                android:textSize="22sp"
+                android:layout_alignParentRight="true"
+                android:textColor="@color/greytextcolor3"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBarToday"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_centerInParent="true"
+        android:indeterminateDrawable="@drawable/progressbar_color"/>
+
+    <ImageView
+        android:id="@+id/ivRefreshPresenceToday"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        app:srcCompat="@drawable/ic_refresh_green_48dp" />
+
+</RelativeLayout>

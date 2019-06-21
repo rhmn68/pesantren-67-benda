@@ -1,6 +1,5 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,11 +12,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp.TagihanAllVarModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp.TagihanSppModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
@@ -40,12 +38,12 @@ public class MakePaymentActivity extends AppCompatActivity {
     private RecyclerMakePayment.OnCheckBoxClickListener onCheckBoxClickListener;
     private List<TagihanSppModel> tagihanSppModelList;
     private RecyclerView mRecyclerView;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPrefManager sharedPrefManager;
     private TextView tvTotalNominal;
     private double totalPayment;
     private boolean isThreadWork = false;
     private ActionBar aksibar;
+    private TagihanAllSantriModel tagihanAllSantriModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,12 +51,10 @@ public class MakePaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_make_payment);
 
         mRecyclerView = findViewById(R.id.rv_numbers);
-        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         tvTotalNominal = findViewById(R.id.tvTotalNominal);
         sharedPrefManager = new SharedPrefManager(MakePaymentActivity.this);
         tagihanSppModelList = new ArrayList<>();
 
-        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
         totalPayment = 0;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -70,8 +66,10 @@ public class MakePaymentActivity extends AppCompatActivity {
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
 
+        tagihanAllSantriModel = sharedPrefManager.getTagihanAllSantri();
+
         initializationOfListener();
-        new GetTagihanSpp().execute();
+        initializationOfViewer();
     }
 
     @Override
@@ -85,25 +83,14 @@ public class MakePaymentActivity extends AppCompatActivity {
     }
 
     private void initializationOfListener() {
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (!isThreadWork)
-                    new GetTagihanSpp().execute();
-            }
-        });
-
-        onCheckBoxClickListener = new RecyclerMakePayment.OnCheckBoxClickListener() {
-            @Override
-            public void onClick(int posisi, boolean isCheckBoxChecked, TagihanAllVarModel tagihanAllVarModel) {
-                Log.d(TAG, "posisi : " + posisi + " isCheckBoxChecked : " + isCheckBoxChecked +
-                                " nama : " + tagihanAllVarModel.getFullname());
-                if (isCheckBoxChecked)
-                    totalPayment += Double.parseDouble(tagihanAllVarModel.getNominal());
-                else
-                    totalPayment -= Double.parseDouble(tagihanAllVarModel.getNominal());
-                tvTotalNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(totalPayment));
-            }
+        onCheckBoxClickListener = (posisi, isCheckBoxChecked, tagihanAllVarModel) -> {
+            Log.d(TAG, "posisi : " + posisi + " isCheckBoxChecked : " + isCheckBoxChecked +
+                            " nama : " + tagihanAllVarModel.getFullname());
+            if (isCheckBoxChecked)
+                totalPayment += Double.parseDouble(tagihanAllVarModel.getNominal());
+            else
+                totalPayment -= Double.parseDouble(tagihanAllVarModel.getNominal());
+            tvTotalNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(totalPayment));
         };
     }
 
@@ -112,7 +99,7 @@ public class MakePaymentActivity extends AppCompatActivity {
                 new LinearLayoutManager(MakePaymentActivity.this);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
-        recyclerMakePayment = new RecyclerMakePayment(MakePaymentActivity.this, tagihanSppModelList);
+        recyclerMakePayment = new RecyclerMakePayment(MakePaymentActivity.this, tagihanAllSantriModel);
         recyclerMakePayment.setCheckBoxClickListener(onCheckBoxClickListener);
         mRecyclerView.setAdapter(recyclerMakePayment);
     }
@@ -122,7 +109,6 @@ public class MakePaymentActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             isThreadWork = true;
-            swipeRefreshLayout.setRefreshing(true);
             tagihanSppModelList = new ArrayList<>();
         }
 
@@ -158,7 +144,6 @@ public class MakePaymentActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
-            swipeRefreshLayout.setRefreshing(false);
             isThreadWork = false;
             if (isSuccess) {
                 initializationOfViewer();

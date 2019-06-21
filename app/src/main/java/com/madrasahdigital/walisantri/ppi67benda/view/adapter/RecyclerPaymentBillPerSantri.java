@@ -11,33 +11,31 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.Student;
+import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.BillItem;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
- * Created by Alhudaghifari on 22:50 15/06/19
+ * Created by Alhudaghifari on 17:19 21/06/19
  */
-public class RecyclerPaymentBill extends RecyclerView.Adapter<RecyclerView.ViewHolder>  {
+public class RecyclerPaymentBillPerSantri  extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<Student> santriList;
+    private List<BillItem> billItems;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
 
 
-    public RecyclerPaymentBill(Context context, List<Student> santriList) {
+    public RecyclerPaymentBillPerSantri(Context context, List<BillItem> billItems) {
         mContext = context;
-        this.santriList = santriList;
+        this.billItems = billItems;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        view = LayoutInflater.from(mContext).inflate(R.layout.item_payment_bill, parent, false);
+        view = LayoutInflater.from(mContext).inflate(R.layout.item_payment_bill_2, parent, false);
         return new ViewHolderCategory(view);
     }
 
@@ -45,20 +43,16 @@ public class RecyclerPaymentBill extends RecyclerView.Adapter<RecyclerView.ViewH
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
         final int position = i;
-        String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(santriList.get(position).getBills().getSubtotal());
-        viewHolderCategory.tvSantriName.setText(santriList.get(position).getFullname());
+        String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(billItems.get(position).getAmount()));
+        viewHolderCategory.tvKeteranganBayar.setText(billItems.get(position).getTitle());
         viewHolderCategory.tvTotalNominal.setText(tot);
-
-        if (santriList.get(i).getFullname().length() > 1) {
-            viewHolderCategory.tvFirstCharForImageProfil.setText(santriList.get(i).getFullname().charAt(0) + "");
-        }
 
         viewHolderCategory.mViewContainer.setOnClickListener(view -> {
             if (mOnArtikelClickListener != null) {
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     if (mOnArtikelClickListener != null)
-                        mOnArtikelClickListener.onClick(position, santriList.get(position));
+                        mOnArtikelClickListener.onClick(position, billItems.get(position));
                 }, 250);
             }
         });
@@ -66,24 +60,20 @@ public class RecyclerPaymentBill extends RecyclerView.Adapter<RecyclerView.ViewH
 
     @Override
     public int getItemCount() {
-        return santriList.size();
+        return billItems.size();
     }
 
 
     private class ViewHolderCategory extends RecyclerView.ViewHolder {
         public View mViewContainer;
 
-        public CircleImageView civProfPic;
-        public TextView tvSantriName;
+        public TextView tvKeteranganBayar;
         public TextView tvTotalNominal;
-        public TextView tvFirstCharForImageProfil;
 
         public ViewHolderCategory(View itemView) {
             super(itemView);
             mViewContainer = itemView;
-            civProfPic = itemView.findViewById(R.id.civProfPic);
-            tvFirstCharForImageProfil = itemView.findViewById(R.id.tvFirstCharForImageProfil);
-            tvSantriName = itemView.findViewById(R.id.tvSantriName);
+            tvKeteranganBayar = itemView.findViewById(R.id.tvKeteranganBayar);
             tvTotalNominal = itemView.findViewById(R.id.tvTotalNominal);
         }
     }
@@ -92,7 +82,7 @@ public class RecyclerPaymentBill extends RecyclerView.Adapter<RecyclerView.ViewH
      * interface ketika container di click
      */
     public interface OnArtikelClickListener {
-        void onClick(int posisi, Student santri);
+        void onClick(int posisi, BillItem billItem);
     }
 
     /**

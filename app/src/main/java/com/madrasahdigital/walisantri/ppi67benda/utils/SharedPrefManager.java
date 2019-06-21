@@ -7,6 +7,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +35,7 @@ public class SharedPrefManager {
     private final String KEY_ID_ACTIVE_SANTRI_IN_HOMEPAGE = "santriactive231";
     private final String KEY_DATA_NOTIF = "datanotif323";
     private final String KEY_TOTAL_TAGIHAN = "tottagihan21";
+    private final String KEY_TAGIHAN_ALL_SANTRI = "tagihanallsantri32";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -140,6 +142,25 @@ public class SharedPrefManager {
                 AllSantri.class);
 
         return allSantri;
+    }
+
+    public void saveTagihanAllSantri(TagihanAllSantriModel tagihanAllSantriModel) {
+        Gson gson = new Gson();
+        String jsonUser = gson.toJson(tagihanAllSantriModel);
+
+        editor = pref.edit();
+        editor.putString(KEY_TAGIHAN_ALL_SANTRI, jsonUser);
+        editor.apply();
+    }
+
+    public TagihanAllSantriModel getTagihanAllSantri() {
+        String jsonUser = pref.getString(KEY_TAGIHAN_ALL_SANTRI, "");
+
+        Gson gson = new Gson();
+        TagihanAllSantriModel tagihanAllSantriModel = gson.fromJson(jsonUser,
+                TagihanAllSantriModel.class);
+
+        return tagihanAllSantriModel;
     }
 
     public void resetData() {

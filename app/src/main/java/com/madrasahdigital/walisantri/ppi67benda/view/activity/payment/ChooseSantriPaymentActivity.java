@@ -15,15 +15,16 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
+import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPaymentBill;
 
 public class ChooseSantriPaymentActivity extends AppCompatActivity {
 
     private ActionBar aksibar;
     private SharedPrefManager sharedPrefManager;
-    private AllSantri allSantri;
+    private TagihanAllSantriModel tagihanAllSantriModel;
     private TextView tvNoBill;
     private TextView tvTotalText;
     private TextView tvTotalNominal;
@@ -53,9 +54,9 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         aksibar.setDisplayHomeAsUpEnabled(true);
 
         sharedPrefManager = new SharedPrefManager(ChooseSantriPaymentActivity.this);
-        allSantri = sharedPrefManager.getAllSantri();
+        tagihanAllSantriModel = sharedPrefManager.getTagihanAllSantri();
 
-        if (allSantri.getTotal() == 0) {
+        if (tagihanAllSantriModel.getStudents().size() == 0) {
             tvNoBill.setVisibility(View.VISIBLE);
             tvTotalText.setVisibility(View.GONE);
             tvTotalNominal.setVisibility(View.GONE);
@@ -64,6 +65,8 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
             tvNoBill.setVisibility(View.GONE);
             rv_numbers.setVisibility(View.VISIBLE);
         }
+        String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
+        tvTotalNominal.setText(tot);
 
         initializationOfListener();
         initializationOfPresenceViewer();
@@ -83,6 +86,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         onArtikelClickListener = (posisi, santri) -> {
             Intent intent = new Intent(ChooseSantriPaymentActivity.this, TagihanPembayaranPerSantriActivity.class);
             intent.putExtra("santriname", santri.getFullname());
+            intent.putExtra("posisi", posisi);
             startActivity(intent);
         };
     }
@@ -93,7 +97,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         rv_numbers.setLayoutManager(mLinearLayoutManager);
         rv_numbers.setHasFixedSize(true);
 
-        recyclerPaymentBill = new RecyclerPaymentBill(ChooseSantriPaymentActivity.this, allSantri.getSantri());
+        recyclerPaymentBill = new RecyclerPaymentBill(ChooseSantriPaymentActivity.this, tagihanAllSantriModel.getStudents());
         recyclerPaymentBill.setOnArtikelClickListener(onArtikelClickListener);
 
         rv_numbers.setAdapter(recyclerPaymentBill);
