@@ -3,6 +3,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.DetailPaymentModel;
+import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerDetailMakePayment;
 
 public class DetailMakePaymentActivity extends AppCompatActivity {
@@ -26,8 +28,7 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
     private RecyclerView rv_numbers;
     private RecyclerDetailMakePayment recyclerPaymentBill;
     private RecyclerDetailMakePayment.OnArtikelClickListener onArtikelClickListener;
-    
-    
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,8 +49,15 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         tvSubTotal = findViewById(R.id.tvSubTotal);
         tvFee = findViewById(R.id.tvFee);
         tvTotalNominal = findViewById(R.id.tvTotalNominal);
+        rv_numbers = findViewById(R.id.rv_numbers);
 
         detailPaymentModel = getIntent().getParcelableExtra("detailpayment");
+        initializationOfListener();
+        initializationOfRecyclerViewer();
+
+        tvSubTotal.setText(UtilsManager.getRupiahMoney(String.valueOf(detailPaymentModel.getSubtotal())));
+        tvFee.setText(UtilsManager.getRupiahMoney(String.valueOf(detailPaymentModel.getPaymentFee())));
+        tvTotalNominal.setText(UtilsManager.getRupiahMoney(String.valueOf(detailPaymentModel.getTotal())));
     }
 
     private void initializationOfListener() {
@@ -59,7 +67,7 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         };
     }
 
-    private void initializationOfPresenceViewer() {
+    private void initializationOfRecyclerViewer() {
         final LinearLayoutManager mLinearLayoutManager =
                 new LinearLayoutManager(DetailMakePaymentActivity.this);
         rv_numbers.setLayoutManager(mLinearLayoutManager);
@@ -70,5 +78,8 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         recyclerPaymentBill.setOnArtikelClickListener(onArtikelClickListener);
 
         rv_numbers.setAdapter(recyclerPaymentBill);
+    }
+
+    public void bayarSekarang(View view) {
     }
 }

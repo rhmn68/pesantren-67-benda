@@ -116,8 +116,9 @@ public class HomeActivityV2 extends AppCompatActivity
             startActivity(intent);
         });
 
-        onArtikelClickListenerNewsHome = (posisi, notificationModel) -> {
+        onArtikelClickListenerNewsHome = (posisi, newsModel) -> {
             Intent intent = new Intent(HomeActivityV2.this, DetailNewsActivity.class);
+            intent.putExtra("urlberita", newsModel.getUrl());
             startActivity(intent);
         };
 

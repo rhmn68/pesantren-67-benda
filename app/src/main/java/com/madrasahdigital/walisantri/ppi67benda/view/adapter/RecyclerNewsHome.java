@@ -63,8 +63,8 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
                 .with(mContext)
                 .load(post.getFeaturedImage())
                 .centerCrop()
-                .placeholder(R.drawable.round_silver)
-                .error(R.drawable.round_silver)
+                .placeholder(R.drawable.bg_silver)
+                .error(R.drawable.bg_silver)
                 .into(viewHolderCategory.ivThumbnailNews);
 
         viewHolderCategory.mViewContainer.setOnClickListener(view -> {

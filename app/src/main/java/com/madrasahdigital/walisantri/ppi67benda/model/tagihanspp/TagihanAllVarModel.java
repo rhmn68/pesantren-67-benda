@@ -35,8 +35,17 @@ public class TagihanAllVarModel {
     @Expose
     private String url;
     private String dueDate;
+    private String titleBill;
 
     public TagihanAllVarModel() {
+    }
+
+    public String getTitleBill() {
+        return titleBill;
+    }
+
+    public void setTitleBill(String titleBill) {
+        this.titleBill = titleBill;
     }
 
     public String getDueDate() {

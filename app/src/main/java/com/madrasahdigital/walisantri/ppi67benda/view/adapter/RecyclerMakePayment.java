@@ -45,6 +45,7 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
                 tagihanAllVarModel.setKelas(tagihanAllSantriModel.getStudents().get(i).getClassName());
                 tagihanAllVarModel.setIdBill(tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().get(j).getId());
                 tagihanAllVarModel.setStatus(false);
+                tagihanAllVarModel.setTitleBill(tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().get(j).getTitle());
                 tagihanAllVarModel.setNominal(tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().get(j).getAmount());
                 tagihanAllVarModel.setDueDate(tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().get(j).getDueDate());
                 tagihanAllVarModel.setUrl(tagihanAllSantriModel.getStudents().get(i).getBills().getBillItems().get(j).getUrl());
@@ -95,9 +96,10 @@ public class RecyclerMakePayment extends RecyclerView.Adapter<RecyclerView.ViewH
                 status = mContext.getResources().getString(R.string.belumdibayar);
             }
 
-            viewHolderCategory.tvKelas.setText("Kelas " + tagihanSppModel.getKelas());
+//            viewHolderCategory.tvKelas.setText("Kelas " + tagihanSppModel.getKelas());
+            viewHolderCategory.tvKelas.setVisibility(View.GONE);
             viewHolderCategory.tvName.setText(tagihanSppModel.getFullname());
-            viewHolderCategory.tvPeriode.setText(date);
+            viewHolderCategory.tvPeriode.setText(tagihanSppModel.getTitleBill());
             viewHolderCategory.tvStatus.setText(status);
             viewHolderCategory.tvNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.parseDouble(tagihanSppModel.getNominal())));
             viewHolderCategory.checkBox.setOnClickListener(view -> {

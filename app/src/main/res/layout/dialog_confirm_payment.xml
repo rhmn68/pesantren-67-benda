@@ -1,6 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:background="@drawable/rounded_full_white_40dp">
 
-</LinearLayout>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvStatusPresence"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apakah anda ingin melakukan pembayaran sekarang?"
+                android:textSize="16sp"
+                android:textColor="@color/black"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/scrollView"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnBatal"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Batal"
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/black"
+            android:background="@drawable/btn_silver"
+            android:layout_marginTop="20dp"
+            />
+
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Konfirmasi"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/white"
+            android:background="@drawable/btn_green"
+            android:layout_marginTop="20dp"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

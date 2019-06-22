@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ public class DetailNewsActivity extends AppCompatActivity {
     private SharedPrefManager sharedPrefManager;
     private ProgressBar progressBar;
     private ImageView ivRefreshPresenceToday;
+    private String urlBerita;
 
 
     @Override
@@ -65,6 +67,9 @@ public class DetailNewsActivity extends AppCompatActivity {
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         sharedPrefManager = new SharedPrefManager(DetailNewsActivity.this);
 
+        Intent intent = getIntent();
+        urlBerita = intent.getStringExtra("urlberita");
+
         new GetDetailArticle().execute();
     }
 
@@ -86,7 +91,7 @@ public class DetailNewsActivity extends AppCompatActivity {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_NEWS)
+                    .url(urlBerita)
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
@@ -110,7 +115,7 @@ public class DetailNewsActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
-            ivNewsImage.setImageDrawable(getResources().getDrawable(R.drawable.round_silver));
+            ivNewsImage.setImageDrawable(getResources().getDrawable(R.drawable.bg_silver));
             tvTitleNews.setText("");
             tvDipostingPada.setText("");
             tvIsiBerita.setText("");
@@ -125,12 +130,12 @@ public class DetailNewsActivity extends AppCompatActivity {
                         .with(DetailNewsActivity.this)
                         .load(detailNewsModel.getFeaturedImage())
                         .centerCrop()
-                        .placeholder(R.drawable.round_silver)
-                        .error(R.drawable.round_silver)
+                        .placeholder(R.drawable.bg_silver)
+                        .error(R.drawable.bg_silver)
                         .into(ivNewsImage);
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
-                tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());
+                    tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());
                 tvIsiBerita.setText(detailNewsModel.getContent());
             } else {
                 ivRefreshPresenceToday.setVisibility(View.VISIBLE);

@@ -79,6 +79,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
     private void initializeListener() {
         onArtikelClickListenerNewsHome = (posisi, notificationModel) -> {
             Intent intent = new Intent(NewsFromPesantrenActivity.this, DetailNewsActivity.class);
+            intent.putExtra("urlberita", notificationModel.getUrl());
             startActivity(intent);
         };
 
