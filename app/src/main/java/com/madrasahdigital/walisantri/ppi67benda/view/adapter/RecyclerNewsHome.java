@@ -12,8 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 
 import java.util.List;
@@ -24,14 +25,14 @@ import java.util.List;
 public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static String TAG = RecyclerNewsHome.class.getSimpleName();
-    private List<NotificationModel> notifList;
+    private List<Post> postList;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
     private int type;
 
-    public RecyclerNewsHome(Context context, List<NotificationModel> notifList, int type) {
+    public RecyclerNewsHome(Context context, List<Post> postList, int type) {
         mContext = context;
-        this.notifList = notifList;
+        this.postList = postList;
         this.type = type;
     }
     
@@ -50,15 +51,28 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
         ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
         final int position = i;
-        final NotificationModel notificationModel = notifList.get(position);
+        final Post post = postList.get(position);
 
-        viewHolderCategory.tvTitleNews.setText(notificationModel.getSubject());
+        viewHolderCategory.tvTitleNews.setText(post.getTitle());
+        if (post.getIntro() != null)
+        viewHolderCategory.tvDescriptionNews.setText(post.getIntro());
+        else
+            viewHolderCategory.tvDescriptionNews.setText("");
+
+        Glide
+                .with(mContext)
+                .load(post.getFeaturedImage())
+                .centerCrop()
+                .placeholder(R.drawable.round_silver)
+                .error(R.drawable.round_silver)
+                .into(viewHolderCategory.ivThumbnailNews);
+
         viewHolderCategory.mViewContainer.setOnClickListener(view -> {
             if (mOnArtikelClickListener != null) {
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     if (mOnArtikelClickListener != null)
-                        mOnArtikelClickListener.onClick(position, notificationModel);
+                        mOnArtikelClickListener.onClick(position, post);
                 }, 250);
             }
         });
@@ -68,7 +82,7 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
                 Handler handler = new Handler();
                 handler.postDelayed(() -> {
                     if (mOnArtikelClickListener != null)
-                        mOnArtikelClickListener.onClick(position, notificationModel);
+                        mOnArtikelClickListener.onClick(position, post);
                 }, 250);
             }
         });
@@ -76,7 +90,7 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     @Override
     public int getItemCount() {
-        return notifList.size();
+        return postList.size();
     }
 
     private class ViewHolderCategory extends RecyclerView.ViewHolder {
@@ -101,7 +115,7 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
      * interface ketika container di click
      */
     public interface OnArtikelClickListener {
-        void onClick(int posisi, NotificationModel presence);
+        void onClick(int posisi, Post post);
     }
 
     /**

@@ -22,7 +22,6 @@
         android:layout_height="match_parent"
         android:scrollbars="vertical" />
 
-
     <LinearLayout
         android:id="@+id/linlayBottom"
         android:layout_width="match_parent"
@@ -87,6 +86,7 @@
             android:textColor="@color/white"
             android:layout_marginTop="10dp"
             android:elevation="4dp"
+            android:onClick="bayarSekarang"
             android:layout_marginBottom="10dp"
             android:text="Bayar Sekarang"/>
 

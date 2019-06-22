@@ -1,9 +1,13 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -15,19 +19,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.PaymentSelectedModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.DetailPaymentModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanspp.TagihanSppModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerMakePayment;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
@@ -45,6 +53,8 @@ public class MakePaymentActivity extends AppCompatActivity {
     private boolean isThreadWork = false;
     private ActionBar aksibar;
     private TagihanAllSantriModel tagihanAllSantriModel;
+    private LoadingDialog loadingDialog;
+    private String bodyItemPayment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +76,10 @@ public class MakePaymentActivity extends AppCompatActivity {
         aksibar = MakePaymentActivity.this.getSupportActionBar();
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
+
+        loadingDialog = new LoadingDialog(MakePaymentActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         tagihanAllSantriModel = sharedPrefManager.getTagihanAllSantri();
         paymentSelectedModelList = new ArrayList<>();
@@ -115,6 +129,85 @@ public class MakePaymentActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(recyclerMakePayment);
     }
 
+    public void bayarSekarang(View view) {
+        if (paymentSelectedModelList.size() > 0) {
+            bodyItemPayment = "[";
+            for (int i = 0; i < paymentSelectedModelList.size(); i++) {
+                if (i != 0) bodyItemPayment += ",";
+                bodyItemPayment += "{";
+                bodyItemPayment += "\"student_id\":" + paymentSelectedModelList.get(i).getSantriId();
+                bodyItemPayment += ",\"billing_id\":" + paymentSelectedModelList.get(i).getBillingId();
+                bodyItemPayment += "}";
+            }
+            bodyItemPayment += "]";
+            new PostRequestPembayaran().execute();
+        } else {
+            UtilsManager.showToast(MakePaymentActivity.this, "Tidak ada tagihan yang dipilih");
+        }
+    }
+
+    private class PostRequestPembayaran extends AsyncTask<Void, Integer, Integer> {
+
+        private int statusCode;
+        private int statusRespon;
+        private DetailPaymentModel detailPaymentModel;
+
+        @Override
+        protected void onPreExecute() {
+            loadingDialog.show();
+        }
+
+        @Override
+        protected Integer doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+            statusRespon = 0;
+            RequestBody body = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("items", bodyItemPayment)
+                    .build();
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_POST_TAGIHAN_PAYMENT)
+                    .post(body)
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                ResponseBody responseBody = response.body();
+
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                statusRespon = 2;
+                detailPaymentModel =
+                        gson.fromJson(bodyString, DetailPaymentModel.class);
+
+                statusCode = response.code();
+
+                statusRespon = 1;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return statusRespon;
+        }
+
+        @Override
+        protected void onPostExecute(Integer statusSuccess) {
+            loadingDialog.dismiss();
+
+            if (statusSuccess == 0) {
+                UtilsManager.showToast(MakePaymentActivity.this, getResources().getString(R.string.cekkoneksi));
+            } else if (statusSuccess == 1) {
+                Intent intent = new Intent(MakePaymentActivity.this, DetailMakePaymentActivity.class);
+                intent.putExtra("detailpayment", detailPaymentModel);
+                startActivity(intent);
+            } else {
+                UtilsManager.showToast(MakePaymentActivity.this, "Terjadi kesalahan " + statusCode);
+            }
+        }
+    }
+
     private class GetTagihanSpp extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -135,7 +228,6 @@ public class MakePaymentActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 

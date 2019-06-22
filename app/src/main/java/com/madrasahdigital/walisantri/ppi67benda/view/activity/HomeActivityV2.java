@@ -23,6 +23,7 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
@@ -39,7 +40,6 @@ import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHo
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -55,6 +55,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private AllSantri allSantri;
     private List<Presence> presenceList;
     private List<NotificationModel> notificationModelList;
+    private NewsModel newsModel;
     private ProgressBar progressBarToday;
     private ProgressBar progressBarNews;
     private ImageView ivRefreshPresenceToday;
@@ -246,7 +247,7 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_news.setLayoutManager(mLinearLayoutManager);
         rv_news.setHasFixedSize(true);
 
-        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, notificationModelList, Constant.TYPE_NEWS_HOME);
+        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, newsModel.getPosts(), Constant.TYPE_NEWS_HOME);
         recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
 
         rv_news.setAdapter(recyclerNewsHome);
@@ -336,7 +337,7 @@ public class HomeActivityV2 extends AppCompatActivity
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_NOTIFICATION)
+                    .url(Constant.LINK_GET_NEWS)
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
@@ -348,11 +349,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 String bodyString = responseBody.string();
 
                 Gson gson = new Gson();
-                NotificationModel[] paymentModel =
-                        gson.fromJson(bodyString, NotificationModel[].class);
-
-                notificationModelList = new ArrayList<>();
-                notificationModelList.addAll(Arrays.asList(paymentModel));
+                newsModel = gson.fromJson(bodyString, NewsModel.class);
 
                 return true;
             } catch (Exception e) {

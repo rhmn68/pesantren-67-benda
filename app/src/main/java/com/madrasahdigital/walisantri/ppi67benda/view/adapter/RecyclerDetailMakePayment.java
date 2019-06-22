@@ -11,22 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.BillItem;
+import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.Item;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.util.List;
 
 /**
- * Created by Alhudaghifari on 17:19 21/06/19
+ * Created by Alhudaghifari on 13:26 22/06/19
  */
-public class RecyclerPaymentBillPerSantri extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class RecyclerDetailMakePayment extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private List<BillItem> billItems;
+    private List<Item> billItems;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
 
-
-    public RecyclerPaymentBillPerSantri(Context context, List<BillItem> billItems) {
+    public RecyclerDetailMakePayment(Context context, List<Item> billItems) {
         mContext = context;
         this.billItems = billItems;
     }
@@ -44,7 +43,7 @@ public class RecyclerPaymentBillPerSantri extends RecyclerView.Adapter<RecyclerV
         ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
         final int position = i;
         String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(billItems.get(position).getAmount()));
-        viewHolderCategory.tvKeteranganBayar.setText(billItems.get(position).getTitle());
+        viewHolderCategory.tvKeteranganBayar.setText(billItems.get(position).getProductName());
         viewHolderCategory.tvTotalNominal.setText(tot);
 
         viewHolderCategory.mViewContainer.setOnClickListener(view -> {
@@ -82,7 +81,7 @@ public class RecyclerPaymentBillPerSantri extends RecyclerView.Adapter<RecyclerV
      * interface ketika container di click
      */
     public interface OnArtikelClickListener {
-        void onClick(int posisi, BillItem billItem);
+        void onClick(int posisi, Item billItem);
     }
 
     /**

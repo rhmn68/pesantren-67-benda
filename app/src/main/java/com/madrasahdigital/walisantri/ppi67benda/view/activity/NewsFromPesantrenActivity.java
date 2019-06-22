@@ -16,14 +16,13 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
@@ -40,6 +39,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
     private RecyclerNewsHome.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private SharedPrefManager sharedPrefManager;
     private List<NotificationModel> notificationModelList;
+    private NewsModel newsModel;
     private boolean isThreadWork = false;
 
     @Override
@@ -94,7 +94,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
         mRecyclerView.setHasFixedSize(true);
 
-        recyclerNewsHome = new RecyclerNewsHome(NewsFromPesantrenActivity.this, notificationModelList, Constant.TYPE_NEWS_PAGE);
+        recyclerNewsHome = new RecyclerNewsHome(NewsFromPesantrenActivity.this, newsModel.getPosts(), Constant.TYPE_NEWS_PAGE);
         recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
 
         mRecyclerView.setAdapter(recyclerNewsHome);
@@ -108,7 +108,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_NOTIFICATION)
+                    .url(Constant.LINK_GET_NEWS)
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
@@ -120,11 +120,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
                 String bodyString = responseBody.string();
 
                 Gson gson = new Gson();
-                NotificationModel[] paymentModel =
-                        gson.fromJson(bodyString, NotificationModel[].class);
-
-                notificationModelList = new ArrayList<>();
-                notificationModelList.addAll(Arrays.asList(paymentModel));
+                newsModel = gson.fromJson(bodyString, NewsModel.class);
 
                 return true;
             } catch (Exception e) {

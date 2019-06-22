@@ -18,7 +18,9 @@ public class Constant {
     public static final String LINK_GET_PRESENCE_TODAY = SERVER_LINK + "api/santri/1/presensi/"; // add date in the last, example api/santri/1/presensi/20190515
     public static final String LINK_GET_PRESENCE_SANTRI = SERVER_LINK + "api/santri/1/presensi?year=$&month=#"; //replace $ with year and # with month (05 for May)
     public static final String LINK_GET_NOTIFICATION = SERVER_LINK + "api/notification";
+    public static final String LINK_GET_NEWS = SERVER_LINK + "api/post";
     public static final String LINK_GET_TAGIHAN_ALL_SANTRI = SERVER_LINK + "api/tagihan";
+    public static final String LINK_POST_TAGIHAN_PAYMENT = SERVER_LINK + "api/tagihan/payment";
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri
     public static final String LINK_GET_PRESENCE_TODAY_2 = SERVER_LINK + "api/santri/$/presensi/";
