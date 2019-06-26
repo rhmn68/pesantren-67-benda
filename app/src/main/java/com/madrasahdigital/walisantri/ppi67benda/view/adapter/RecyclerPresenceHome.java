@@ -10,6 +10,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
 
@@ -48,16 +49,25 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
         viewHolderCategory.tvStatusPresence.setText(presenceList.get(position).getStatus());
         viewHolderCategory.tvKeteranganAbsen.setText(presenceList.get(position).getDescription());
 
-        if (presenceList.get(i).getSantriName().length() > 1) {
-            viewHolderCategory.tvFirstCharForImageProfil.setText(presenceList.get(i).getSantriName().charAt(0) + "");
+        if (presenceList.get(i).getUrlPhoto() != null) {
+            viewHolderCategory.tvFirstCharForImageProfil.setText("");
+            Glide
+                    .with(mContext)
+                    .load(presenceList.get(i).getUrlPhoto())
+                    .centerCrop()
+                    .placeholder(R.drawable.bg_silver)
+                    .error(R.drawable.bg_silver)
+                    .into(viewHolderCategory.civPhotoProfile);
+        } else {
+            if (presenceList.get(i).getSantriName().length() > 1) {
+                viewHolderCategory.tvFirstCharForImageProfil.setText(presenceList.get(i).getSantriName().charAt(0) + "");
+            }
         }
 
-        // TODO Delete i == 0
-        if (presenceList.get(i).getStatus().equals("present") && i == 0) {
+        if (presenceList.get(i).getStatus().equals("present")) {
             viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_green));
             viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.greytextcolor2));
         } else {
-            // TODO also delete this else
             viewHolderCategory.tvStatusPresence.setText("Absen");
             viewHolderCategory.tvKeteranganAbsen.setText("Tanpa keterangan");
         }

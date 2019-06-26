@@ -24,6 +24,15 @@ public class Presence {
     @Expose
     private String url;
     private String santriName;
+    private String urlPhoto;
+
+    public String getUrlPhoto() {
+        return urlPhoto;
+    }
+
+    public void setUrlPhoto(String urlPhoto) {
+        this.urlPhoto = urlPhoto;
+    }
 
     public String getSantriName() {
         return santriName;

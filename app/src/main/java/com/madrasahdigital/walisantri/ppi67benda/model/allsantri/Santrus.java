@@ -11,9 +11,15 @@ public class Santrus {
     @SerializedName("id")
     @Expose
     private String id;
+    @SerializedName("nis")
+    @Expose
+    private String nis;
     @SerializedName("fullname")
     @Expose
     private String fullname;
+    @SerializedName("photo")
+    @Expose
+    private Object photo;
     @SerializedName("place_of_birth")
     @Expose
     private String placeOfBirth;
@@ -50,6 +56,15 @@ public class Santrus {
     @SerializedName("date_join")
     @Expose
     private String dateJoin;
+    @SerializedName("father_id")
+    @Expose
+    private Object fatherId;
+    @SerializedName("mother_id")
+    @Expose
+    private Object motherId;
+    @SerializedName("wali_id")
+    @Expose
+    private Object waliId;
     @SerializedName("created_at")
     @Expose
     private String createdAt;
@@ -59,6 +74,39 @@ public class Santrus {
     @SerializedName("deleted_at")
     @Expose
     private Object deletedAt;
+    @SerializedName("student_id")
+    @Expose
+    private String studentId;
+    @SerializedName("class_id")
+    @Expose
+    private String classId;
+    @SerializedName("level_id")
+    @Expose
+    private String levelId;
+    @SerializedName("year_id")
+    @Expose
+    private String yearId;
+    @SerializedName("class_name")
+    @Expose
+    private String className;
+    @SerializedName("teacher")
+    @Expose
+    private String teacher;
+    @SerializedName("level_name")
+    @Expose
+    private String levelName;
+    @SerializedName("level_number")
+    @Expose
+    private String levelNumber;
+    @SerializedName("default_billing")
+    @Expose
+    private String defaultBilling;
+    @SerializedName("year_label")
+    @Expose
+    private String yearLabel;
+    @SerializedName("current_year")
+    @Expose
+    private String currentYear;
     @SerializedName("url")
     @Expose
     private String url;
@@ -71,12 +119,28 @@ public class Santrus {
         this.id = id;
     }
 
+    public String getNis() {
+        return nis;
+    }
+
+    public void setNis(String nis) {
+        this.nis = nis;
+    }
+
     public String getFullname() {
         return fullname;
     }
 
     public void setFullname(String fullname) {
         this.fullname = fullname;
+    }
+
+    public Object getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Object photo) {
+        this.photo = photo;
     }
 
     public String getPlaceOfBirth() {
@@ -175,6 +239,30 @@ public class Santrus {
         this.dateJoin = dateJoin;
     }
 
+    public Object getFatherId() {
+        return fatherId;
+    }
+
+    public void setFatherId(Object fatherId) {
+        this.fatherId = fatherId;
+    }
+
+    public Object getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(Object motherId) {
+        this.motherId = motherId;
+    }
+
+    public Object getWaliId() {
+        return waliId;
+    }
+
+    public void setWaliId(Object waliId) {
+        this.waliId = waliId;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }
@@ -199,6 +287,94 @@ public class Santrus {
         this.deletedAt = deletedAt;
     }
 
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
+    public String getLevelId() {
+        return levelId;
+    }
+
+    public void setLevelId(String levelId) {
+        this.levelId = levelId;
+    }
+
+    public String getYearId() {
+        return yearId;
+    }
+
+    public void setYearId(String yearId) {
+        this.yearId = yearId;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(String teacher) {
+        this.teacher = teacher;
+    }
+
+    public String getLevelName() {
+        return levelName;
+    }
+
+    public void setLevelName(String levelName) {
+        this.levelName = levelName;
+    }
+
+    public String getLevelNumber() {
+        return levelNumber;
+    }
+
+    public void setLevelNumber(String levelNumber) {
+        this.levelNumber = levelNumber;
+    }
+
+    public String getDefaultBilling() {
+        return defaultBilling;
+    }
+
+    public void setDefaultBilling(String defaultBilling) {
+        this.defaultBilling = defaultBilling;
+    }
+
+    public String getYearLabel() {
+        return yearLabel;
+    }
+
+    public void setYearLabel(String yearLabel) {
+        this.yearLabel = yearLabel;
+    }
+
+    public String getCurrentYear() {
+        return currentYear;
+    }
+
+    public void setCurrentYear(String currentYear) {
+        this.currentYear = currentYear;
+    }
+
     public String getUrl() {
         return url;
     }
@@ -206,4 +382,5 @@ public class Santrus {
     public void setUrl(String url) {
         this.url = url;
     }
+
 }

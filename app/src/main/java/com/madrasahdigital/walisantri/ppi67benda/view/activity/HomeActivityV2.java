@@ -427,6 +427,8 @@ public class HomeActivityV2 extends AppCompatActivity
                     i++;
                 }
                 presence.setSantriName(allSantri.getSantri().get(i).getFullname());
+                if (allSantri.getSantri().get(i).getPhoto() != null)
+                    presence.setUrlPhoto(allSantri.getSantri().get(i).getPhoto().toString());
                 presenceList.add(presence);
                 if (presenceList.size() == allSantri.getTotal()) {
                     setView(TYPE_DONE_LOAD_PRESENCE_TODAY);
