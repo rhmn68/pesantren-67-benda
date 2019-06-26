@@ -1,9 +1,251 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".view.activity.payment.DetailPembayaran">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@color/white"
+        app:popupTheme="@style/AppTheme.PopupOverlay"
+        app:title="Detail Pembayaran"
+        app:titleTextColor="@color/black"/>
+
+    <ImageView
+        android:id="@+id/ivRefresh"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:visibility="gone"
+        app:srcCompat="@drawable/ic_refresh_green_48dp" />
+
+    <TextView
+        android:id="@+id/tvMuatUlang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Muat Ulang"
+        android:layout_centerInParent="true"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:layout_below="@id/ivRefresh"
+        android:textStyle="bold"
+        android:textColor="@color/red"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Order Code"
+                android:textSize="12sp"
+                android:textColor="@color/greytextcolor"/>
+
+            <TextView
+                android:id="@+id/tvOrderCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123321wd23fw2345"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/greytextcolor4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/silverlow"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Status Pembayaran"
+                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/greytextcolor"/>
+
+            <TextView
+                android:id="@+id/tvStatusPembayaran"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sudah dibayar"
+                android:layout_marginStart="10dp"
+                android:textSize="16sp"
+                android:textColor="@color/greytextcolor4"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/silverlow"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Detail Tagihan"
+                android:textSize="12sp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/greytextcolor"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_numbers"
+                android:layout_below="@id/tvTitleToday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/silverlow"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/tvTotalText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Total"
+                    android:textSize="20sp"
+                    android:textColor="@color/greytextcolor4"/>
+
+                <TextView
+                    android:id="@+id/tvTotalTagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rp 3.000.000"
+                    android:textSize="20sp"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/greytextcolor4"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/silverlow"/>
+
+            <LinearLayout
+                android:id="@+id/linlayInfoCaraBayar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvTextTagihan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Silahkan transfer dengan nominal tepat Rp500.000 ke rekening berikut:"
+                    android:textSize="12sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/greytextcolor"/>
+
+                <TextView
+                    android:id="@+id/tvAtasNama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Penerima : Pesantren Persis 67Benda"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/greytextcolor4"/>
+
+                <TextView
+                    android:id="@+id/tvBankName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank : BNI"
+                    android:layout_marginStart="10dp"
+                    android:textSize="16sp"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/greytextcolor4"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvNoRekening"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No Rekening :\n123321123"
+                        android:layout_marginStart="10dp"
+                        android:textSize="16sp"
+                        android:layout_centerVertical="true"
+                        android:textColor="@color/greytextcolor4"/>
+
+                    <TextView
+                        android:id="@+id/tvCopyNorek"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Salin No.Rek"
+                        android:layout_centerVertical="true"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="5dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:textSize="14sp"
+                        android:background="@drawable/btn_silver"
+                        android:textColor="@color/black"/>
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/silverlow"/>
+
+                <TextView
+                    android:id="@+id/tvPastikanBayar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pastikan mengirim dengan angka unik 3 digit terakhir dari nominal agar pihak admin kami mudah dalam proses verifikasi pembayaran.
+Setelah mengirimkan pembayaran, silakan konfirmasi melalui tombol berikut:"
+                    android:textSize="12sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/greytextcolor"/>
+
+                <Button
+                    android:id="@+id/btnKonfirmasiWhatsapp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Konfirmasi Whatsapp"
+                    android:layout_marginTop="15dp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/btn_green"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/silverlow"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

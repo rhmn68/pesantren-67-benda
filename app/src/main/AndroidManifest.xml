@@ -12,10 +12,15 @@
         android:roundIcon="@drawable/icon_circle_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.payment.DetailMakePaymentActivity"
+        <activity android:name=".view.activity.payment.DetailPembayaran"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.payment.DetailMakePaymentActivity"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.WelcomeGuideActivity"
             android:configChanges="locale|orientation"

@@ -1,8 +1,12 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,10 +17,20 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.DetailPaymentModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.KonfirmasiCheckoutModel;
+import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
+import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerDetailMakePayment;
+import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class DetailMakePaymentActivity extends AppCompatActivity {
 
@@ -25,9 +39,10 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
     private TextView tvFee;
     private TextView tvTotalNominal;
     private DetailPaymentModel detailPaymentModel;
+    private LoadingDialog loadingDialog;
+    private SharedPrefManager sharedPrefManager;
     private RecyclerView rv_numbers;
     private RecyclerDetailMakePayment recyclerPaymentBill;
-    private RecyclerDetailMakePayment.OnArtikelClickListener onArtikelClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +66,12 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         tvTotalNominal = findViewById(R.id.tvTotalNominal);
         rv_numbers = findViewById(R.id.rv_numbers);
 
+        loadingDialog = new LoadingDialog(DetailMakePaymentActivity.this);
+        loadingDialog.setCancelable(false);
+        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        sharedPrefManager = new SharedPrefManager(DetailMakePaymentActivity.this);
         detailPaymentModel = getIntent().getParcelableExtra("detailpayment");
-        initializationOfListener();
         initializationOfRecyclerViewer();
 
         tvSubTotal.setText(UtilsManager.getRupiahMoney(String.valueOf(detailPaymentModel.getSubtotal())));
@@ -60,11 +79,14 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         tvTotalNominal.setText(UtilsManager.getRupiahMoney(String.valueOf(detailPaymentModel.getTotal())));
     }
 
-    private void initializationOfListener() {
-        onArtikelClickListener = (posisi, santri) -> {
-            Intent intent = new Intent(DetailMakePaymentActivity.this, DetailTagihanActivity.class);
-            startActivity(intent);
-        };
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializationOfRecyclerViewer() {
@@ -75,11 +97,61 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
 
         recyclerPaymentBill = new RecyclerDetailMakePayment(DetailMakePaymentActivity.this,
                 detailPaymentModel.getItems());
-        recyclerPaymentBill.setOnArtikelClickListener(onArtikelClickListener);
 
         rv_numbers.setAdapter(recyclerPaymentBill);
     }
 
     public void bayarSekarang(View view) {
+        new KonfirmasiCheckoutPembayaran().execute();
+    }
+
+
+    private class KonfirmasiCheckoutPembayaran extends AsyncTask<Void, Integer, Boolean> {
+
+        private KonfirmasiCheckoutModel konfirmasiCheckoutModel;
+
+        @Override
+        protected void onPreExecute() {
+            loadingDialog.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(detailPaymentModel.getConfirmUrl())
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                konfirmasiCheckoutModel =
+                        gson.fromJson(bodyString, KonfirmasiCheckoutModel.class);
+
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            loadingDialog.dismiss();
+            if (isSuccess) {
+                Intent intent = new Intent(DetailMakePaymentActivity.this, DetailPembayaran.class);
+                intent.putExtra("urldetailpembayaran", konfirmasiCheckoutModel.getUrl());
+                startActivity(intent);
+            } else {
+                UtilsManager.showToast(DetailMakePaymentActivity.this, getResources().getString(R.string.cekkoneksi));
+            }
+        }
     }
 }

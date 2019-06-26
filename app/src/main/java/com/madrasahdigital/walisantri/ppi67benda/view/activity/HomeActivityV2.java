@@ -440,7 +440,6 @@ public class HomeActivityV2 extends AppCompatActivity
         }
     }
 
-
     private class GetDataSantri extends AsyncTask<Void, Integer, Boolean> {
 
         @Override

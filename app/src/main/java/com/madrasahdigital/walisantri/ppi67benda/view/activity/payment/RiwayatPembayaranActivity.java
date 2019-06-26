@@ -87,7 +87,8 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
 
     private void initializationOfListener() {
         onArtikelClickListener = (posisi, paymentModel) -> {
-            Intent intent = new Intent(RiwayatPembayaranActivity.this, DetailTagihanActivity.class);
+            Intent intent = new Intent(RiwayatPembayaranActivity.this, DetailPembayaran.class);
+            intent.putExtra("urldetailpembayaran", paymentModel.getUrl());
             startActivity(intent);
         };
 

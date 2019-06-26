@@ -27,6 +27,13 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rincian Pembayaran"
+                android:textSize="16sp"
+                android:textColor="@color/greytextcolor3"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_numbers"
                 android:layout_below="@id/tvTitleToday"
@@ -39,11 +46,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Subtotal"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/greytextcolor3"/>
 
                 <TextView
@@ -51,7 +59,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp 500.000"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/greytextcolor3"/>
 
@@ -64,8 +72,8 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Fee"
-                    android:textSize="18sp"
+                    android:text="Digit Verifikasi*"
+                    android:textSize="16sp"
                     android:textColor="@color/greytextcolor3"/>
 
                 <TextView
@@ -73,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp 648"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/greytextcolor3"/>
 
@@ -87,7 +95,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Total"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:textColor="@color/greytextcolor3"/>
 
                 <TextView
@@ -95,11 +103,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Rp 500.648"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/greytextcolor3"/>
 
             </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="*Digit verifikasi adalah 3 digit unik yang ditambahkan ke subtotal pembayaran untuk memudahkan tim admin kami dalam memverifikasi pembayaran"
+                android:textSize="12sp"
+                android:textColor="@color/greytextcolor"
+                android:layout_marginBottom="80dp"/>
 
         </LinearLayout>
 
