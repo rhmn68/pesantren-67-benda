@@ -2,14 +2,15 @@ package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 
 import android.content.Context;
 import android.os.Handler;
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.payment.PaymentModel;
@@ -50,9 +51,17 @@ public class RecyclerPayment extends RecyclerView.Adapter<RecyclerView.ViewHolde
         viewHolderCategory.tvStatus.setText(paymentModel.getStatus());
 
         if (paymentModel.getStatus().equals("pending")) {
-            viewHolderCategory.ivCheck.setImageResource(R.drawable.ic_add_circle_red_24dp);
+            viewHolderCategory.ivCheck.setImageResource(R.drawable.ic_add_circle_orange_24dp);
             viewHolderCategory.ivCheck.setRotation(45);
-            viewHolderCategory.tvNominal.setTextColor(mContext.getResources().getColor(R.color.red));
+            viewHolderCategory.tvNominal.setTextColor(mContext.getResources().getColor(R.color.orange));
+        } else if (paymentModel.getStatus().equals("cancel")) {
+            viewHolderCategory.ivCheck.setImageResource(R.drawable.ic_add_circle_silver_24dp);
+            viewHolderCategory.ivCheck.setRotation(45);
+            viewHolderCategory.tvNominal.setTextColor(mContext.getResources().getColor(R.color.greytextcolor));
+        } else {
+            viewHolderCategory.ivCheck.setImageResource(R.drawable.ic_check_circle_green_24dp);
+            viewHolderCategory.ivCheck.setRotation(0);
+            viewHolderCategory.tvNominal.setTextColor(mContext.getResources().getColor(R.color.colorPrimaryDark));
         }
         viewHolderCategory.tvNominal.setText(UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.parseDouble(paymentModel.getTotal())));
 

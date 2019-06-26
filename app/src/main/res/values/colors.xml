@@ -30,6 +30,7 @@
     <color name="greytextcolor3">#626063</color>
     <color name="greytextcolor4">#424242</color>
     <color name="red">#D32F2F</color>
+    <color name="orange">#FF9800</color>
 
     <!--Presence color-->
     <color name="colorPresent">#449425</color>
