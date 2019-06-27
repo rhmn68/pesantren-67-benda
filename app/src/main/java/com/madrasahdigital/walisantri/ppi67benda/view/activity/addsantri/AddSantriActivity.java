@@ -76,6 +76,8 @@ public class AddSantriActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
+            Intent intent = new Intent(AddSantriActivity.this, HomeActivityV2.class);
+            startActivity(intent);
             finish();
             return true;
         }

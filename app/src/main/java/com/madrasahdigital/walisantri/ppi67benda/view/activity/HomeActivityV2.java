@@ -3,6 +3,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -68,9 +69,11 @@ public class HomeActivityV2 extends AppCompatActivity
     private TextView tvBelumAdaSantri;
     private TextView tvTitleToday;
     private TextView tvTotalTagihan;
+    private TextView tvTextTagihanPembayaran;
     private Button btnTambahkanSantri;
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
+//    private SwipeRefreshLayout swipeRefreshLayout;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
@@ -92,6 +95,8 @@ public class HomeActivityV2 extends AppCompatActivity
         progressBarNews = findViewById(R.id.progressBarNews);
         tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
+        tvTextTagihanPembayaran = findViewById(R.id.tvTextTagihanPembayaran);
+//        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
@@ -99,14 +104,22 @@ public class HomeActivityV2 extends AppCompatActivity
         presenceList = new ArrayList<>();
         String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
         tvTitleToday.setText(titleToday);
+//        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
         initializeListener();
+//        swipeRefreshLayout.setRefreshing(true);
         new GetNews().execute();
         new GetDataSantri().execute();
         new GetTagihanAlLSantri().execute();
     }
 
     private void initializeListener() {
+//
+//        swipeRefreshLayout.setOnRefreshListener(() -> {
+//            if (!isThreadWork)
+//                new RiwayatPembayaranActivity.GetPaymentData().execute();
+//        });
+
         ivRefreshPresenceToday.setOnClickListener(l -> {
             new GetDataSantri().execute();
         });
@@ -149,6 +162,11 @@ public class HomeActivityV2 extends AppCompatActivity
             }
             startActivity(intent);
         });
+
+        int size = navigationView.getMenu().size();
+        for (int i = 0; i < size; i++) {
+            navigationView.getMenu().getItem(i).setCheckable(false);
+        }
     }
 
     @Override
@@ -188,7 +206,6 @@ public class HomeActivityV2 extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        navigationView.getMenu().getItem(0).setChecked(true);
 
         if (id == R.id.nav_presensi) {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPresenceActivity.class);
@@ -226,7 +243,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.END);
-        navigationView.getMenu().getItem(0).setChecked(true);
         return true;
     }
 
@@ -285,6 +301,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private class GetTagihanAlLSantri extends AsyncTask<Void, Integer, Boolean> {
 
         private TagihanAllSantriModel tagihanAllSantriModel;
+        private boolean status = false;
 
         @Override
         protected Boolean doInBackground(Void... voids) {
@@ -302,31 +319,50 @@ public class HomeActivityV2 extends AppCompatActivity
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 
-                Gson gson = new Gson();
-                tagihanAllSantriModel =
-                        gson.fromJson(bodyString, TagihanAllSantriModel.class);
+                int statusCode = response.code();
 
-                return true;
+                if (statusCode == 200) {
+                    status = true;
+                    Gson gson = new Gson();
+                    tagihanAllSantriModel =
+                            gson.fromJson(bodyString, TagihanAllSantriModel.class);
+                }
+
+                return status;
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
-            return false;
+            return status;
         }
 
         @Override
         protected void onPreExecute() {
-            String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
-            tvTotalTagihan.setText(tot);
+            if (sharedPrefManager.getTotalTagihan() != null) {
+                rellayTotalTagihan.setVisibility(View.VISIBLE);
+                tvTextTagihanPembayaran.setVisibility(View.VISIBLE);
+                Log.d(TAG, "total tagihan : " + sharedPrefManager.getTotalTagihan());
+                String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
+                tvTotalTagihan.setText(tot);
+            } else {
+                rellayTotalTagihan.setVisibility(View.GONE);
+                tvTextTagihanPembayaran.setVisibility(View.GONE);
+            }
         }
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
+//            swipeRefreshLayout.setRefreshing(false);
             if (isSuccess) {
+                rellayTotalTagihan.setVisibility(View.VISIBLE);
+                tvTextTagihanPembayaran.setVisibility(View.VISIBLE);
                 sharedPrefManager.saveTagihanAllSantri(tagihanAllSantriModel);
                 sharedPrefManager.setTotalTagihan(String.valueOf(tagihanAllSantriModel.getTotal()));
                 String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(tagihanAllSantriModel.getTotal());
                 tvTotalTagihan.setText(tot);
+            } else {
+                rellayTotalTagihan.setVisibility(View.GONE);
+                tvTextTagihanPembayaran.setVisibility(View.GONE);
             }
         }
     }
@@ -368,6 +404,7 @@ public class HomeActivityV2 extends AppCompatActivity
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             progressBarNews.setVisibility(View.GONE);
+//            swipeRefreshLayout.setRefreshing(false);
             if (isSuccess) {
                 initializationOfNewsViewer();
             } else {
@@ -421,6 +458,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
+//            swipeRefreshLayout.setRefreshing(false);
             if (isSuccess) {
                 int i = 0;
                 while (i < allSantri.getTotal() && !allSantri.getSantri().get(i).getId().equals(id)) {
@@ -478,6 +516,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
+//            swipeRefreshLayout.setRefreshing(false);
             if (allSantri.getTotal() == 0) {
                 setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
             } else {

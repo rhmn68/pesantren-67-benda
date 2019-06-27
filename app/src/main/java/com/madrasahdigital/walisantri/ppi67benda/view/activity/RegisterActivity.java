@@ -148,7 +148,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (!nama.isEmpty() && !email.isEmpty() && !password.isEmpty() && !konfirmasiPassword.isEmpty() ) {
             if (password.equals(konfirmasiPassword)) {
                 if (isEmailTrue) {
-                    password = UtilsManager.md5(password);
                     new RegisterToServer(nama, email, password, password).execute();
                 }
             } else {

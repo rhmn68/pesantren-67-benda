@@ -65,8 +65,6 @@ public class LoginActivity extends AppCompatActivity {
         password = etPassword.getText().toString().trim();
 
         if (!email.isEmpty() && !password.isEmpty()) {
-            if (!email.equals("admin@admin.com"))
-                password = UtilsManager.md5(password);
             new LoginToServer().execute();
         } else {
             UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.lengkapiform));

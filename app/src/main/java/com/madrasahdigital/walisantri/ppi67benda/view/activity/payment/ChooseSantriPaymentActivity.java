@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -28,6 +29,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
     private TextView tvNoBill;
     private TextView tvTotalText;
     private TextView tvTotalNominal;
+    private LinearLayout linlayBottom;
     private RecyclerView rv_numbers;
     private RecyclerPaymentBill recyclerPaymentBill;
     private RecyclerPaymentBill.OnArtikelClickListener onArtikelClickListener;
@@ -43,6 +45,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         rv_numbers = findViewById(R.id.rv_numbers);
         tvTotalNominal = findViewById(R.id.tvTotalNominal);
         tvTotalText = findViewById(R.id.tvTotalText);
+        linlayBottom = findViewById(R.id.linlayBottom);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
@@ -56,20 +59,28 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         sharedPrefManager = new SharedPrefManager(ChooseSantriPaymentActivity.this);
         tagihanAllSantriModel = sharedPrefManager.getTagihanAllSantri();
 
-        if (tagihanAllSantriModel.getStudents().size() == 0) {
+        if (tagihanAllSantriModel == null) {
             tvNoBill.setVisibility(View.VISIBLE);
             tvTotalText.setVisibility(View.GONE);
             tvTotalNominal.setVisibility(View.GONE);
             rv_numbers.setVisibility(View.GONE);
+            linlayBottom.setVisibility(View.GONE);
         } else {
-            tvNoBill.setVisibility(View.GONE);
-            rv_numbers.setVisibility(View.VISIBLE);
-        }
-        String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
-        tvTotalNominal.setText(tot);
+            if (tagihanAllSantriModel.getStudents().size() == 0) {
+                tvNoBill.setVisibility(View.VISIBLE);
+                tvTotalText.setVisibility(View.GONE);
+                tvTotalNominal.setVisibility(View.GONE);
+                rv_numbers.setVisibility(View.GONE);
+            } else {
+                tvNoBill.setVisibility(View.GONE);
+                rv_numbers.setVisibility(View.VISIBLE);
+            }
+            String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(Double.valueOf(sharedPrefManager.getTotalTagihan()));
+            tvTotalNominal.setText(tot);
 
-        initializationOfListener();
-        initializationOfPresenceViewer();
+            initializationOfListener();
+            initializationOfPresenceViewer();
+        }
     }
 
     @Override

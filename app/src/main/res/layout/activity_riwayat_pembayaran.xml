@@ -26,6 +26,17 @@
         android:textColor="@color/greytextcolor"
         android:textSize="16sp" />
 
+    <TextView
+        android:id="@+id/tvNoBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="- Belum ada pembayaran - "
+        android:layout_marginTop="20dp"
+        android:visibility="gone"
+        android:textColor="@color/greytextcolor"
+        android:textSize="16sp" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"

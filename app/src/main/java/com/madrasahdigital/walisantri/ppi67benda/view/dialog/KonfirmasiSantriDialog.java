@@ -34,7 +34,7 @@ public class KonfirmasiSantriDialog extends Dialog implements
         myActivity = context;
         this.nis = "NIS : " + nis;
         this.tanggal = "Tanggal lahir : " + tanggalLahir;
-        this.nama = "Nama : " + nama.substring(0,25);
+        this.nama = "Nama : " + nama;
     }
 
     @Override
@@ -50,7 +50,6 @@ public class KonfirmasiSantriDialog extends Dialog implements
         btnBatal = findViewById(R.id.btnBatal);
         btnOk.setOnClickListener(this);
         btnBatal.setOnClickListener(this);
-
 
         tvNis.setText(nis);
         tvTanggal.setText(tanggal);

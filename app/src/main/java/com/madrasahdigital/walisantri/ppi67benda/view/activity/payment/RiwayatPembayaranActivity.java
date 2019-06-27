@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -44,6 +46,7 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
     private SwipeRefreshLayout swipeRefreshLayout;
     private SharedPrefManager sharedPrefManager;
     private boolean isThreadWork = false;
+    private TextView tvNoBill;
     private ActionBar aksibar;
     
     @Override
@@ -63,6 +66,7 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
 
+        tvNoBill = findViewById(R.id.tvNoBill);
         mRecyclerView = findViewById(R.id.rv_numbers);
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         sharedPrefManager = new SharedPrefManager(RiwayatPembayaranActivity.this);
@@ -113,11 +117,14 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
 
     private class GetPaymentData extends AsyncTask<Void, Integer, Boolean> {
 
+        private int statusCode = 0;
+
         @Override
         protected void onPreExecute() {
             isThreadWork = true;
             swipeRefreshLayout.setRefreshing(true);
             paymentModelList = new ArrayList<>();
+            tvNoBill.setVisibility(View.GONE);
         }
 
         @Override
@@ -127,20 +134,23 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_PAYMENT_INFO)
                     .get()
-                    .addHeader("Authorization", sharedPrefManager.getToken())
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
 
             try {
                 Response response = client.newCall(request).execute();
-
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 
-                Gson gson = new Gson();
-                PaymentModel[] paymentModel =
-                        gson.fromJson(bodyString, PaymentModel[].class);
+                statusCode = response.code();
 
-                paymentModelList.addAll(Arrays.asList(paymentModel));
+                if (statusCode == 200) {
+                    Gson gson = new Gson();
+                    PaymentModel[] paymentModel =
+                            gson.fromJson(bodyString, PaymentModel[].class);
+
+                    paymentModelList.addAll(Arrays.asList(paymentModel));
+                }
 
                 return true;
             } catch (Exception e) {
@@ -154,8 +164,11 @@ public class RiwayatPembayaranActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean isSuccess) {
             swipeRefreshLayout.setRefreshing(false);
             isThreadWork = false;
-            if (isSuccess) {
+
+            if (statusCode == 200) {
                 initializationOfViewer();
+            } else if (statusCode == 500 || statusCode == 404) {
+                tvNoBill.setVisibility(View.VISIBLE);
             } else {
                 UtilsManager.showToast(RiwayatPembayaranActivity.this, getResources().getString(R.string.cekkoneksi));
             }
