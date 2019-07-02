@@ -1,11 +1,13 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -96,6 +98,27 @@ public class MakePaymentActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                Intent returnIntent = getIntent();
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Log.d(TAG, "tombol kembali");
+        Intent returnIntent = getIntent();
+        returnIntent.putExtra("result", 1);
+        setResult(Activity.RESULT_OK, returnIntent);
+        finish();
     }
 
     private void initializationOfListener() {
@@ -201,7 +224,7 @@ public class MakePaymentActivity extends AppCompatActivity {
             } else if (statusSuccess == 1) {
                 Intent intent = new Intent(MakePaymentActivity.this, DetailMakePaymentActivity.class);
                 intent.putExtra("detailpayment", detailPaymentModel);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 UtilsManager.showToast(MakePaymentActivity.this, "Terjadi kesalahan " + statusCode);
             }

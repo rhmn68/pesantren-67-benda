@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -89,6 +90,15 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            Intent returnIntent = getIntent();
+            setResult(Activity.RESULT_OK, returnIntent);
+            finish();
+        }
+    }
+
     private void initializationOfRecyclerViewer() {
         final LinearLayoutManager mLinearLayoutManager =
                 new LinearLayoutManager(DetailMakePaymentActivity.this);
@@ -148,7 +158,7 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
             if (isSuccess) {
                 Intent intent = new Intent(DetailMakePaymentActivity.this, DetailPembayaran.class);
                 intent.putExtra("urldetailpembayaran", konfirmasiCheckoutModel.getUrl());
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 UtilsManager.showToast(DetailMakePaymentActivity.this, getResources().getString(R.string.cekkoneksi));
             }

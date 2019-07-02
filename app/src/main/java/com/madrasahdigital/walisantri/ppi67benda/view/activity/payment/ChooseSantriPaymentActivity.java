@@ -1,8 +1,10 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.payment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -23,6 +25,7 @@ import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPaymentBil
 
 public class ChooseSantriPaymentActivity extends AppCompatActivity {
 
+    private final String TAG = ChooseSantriPaymentActivity.class.getSimpleName();
     private ActionBar aksibar;
     private SharedPrefManager sharedPrefManager;
     private TagihanAllSantriModel tagihanAllSantriModel;
@@ -84,6 +87,19 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, "RESULT OK");
+                Intent intent = new Intent(ChooseSantriPaymentActivity.this, RiwayatPembayaranActivity.class);
+                startActivity(intent);
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d(TAG, "RESULT CANCELED");
+            }
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
@@ -121,6 +137,6 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
 
     public void gotoMakePayment(View view) {
         Intent intent = new Intent(ChooseSantriPaymentActivity.this, MakePaymentActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 }

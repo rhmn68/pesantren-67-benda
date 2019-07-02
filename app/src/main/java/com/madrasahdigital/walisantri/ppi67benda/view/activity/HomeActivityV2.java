@@ -118,7 +118,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private void initializeListener() {
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
-        swipeRefreshLayout.setRefreshing(false);
+            swipeRefreshLayout.setRefreshing(false);
             if (!isThreadPresenceWork) {
                 new GetDataSantri().execute();
             }
