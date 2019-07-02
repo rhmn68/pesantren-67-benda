@@ -1,6 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
@@ -73,7 +75,9 @@ public class HomeActivityV2 extends AppCompatActivity
     private Button btnTambahkanSantri;
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
-//    private SwipeRefreshLayout swipeRefreshLayout;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private boolean isThreadPresenceWork = true;
+    private boolean isThreadTotalTagihanWork = true;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
@@ -96,29 +100,31 @@ public class HomeActivityV2 extends AppCompatActivity
         tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
         tvTextTagihanPembayaran = findViewById(R.id.tvTextTagihanPembayaran);
-//        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
         allSantri = sharedPrefManager.getAllSantri();
-        presenceList = new ArrayList<>();
         String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
         tvTitleToday.setText(titleToday);
-//        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
+        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
         initializeListener();
-//        swipeRefreshLayout.setRefreshing(true);
         new GetNews().execute();
         new GetDataSantri().execute();
         new GetTagihanAlLSantri().execute();
     }
 
     private void initializeListener() {
-//
-//        swipeRefreshLayout.setOnRefreshListener(() -> {
-//            if (!isThreadWork)
-//                new RiwayatPembayaranActivity.GetPaymentData().execute();
-//        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+        swipeRefreshLayout.setRefreshing(false);
+            if (!isThreadPresenceWork) {
+                new GetDataSantri().execute();
+            }
+            if (!isThreadTotalTagihanWork)
+                new GetTagihanAlLSantri().execute();
+        });
 
         ivRefreshPresenceToday.setOnClickListener(l -> {
             new GetDataSantri().execute();
@@ -338,6 +344,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
+            isThreadTotalTagihanWork = true;
             if (sharedPrefManager.getTotalTagihan() != null) {
                 rellayTotalTagihan.setVisibility(View.VISIBLE);
                 tvTextTagihanPembayaran.setVisibility(View.VISIBLE);
@@ -352,7 +359,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
-//            swipeRefreshLayout.setRefreshing(false);
+            isThreadTotalTagihanWork = false;
             if (isSuccess) {
                 rellayTotalTagihan.setVisibility(View.VISIBLE);
                 tvTextTagihanPembayaran.setVisibility(View.VISIBLE);
@@ -404,7 +411,6 @@ public class HomeActivityV2 extends AppCompatActivity
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             progressBarNews.setVisibility(View.GONE);
-//            swipeRefreshLayout.setRefreshing(false);
             if (isSuccess) {
                 initializationOfNewsViewer();
             } else {
@@ -458,7 +464,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
-//            swipeRefreshLayout.setRefreshing(false);
             if (isSuccess) {
                 int i = 0;
                 while (i < allSantri.getTotal() && !allSantri.getSantri().get(i).getId().equals(id)) {
@@ -468,11 +473,15 @@ public class HomeActivityV2 extends AppCompatActivity
                 if (allSantri.getSantri().get(i).getPhoto() != null)
                     presence.setUrlPhoto(allSantri.getSantri().get(i).getPhoto().toString());
                 presenceList.add(presence);
+                Log.d(TAG, "call GetPresenceToday santri : " + presence.getSantriName());
                 if (presenceList.size() == allSantri.getTotal()) {
+                    Log.d(TAG, "call GetPresenceToday total");
+                    isThreadPresenceWork = false;
                     setView(TYPE_DONE_LOAD_PRESENCE_TODAY);
                     initializationOfPresenceViewer();
                 }
             } else {
+                isThreadPresenceWork = false;
                 setView(TYPE_FAIL_PRESENCE_TODAY);
             }
         }
@@ -482,6 +491,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
+            presenceList = new ArrayList<>();
+            isThreadPresenceWork = true;
             setView(TYPE_LOAD_PRESENCE_TODAY);
         }
 
@@ -516,13 +527,20 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
-//            swipeRefreshLayout.setRefreshing(false);
-            if (allSantri.getTotal() == 0) {
-                setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
-            } else {
-                for (int i = 0; i < allSantri.getTotal(); i++) {
-                    new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();
+            if (isSuccess) {
+                if (allSantri.getTotal() == 0) {
+                    isThreadPresenceWork = false;
+                    Log.d(TAG, "call GetDatasantri : no santri");
+                    setView(TYPE_NO_SANTRI_PRESENCE_TODAY);
+                } else {
+                    for (int i = 0; i < allSantri.getTotal(); i++) {
+                        Log.d(TAG, "call GetDataSantri ke " + i);
+                        new GetPresenceToday(UtilsManager.getTodayDateString(), allSantri.getSantri().get(i).getId()).execute();
+                    }
                 }
+            } else {
+                isThreadPresenceWork = false;
+                UtilsManager.showToast(HomeActivityV2.this, "Periksa koneksi anda");
             }
         }
     }

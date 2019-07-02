@@ -9,11 +9,11 @@
     tools:context=".view.activity.HomeActivityV2"
     tools:showIn="@layout/app_bar_home_activity_v2">
 
-    <!--<androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-        <!--android:id="@+id/swipeRefresh"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_marginTop="10dp">-->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -185,6 +185,6 @@
 
         </ScrollView>
 
-    <!--</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>-->
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>
