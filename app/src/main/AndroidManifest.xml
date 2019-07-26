@@ -12,10 +12,15 @@
         android:roundIcon="@drawable/icon_circle_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.payment.DetailPembayaran"
+        <activity android:name=".view.activity.payment.HowToPayActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".view.activity.payment.DetailPembayaran"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.DetailMakePaymentActivity"
             android:configChanges="locale|orientation"
@@ -96,11 +101,6 @@
             android:label="@string/Presence"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.NotifActivity"
-            android:configChanges="locale|orientation"
-            android:label="@string/announce"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.RegisterActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
@@ -119,11 +119,6 @@
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.activity.PresenceActivity"
-            android:configChanges="locale|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
-            android:name=".view.activity.HomeActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
