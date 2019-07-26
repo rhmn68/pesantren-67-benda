@@ -80,6 +80,7 @@
                 android:layout_height="wrap_content"
                 app:headerColor="@color/white"
                 app:headerLabelColor="@color/greytextcolor3"
+                app:todayLabelColor="@color/orange"
                 app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_green_24dp"
                 app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_green_24dp"/>
 
