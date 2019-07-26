@@ -32,6 +32,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
     private TextView tvNoBill;
     private TextView tvTotalText;
     private TextView tvTotalNominal;
+    private TextView tvPetunjukPembayaran;
     private LinearLayout linlayBottom;
     private RecyclerView rv_numbers;
     private RecyclerPaymentBill recyclerPaymentBill;
@@ -49,6 +50,7 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
         tvTotalNominal = findViewById(R.id.tvTotalNominal);
         tvTotalText = findViewById(R.id.tvTotalText);
         linlayBottom = findViewById(R.id.linlayBottom);
+        tvPetunjukPembayaran = findViewById(R.id.tvPetunjukPembayaran);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
@@ -116,6 +118,11 @@ public class ChooseSantriPaymentActivity extends AppCompatActivity {
             intent.putExtra("posisi", posisi);
             startActivity(intent);
         };
+
+        tvPetunjukPembayaran.setOnClickListener(l -> {
+            Intent intent = new Intent(ChooseSantriPaymentActivity.this, HowToPayActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void initializationOfPresenceViewer() {
