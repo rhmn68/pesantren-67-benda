@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,8 +38,10 @@ public class RegisterActivity extends AppCompatActivity {
     private Button btnLanjut;
     private EditText etInputNama;
     private EditText etEmail;
+    private EditText etHp;
     private EditText etPassword;
     private EditText etKonfirmasiPassword;
+    private TextView tvErrorMessage;
     private boolean isEmailTrue = false;
     private LoadingDialog loadingDialog;
 
@@ -62,16 +65,51 @@ public class RegisterActivity extends AppCompatActivity {
         btnLanjut = findViewById(R.id.btnLanjut);
         etInputNama = findViewById(R.id.etInputNama);
         etEmail = findViewById(R.id.etEmail);
+        etHp = findViewById(R.id.etHp);
         etPassword = findViewById(R.id.etPassword);
         etKonfirmasiPassword = findViewById(R.id.etPasswordKonfirmasi);
+        tvErrorMessage = findViewById(R.id.tvErrorMessage);
 
         loadingDialog = new LoadingDialog(RegisterActivity.this);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        etInputNama.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        etHp.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
                 etEmail.setError(null);
             }
 
@@ -97,6 +135,7 @@ public class RegisterActivity extends AppCompatActivity {
         etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
                 etPassword.setError(null);
                 etKonfirmasiPassword.setError(null);
             }
@@ -114,6 +153,7 @@ public class RegisterActivity extends AppCompatActivity {
         etKonfirmasiPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
                 etKonfirmasiPassword.setError(null);
                 etPassword.setError(null);
             }
@@ -142,13 +182,14 @@ public class RegisterActivity extends AppCompatActivity {
     public void registerData(View view) {
         String nama = etInputNama.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
+        String noHp = etHp.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String konfirmasiPassword = etKonfirmasiPassword.getText().toString().trim();
 
-        if (!nama.isEmpty() && !email.isEmpty() && !password.isEmpty() && !konfirmasiPassword.isEmpty() ) {
+        if (!nama.isEmpty() && !email.isEmpty() && !noHp.isEmpty() && !password.isEmpty() && !konfirmasiPassword.isEmpty() ) {
             if (password.equals(konfirmasiPassword)) {
                 if (isEmailTrue) {
-                    new RegisterToServer(nama, email, password, password).execute();
+                    new RegisterToServer(nama, email, noHp, password, password).execute();
                 }
             } else {
                 etKonfirmasiPassword.setError("Samakan password");
@@ -167,17 +208,28 @@ public class RegisterActivity extends AppCompatActivity {
         }
     }
 
+    private void showError(String message) {
+        tvErrorMessage.setText(message);
+        tvErrorMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void hideError() {
+        tvErrorMessage.setVisibility(View.GONE);
+    }
+
     private class RegisterToServer extends AsyncTask<Void, Integer, Boolean> {
 
         private String nama;
         private String email;
+        private String noHp;
         private String password;
         private String konfirmasiPassword;
         private String message = "";
 
-        public RegisterToServer(String nama, String email, String password, String konfirmasiPassword) {
+        public RegisterToServer(String nama, String email, String noHp, String password, String konfirmasiPassword) {
             this.nama = nama;
             this.email = email;
+            this.noHp = noHp;
             this.password = password;
             this.konfirmasiPassword = konfirmasiPassword;
         }
@@ -185,6 +237,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             loadingDialog.show();
+            hideError();
         }
 
         @Override
@@ -194,6 +247,7 @@ public class RegisterActivity extends AppCompatActivity {
             RequestBody body = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
                     .addFormDataPart("email", email)
+                    .addFormDataPart("nomorhp", noHp)
                     .addFormDataPart("password", password)
                     .addFormDataPart("confirm_password", konfirmasiPassword)
                     .addFormDataPart("name", nama)
@@ -229,10 +283,10 @@ public class RegisterActivity extends AppCompatActivity {
                     UtilsManager.showToast(RegisterActivity.this, message);
                     finish();
                 } else {
-                    UtilsManager.showToast(RegisterActivity.this, message);
+                    showError(message);
                 }
             } catch (Exception e) {
-                UtilsManager.showToast(RegisterActivity.this, getResources().getString(R.string.cekkoneksi));
+                showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
         }

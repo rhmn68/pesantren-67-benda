@@ -35,6 +35,18 @@
                 android:layout_marginTop="5dp"
                 android:textColor="@color/greytextcolor3"/>
 
+            <TextView
+                android:id="@+id/tvErrorMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="pesan error"
+                android:background="@color/red"
+                android:textColor="@color/white"
+                android:layout_marginTop="15dp"
+                android:textSize="16sp"
+                android:visibility="gone"
+                android:padding="10dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilInputNama"
                 android:layout_width="match_parent"
@@ -69,6 +81,24 @@
                     android:focusableInTouchMode="true"
                     android:hint="Email"
                     android:inputType="textEmailAddress"
+                    android:textColor="@color/grey" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilHp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:theme="@style/AppTheme.Dark"
+                app:errorEnabled="true">
+
+                <EditText
+                    android:id="@+id/etHp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusableInTouchMode="true"
+                    android:hint="Nomor Handphone"
+                    android:inputType="number"
                     android:textColor="@color/grey" />
             </com.google.android.material.textfield.TextInputLayout>
 
