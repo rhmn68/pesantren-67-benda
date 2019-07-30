@@ -16,7 +16,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <ImageView
                 android:layout_width="90dp"
                 android:layout_height="90dp"
@@ -32,6 +31,19 @@
                 android:layout_marginEnd="@dimen/marginleftright"
                 android:layout_marginRight="@dimen/marginleftright"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvErrorMessage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="pesan error"
+                    android:background="@color/red"
+                    android:textColor="@color/white"
+                    android:layout_marginTop="20dp"
+                    android:textSize="16sp"
+                    android:visibility="gone"
+                    android:padding="10dp"/>
+
                 <!-- Email Label -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

@@ -6,9 +6,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -38,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etEmail;
     private EditText etPassword;
     private LoadingDialog loadingDialog;
+    private TextView tvErrorMessage;
     private String email;
     private String password;
     private SharedPrefManager sharedPrefManager;
@@ -52,12 +56,45 @@ public class LoginActivity extends AppCompatActivity {
                     .getColor(LoginActivity.this, R.color.colorPrimaryDark));
         }
 
+        tvErrorMessage = findViewById(R.id.tvErrorMessage);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.setCancelable(false);
         loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         sharedPrefManager = new SharedPrefManager(LoginActivity.this);
+
+        etEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                hideError();
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
     }
 
     public void gotoHomePage(View view) {
@@ -79,6 +116,15 @@ public class LoginActivity extends AppCompatActivity {
     public void gotoLupaSandi(View view) {
         Intent intent = new Intent(LoginActivity.this, LupaSandiActivity.class);
         startActivity(intent);
+    }
+
+    private void showError(String message) {
+        tvErrorMessage.setText(message);
+        tvErrorMessage.setVisibility(View.VISIBLE);
+    }
+
+    private void hideError() {
+        tvErrorMessage.setVisibility(View.GONE);
     }
 
     private class LoginToServer extends AsyncTask<Void, Integer, Boolean> {
@@ -172,10 +218,10 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 } else {
                     Log.w(TAG, "message : " + jsonObject.getString("message"));
-                    UtilsManager.showToast(LoginActivity.this, jsonObject.getString("message"));
+                    showError(jsonObject.getString("message"));
                 }
             } catch (Exception e) {
-                UtilsManager.showToast(LoginActivity.this, getResources().getString(R.string.cekkoneksi));
+                showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
         }
