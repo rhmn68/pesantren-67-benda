@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@color/green_splash_screen"
     tools:context=".view.activity.SplashScreen">
 
     <ImageView
         android:id="@+id/splashscreen_mid"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/icon_yellow"
+        android:src="@drawable/icon_green"
         android:layout_centerInParent="true"/>
 
 </RelativeLayout>
