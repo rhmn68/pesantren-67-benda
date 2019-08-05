@@ -167,6 +167,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 intent = new Intent(HomeActivityV2.this, AddSantriActivity.class);
             }
             startActivity(intent);
+            finish();
         });
 
         int size = navigationView.getMenu().size();
@@ -230,6 +231,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 intent = new Intent(HomeActivityV2.this, AddSantriActivity.class);
             }
             startActivity(intent);
+            finish();
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(HomeActivityV2.this, AboutActivity.class);
             startActivity(intent);
