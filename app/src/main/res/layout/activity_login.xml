@@ -56,7 +56,7 @@
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/email"
+                        android:hint="Email/No.Hp"
                         android:inputType="textEmailAddress"
                         android:textColor="@color/grey" />
                 </com.google.android.material.textfield.TextInputLayout>

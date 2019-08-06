@@ -18,12 +18,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+import com.madrasahdigital.walisantri.ppi67benda.model.register.RegisterModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
@@ -31,6 +36,8 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -186,7 +193,7 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String konfirmasiPassword = etKonfirmasiPassword.getText().toString().trim();
 
-        if (!nama.isEmpty() && !email.isEmpty() && !noHp.isEmpty() && !password.isEmpty() && !konfirmasiPassword.isEmpty() ) {
+        if (!nama.isEmpty() && !email.isEmpty() && !noHp.isEmpty() && !password.isEmpty() && !konfirmasiPassword.isEmpty()) {
             if (password.equals(konfirmasiPassword)) {
                 if (isEmailTrue) {
                     new RegisterToServer(nama, email, noHp, password, password).execute();
@@ -225,6 +232,7 @@ public class RegisterActivity extends AppCompatActivity {
         private String password;
         private String konfirmasiPassword;
         private String message = "";
+        private RegisterModel registerModel = new RegisterModel();
 
         public RegisterToServer(String nama, String email, String noHp, String password, String konfirmasiPassword) {
             this.nama = nama;
@@ -242,7 +250,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             RequestBody body = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -252,6 +264,7 @@ public class RegisterActivity extends AppCompatActivity {
                     .addFormDataPart("confirm_password", konfirmasiPassword)
                     .addFormDataPart("name", nama)
                     .build();
+
             Request request = new Request.Builder()
                     .url(Constant.LINK_REGISTER)
                     .post(body)
@@ -260,14 +273,20 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 Response response = client.newCall(request).execute();
                 ResponseBody responseBody = response.body();
-                JSONObject jsonObject = new JSONObject(responseBody.string());
-
                 int statusCode = response.code();
-                message = jsonObject.getString("message");
 
                 if (statusCode == 200) {
+                    Gson gson = new Gson();
+                    registerModel =
+                            gson.fromJson(responseBody.string(), RegisterModel.class);
+                    message = registerModel.getMessage();
                     return true;
+                } else {
+                    JSONObject jsonObject = new JSONObject(responseBody.string());
+                    message = jsonObject.getString("message");
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -283,6 +302,7 @@ public class RegisterActivity extends AppCompatActivity {
                     UtilsManager.showToast(RegisterActivity.this, message);
                     finish();
                 } else {
+                    if (message.isEmpty()) message = "Terjadi kesalahan - 800";
                     showError(message);
                 }
             } catch (Exception e) {
