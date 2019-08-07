@@ -176,22 +176,26 @@ public class PresenceActivityV2 extends AppCompatActivity {
                     i++;
                 }
                 String status = presenceModel.getPresensi().get(i).getStatus();
+                String deskrip = presenceModel.getPresensi().get(i).getDescription();
+                if (deskrip == null) deskrip = "";
+                String deskripsi = "Petugas : " + presenceModel.getPresensi().get(i).getPetugas() + "\n" +
+                                    "Deskripsi : " + deskrip;
                 DetailDialog detailDialog;
                 if (status.equals("present")) {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Hadir",
                             presenceModel.getPresensi().get(i).getDate(),
-                            "Deskripsi lorem ipsum dolor");
+                            deskripsi);
                 } else if (status.equals("ill")) {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Sakit",
                             presenceModel.getPresensi().get(i).getDate(),
-                            "Deskripsi lorem ipsum dolor");
+                            deskripsi);
                 } else {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Izin",
                             presenceModel.getPresensi().get(i).getDate(),
-                            "Deskripsi lorem ipsum dolor");
+                            deskripsi);
                 }
 
                 detailDialog.show();
