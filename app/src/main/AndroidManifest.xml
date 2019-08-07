@@ -118,11 +118,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
-            android:name=".view.activity.PresenceActivity"
-            android:configChanges="locale|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity
             android:name=".view.activity.LoginActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
