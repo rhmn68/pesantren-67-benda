@@ -25,6 +25,15 @@ public class Presensi {
     private String url;
     private String santriName;
     private String urlPhoto;
+    private String id;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public String getUrlPhoto() {
         return urlPhoto;

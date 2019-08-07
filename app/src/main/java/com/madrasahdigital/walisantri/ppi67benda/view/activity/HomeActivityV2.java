@@ -144,6 +144,7 @@ public class HomeActivityV2 extends AppCompatActivity
         onArtikelClickListener = (posisi, presence) -> {
             Intent intent = new Intent(HomeActivityV2.this, PresenceActivityV2.class);
             intent.putExtra("namasantri", presence.getSantriName());
+            intent.putExtra("idsantri", presence.getId());
             startActivity(intent);
         };
 
@@ -472,6 +473,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 while (i < allSantri.getTotal() && !allSantri.getSantri().get(i).getId().equals(id)) {
                     i++;
                 }
+                presence.setId(id);
                 presence.setSantriName(allSantri.getSantri().get(i).getFullname());
                 if (allSantri.getSantri().get(i).getPhoto() != null)
                     presence.setUrlPhoto(allSantri.getSantri().get(i).getPhoto().toString());
