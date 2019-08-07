@@ -68,6 +68,7 @@ public class ChooseSantriPresenceActivity extends AppCompatActivity {
     private void initializationOfListener() {
         onArtikelClickListener = (posisi, santri) -> {
             Intent intent = new Intent(ChooseSantriPresenceActivity.this, PresenceActivityV2.class);
+            intent.putExtra("idsantri", santri.getId());
             intent.putExtra("namasantri", santri.getFullname());
             startActivity(intent);
         };

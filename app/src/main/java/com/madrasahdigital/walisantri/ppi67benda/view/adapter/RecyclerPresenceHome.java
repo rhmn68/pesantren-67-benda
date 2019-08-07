@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
+import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 
 import java.util.List;
 
@@ -24,11 +24,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static String TAG = RecyclerPresenceHome.class.getSimpleName();
-    private List<Presence> presenceList;
+    private List<Presensi> presenceList;
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
 
-    public RecyclerPresenceHome(Context context, List<Presence> presenceList) {
+    public RecyclerPresenceHome(Context context, List<Presensi> presenceList) {
         mContext = context;
         this.presenceList = presenceList;
     }
@@ -112,7 +112,7 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
      * interface ketika container di click
      */
     public interface OnArtikelClickListener {
-        void onClick(int posisi, Presence presence);
+        void onClick(int posisi, Presensi presence);
     }
 
     /**

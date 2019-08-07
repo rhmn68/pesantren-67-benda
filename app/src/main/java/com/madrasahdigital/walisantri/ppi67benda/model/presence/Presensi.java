@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * Created by Alhudaghifari on 5:15 16/05/19
  */
-public class Presence {
+public class Presensi {
 
     @SerializedName("date")
     @Expose

@@ -28,7 +28,7 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
-import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
+import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
@@ -56,7 +56,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private final String TAG = HomeActivityV2.class.getSimpleName();
     private SharedPrefManager sharedPrefManager;
     private AllSantri allSantri;
-    private List<Presence> presenceList;
+    private List<Presensi> presenceList;
     private List<NotificationModel> notificationModelList;
     private NewsModel newsModel;
     private ProgressBar progressBarToday;
@@ -370,6 +370,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 String tot = "Rp " + UtilsManager.convertLongToCurrencyIDv2WithoutRp(tagihanAllSantriModel.getTotal());
                 tvTotalTagihan.setText(tot);
             } else {
+                sharedPrefManager.saveTagihanAllSantri(null);
                 rellayTotalTagihan.setVisibility(View.GONE);
                 tvTextTagihanPembayaran.setVisibility(View.GONE);
             }
@@ -424,7 +425,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private class GetPresenceToday extends AsyncTask<Void, Integer, Boolean> {
 
         private String date;
-        private Presence presence;
+        private Presensi presence;
         private String id;
 
         public GetPresenceToday(String date, String id) {
@@ -454,7 +455,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 String bodyString = responseBody.string();
 
                 Gson gson = new Gson();
-                presence = gson.fromJson(bodyString, Presence.class);
+                presence = gson.fromJson(bodyString, Presensi.class);
 
                 return true;
             } catch (Exception e) {

@@ -21,13 +21,12 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
-import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presence;
+import com.madrasahdigital.walisantri.ppi67benda.model.presence.PresenceModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.DetailDialog;
-
-import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -62,9 +61,11 @@ public class PresenceActivityV2 extends AppCompatActivity {
     private SharedPrefManager sharedPrefManager;
     private CalendarView calendarView;
     private ProgressBar progressBar;
+    private PresenceModel presenceModel;
     private List<Calendar> calendarList;
-    private List<Presence> presence;
+//    private List<Presensi> presence;
     private ActionBar aksibar;
+    private String idSantri;
 
     private final int TODAY = 0;
     private final int YESTERDAY = 1;
@@ -105,6 +106,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         Intent intent = getIntent();
         String namaSantri = intent.getStringExtra("namasantri");
+        idSantri = intent.getStringExtra("idsantri");
         tvSantriName.setText(namaSantri);
         if (namaSantri.length() > 0) {
             tvFirstCharForImageProfil.setText(namaSantri.substring(0,1));
@@ -114,7 +116,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         getPresenceStatusToday();
 
-        new GetPresenceByYearAndMonth(UtilsManager.getYear(), UtilsManager.getMonth()).execute();
+        new GetPresenceByYearAndMonth(idSantri, UtilsManager.getYear(), UtilsManager.getMonth()).execute();
     }
 
     @Override
@@ -173,22 +175,22 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 while (!calendarList.get(i).equals(clickedDayCalendar)) {
                     i++;
                 }
-                String status = presence.get(i).getStatus();
+                String status = presenceModel.getPresensi().get(i).getStatus();
                 DetailDialog detailDialog;
                 if (status.equals("present")) {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Hadir",
-                            presence.get(i).getDate(),
+                            presenceModel.getPresensi().get(i).getDate(),
                             "Deskripsi lorem ipsum dolor");
                 } else if (status.equals("ill")) {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Sakit",
-                            presence.get(i).getDate(),
+                            presenceModel.getPresensi().get(i).getDate(),
                             "Deskripsi lorem ipsum dolor");
                 } else {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Izin",
-                            presence.get(i).getDate(),
+                            presenceModel.getPresensi().get(i).getDate(),
                             "Deskripsi lorem ipsum dolor");
                 }
 
@@ -204,22 +206,22 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         Calendar calendar;
 
-        for (int i = 0; i < presence.size(); i++) {
+        for (int i = 0; i < presenceModel.getPresensi().size(); i++) {
             calendar = Calendar.getInstance();
-            if (presence.get(i).getStatus().equals("present")) {
-                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
-                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
-                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+            if (presenceModel.getPresensi().get(i).getStatus().equals("present")) {
+                calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
+                        UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
                 events.add(new EventDay(calendar, R.drawable.ic_thumb_up_green_24dp));
-            } else if (presence.get(i).getStatus().equals("ill")) {
-                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
-                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
-                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+            } else if (presenceModel.getPresensi().get(i).getStatus().equals("ill")) {
+                calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
+                        UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
                 events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
-            } else if (presence.get(i).getStatus().equals("permit")) {
-                calendar.set(UtilsManager.getYearFromString(presence.get(i).getDate()),
-                        UtilsManager.getMonthFromString(presence.get(i).getDate()) - 1,
-                        UtilsManager.getDayFromString(presence.get(i).getDate()));
+            } else if (presenceModel.getPresensi().get(i).getStatus().equals("permit")) {
+                calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
+                        UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
                 events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
             }
             calendarList.add(calendar);
@@ -229,19 +231,21 @@ public class PresenceActivityV2 extends AppCompatActivity {
     }
 
     private void getPresenceStatusToday() {
-        new GetPresenceStatusByDate(UtilsManager.getTodayDateString(), TODAY).execute();
+        new GetPresenceStatusByDate(idSantri, UtilsManager.getTodayDateString(), TODAY).execute();
     }
 
     private void getPresenceStatusYesterday() {
-        new GetPresenceStatusByDate(UtilsManager.getYesterdayDateString(), YESTERDAY).execute();
+        new GetPresenceStatusByDate(idSantri, UtilsManager.getYesterdayDateString(), YESTERDAY).execute();
     }
 
     private class GetPresenceByYearAndMonth extends AsyncTask<Void, Integer, Boolean> {
 
+        private String id;
         private String year;
         private String month;
 
-        public GetPresenceByYearAndMonth(String year, String month) {
+        public GetPresenceByYearAndMonth(String id, String year, String month) {
+            this.id = id;
             this.year = year;
             this.month = month;
         }
@@ -258,7 +262,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_PRESENCE_SANTRI.replace("$", year).replace("#", month))
+                    .url(Constant.LINK_GET_PRESENCE_SANTRI.replace("*", id).replace("$", year).replace("#", month))
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
@@ -269,15 +273,8 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 
-                JSONObject jsonObject = new JSONObject(bodyString);
                 Gson gson = new Gson();
-                presence = new ArrayList<>();
-                int i = 1;
-                while (jsonObject.has(String.valueOf(i))) {
-                    Log.d(TAG, "date : " + jsonObject.getJSONObject(String.valueOf(i)).get("date"));
-                    presence.add(gson.fromJson(jsonObject.getString(String.valueOf(i)), Presence.class));
-                    i++;
-                }
+                presenceModel = gson.fromJson(bodyString, PresenceModel.class);
 
                 return true;
             } catch (Exception e) {
@@ -298,11 +295,13 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
     private class GetPresenceStatusByDate extends AsyncTask<Void, Integer, Boolean> {
 
+        private String id;
         private String date;
-        private Presence presence;
+        private Presensi presence;
         private int statusDay;
 
-        public GetPresenceStatusByDate(String date, int statusDay) {
+        public GetPresenceStatusByDate(String id, String date, int statusDay) {
+            this.id = id;
             this.date = date;
             this.statusDay = statusDay;
         }
@@ -327,7 +326,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_PRESENCE_TODAY + date)
+                    .url(Constant.LINK_GET_PRESENCE_TODAY.replace("*", id) + date)
                     .get()
                     .addHeader("Authorization", sharedPrefManager.getToken())
                     .build();
@@ -339,7 +338,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 String bodyString = responseBody.string();
 
                 Gson gson = new Gson();
-                presence = gson.fromJson(bodyString, Presence.class);
+                presence = gson.fromJson(bodyString, Presensi.class);
 
                 return true;
             } catch (Exception e) {
