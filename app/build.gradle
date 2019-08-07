@@ -6,8 +6,8 @@ android {
         applicationId "com.madrasahdigital.walisantri.ppi67benda"
         minSdkVersion 17
         targetSdkVersion 28
-        versionCode 3
-        versionName "1.0.2"
+        versionCode 4
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -44,7 +44,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
 
     implementation 'com.github.bumptech.glide:glide:4.9.0'
-    implementation 'com.github.applikeysolutions:cosmocalendar:1.0.4'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
