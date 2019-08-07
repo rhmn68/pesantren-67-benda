@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:background="@color/white"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="Detail Pembayaran"
+        app:title="Cara Pembayaran"
         app:titleTextColor="@color/black"/>
 
     <LinearLayout
