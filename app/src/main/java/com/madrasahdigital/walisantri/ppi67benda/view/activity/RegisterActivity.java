@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -7,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -36,10 +39,13 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private final String TAG = RegisterActivity.class.getSimpleName();
 
     private ActionBar aksibar;
     private Button btnLanjut;
@@ -186,6 +192,22 @@ public class RegisterActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, "onActivityResult RESULT OK");
+                Intent returnIntent = getIntent();
+                returnIntent.putExtra("pagetype", data.getIntExtra("pagetype", Constant.TYPE_WELCOME_MSG));
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d(TAG, "onActivityResult RESULT CANCELED");
+            }
+        }
+    }
+
     public void registerData(View view) {
         String nama = etInputNama.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
@@ -250,10 +272,13 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
+            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
             OkHttpClient client = new OkHttpClient.Builder()
                     .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                     .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                     .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .addInterceptor(logging)
                     .build();
 
             RequestBody body = new MultipartBody.Builder()
@@ -282,7 +307,7 @@ public class RegisterActivity extends AppCompatActivity {
                     message = registerModel.getMessage();
                     return true;
                 } else {
-                    JSONObject jsonObject = new JSONObject(responseBody.string());
+                    JSONObject jsonObject = new JSONObject(responseBody.string().replace("\\n",""));
                     message = jsonObject.getString("message");
                 }
             } catch (IOException e) {
@@ -300,7 +325,11 @@ public class RegisterActivity extends AppCompatActivity {
             try {
                 if (isSuccess) {
                     UtilsManager.showToast(RegisterActivity.this, message);
-                    finish();
+                    Intent intent = new Intent(RegisterActivity.this, OtpActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("pass", password);
+                    intent.putExtra("id", String.valueOf(registerModel.getId()));
+                    startActivityForResult(intent, 1);
                 } else {
                     if (message.isEmpty()) message = "Terjadi kesalahan - 800";
                     showError(message);
