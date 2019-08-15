@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -35,13 +36,12 @@ public class DetailNewsActivity extends AppCompatActivity {
     private ImageView ivNewsImage;
     private TextView tvTitleNews;
     private TextView tvDipostingPada;
-    private TextView tvIsiBerita;
     private DetailNewsModel detailNewsModel;
     private SharedPrefManager sharedPrefManager;
     private ProgressBar progressBar;
     private ImageView ivRefreshPresenceToday;
     private String urlBerita;
-
+    private WebView wvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +60,16 @@ public class DetailNewsActivity extends AppCompatActivity {
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
         ivNewsImage = findViewById(R.id.ivNewsImage);
+        wvDescription = findViewById(R.id.wvDescription);
         tvTitleNews = findViewById(R.id.tvTitleNews);
         tvDipostingPada = findViewById(R.id.tvDipostingPada);
-        tvIsiBerita = findViewById(R.id.tvIsiBerita);
         progressBar = findViewById(R.id.progressBarToday);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         sharedPrefManager = new SharedPrefManager(DetailNewsActivity.this);
+
+        wvDescription.getSettings().setSupportZoom(true);
+        wvDescription.getSettings().setBuiltInZoomControls(true);
+        wvDescription.getSettings().setDisplayZoomControls(true);
 
         Intent intent = getIntent();
         urlBerita = intent.getStringExtra("urlberita");
@@ -83,6 +87,16 @@ public class DetailNewsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void setDetailArticle(String detail) {
+        String styleOpening = "<html><body>";
+        String styleClosing = "</body></html>";
+
+        String webCodeString = styleOpening;
+        webCodeString += detail;
+        webCodeString += styleClosing;
+
+        wvDescription.loadData(webCodeString, "text/html", "utf-8");
+    }
 
     private class GetDetailArticle extends AsyncTask<Void, Integer, Boolean> {
 
@@ -118,7 +132,7 @@ public class DetailNewsActivity extends AppCompatActivity {
             ivNewsImage.setImageDrawable(getResources().getDrawable(R.drawable.bg_silver));
             tvTitleNews.setText("");
             tvDipostingPada.setText("");
-            tvIsiBerita.setText("");
+            setDetailArticle("");
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -136,7 +150,7 @@ public class DetailNewsActivity extends AppCompatActivity {
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
                     tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());
-                tvIsiBerita.setText(detailNewsModel.getContent());
+                setDetailArticle(detailNewsModel.getContent());
             } else {
                 ivRefreshPresenceToday.setVisibility(View.VISIBLE);
                 UtilsManager.showToast(DetailNewsActivity.this, getResources().getString(R.string.cekkoneksi));

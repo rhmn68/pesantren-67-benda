@@ -55,18 +55,14 @@
                 android:layout_marginEnd="20dp"
                 android:text="Diposting pada hari Ahad, 9 Juni 2019"/>
 
-
-            <TextView
-                android:id="@+id/tvIsiBerita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/greytextcolor3"
+            <WebView
+                android:id="@+id/wvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="20dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="50dp"
-                android:text="@string/loremipsumlong"/>
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="50dp"/>
 
         </LinearLayout>
 
