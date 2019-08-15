@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.Editable;
@@ -16,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -62,6 +64,11 @@ public class OtpActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(ContextCompat
+                    .getColor(OtpActivity.this, R.color.colorPrimaryDark));
+        }
 
         tvTimer = findViewById(R.id.tvTimer);
         tvResendOtp = findViewById(R.id.tvResendOtp);
