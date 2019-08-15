@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -73,8 +74,11 @@ public class HomeActivityV2 extends AppCompatActivity
     private TextView tvTotalTagihan;
     private TextView tvTextTagihanPembayaran;
     private Button btnTambahkanSantri;
+    private Button btnLogin;
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
+    private LinearLayout linlayWelcomeNotLogin;
+    private LinearLayout linlayInfoSantri;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isThreadPresenceWork = true;
     private boolean isThreadTotalTagihanWork = true;
@@ -83,6 +87,8 @@ public class HomeActivityV2 extends AppCompatActivity
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
     private final int TYPE_FAIL_PRESENCE_TODAY = 2;
     private final int TYPE_NO_SANTRI_PRESENCE_TODAY = 3;
+    private final int TYPE_NOT_LOGGED_IN = 4;
+    private final int TYPE_LOGGED_IN = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,11 +97,14 @@ public class HomeActivityV2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBarToday = findViewById(R.id.progressBarToday);
         rv_news = findViewById(R.id.rv_news);
+        linlayWelcomeNotLogin = findViewById(R.id.linlayWelcomeNotLogin);
+        linlayInfoSantri = findViewById(R.id.linlayInfoSantri);
         rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
         tvBelumAdaSantri = findViewById(R.id.tvBelumAdaSantri);
         btnTambahkanSantri = findViewById(R.id.btnTambahkanSantri);
+        btnLogin = findViewById(R.id.btnLogin);
         progressBarNews = findViewById(R.id.progressBarNews);
         tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
@@ -104,18 +113,29 @@ public class HomeActivityV2 extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
-        allSantri = sharedPrefManager.getAllSantri();
-        String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
-        tvTitleToday.setText(titleToday);
-        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
         initializeListener();
+        if (sharedPrefManager.isLoggedIn()) {
+            setView(TYPE_LOGGED_IN);
+            allSantri = sharedPrefManager.getAllSantri();
+            String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
+            tvTitleToday.setText(titleToday);
+            swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
+
+            new GetDataSantri().execute();
+            new GetTagihanAlLSantri().execute();
+        } else {
+            setView(TYPE_NOT_LOGGED_IN);
+        }
+
         new GetNews().execute();
-        new GetDataSantri().execute();
-        new GetTagihanAlLSantri().execute();
     }
 
     private void initializeListener() {
+
+        btnLogin.setOnClickListener(l -> {
+
+        });
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
@@ -126,9 +146,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 new GetTagihanAlLSantri().execute();
         });
 
-        ivRefreshPresenceToday.setOnClickListener(l -> {
-            new GetDataSantri().execute();
-        });
+        ivRefreshPresenceToday.setOnClickListener(l -> new GetDataSantri().execute());
 
         rellayTotalTagihan.setOnClickListener(l -> {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPaymentActivity.class);
@@ -304,6 +322,12 @@ public class HomeActivityV2 extends AppCompatActivity
             rv_presence_today.setVisibility(View.GONE);
             progressBarToday.setVisibility(View.GONE);
             ivRefreshPresenceToday.setVisibility(View.VISIBLE);
+        } else if (type == TYPE_NOT_LOGGED_IN) {
+            linlayInfoSantri.setVisibility(View.GONE);
+            linlayWelcomeNotLogin.setVisibility(View.VISIBLE);
+        } else if (type == TYPE_LOGGED_IN) {
+            linlayInfoSantri.setVisibility(View.VISIBLE);
+            linlayWelcomeNotLogin.setVisibility(View.GONE);
         }
     }
 
