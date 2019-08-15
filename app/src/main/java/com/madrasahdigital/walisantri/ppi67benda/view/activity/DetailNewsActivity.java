@@ -88,14 +88,7 @@ public class DetailNewsActivity extends AppCompatActivity {
     }
 
     private void setDetailArticle(String detail) {
-        String styleOpening = "<html><body>";
-        String styleClosing = "</body></html>";
-
-        String webCodeString = styleOpening;
-        webCodeString += detail;
-        webCodeString += styleClosing;
-
-        wvDescription.loadData(webCodeString, "text/html", "utf-8");
+        wvDescription.loadData(detail, "text/html", "utf-8");
     }
 
     private class GetDetailArticle extends AsyncTask<Void, Integer, Boolean> {
