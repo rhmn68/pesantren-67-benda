@@ -21,6 +21,8 @@ public class Constant {
     public static final String LINK_GET_NEWS = SERVER_LINK + "api/post";
     public static final String LINK_GET_TAGIHAN_ALL_SANTRI = SERVER_LINK + "api/tagihan";
     public static final String LINK_POST_TAGIHAN_PAYMENT = SERVER_LINK + "api/tagihan/payment";
+    public static final String LINK_POST_OTP = SERVER_LINK + "api/user/auth/confirm_otp";
+    public static final String LINK_GET_OTP = SERVER_LINK + "api/user/auth/resend_otp/$"; // replace $ with id user
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri
     public static final String LINK_GET_PRESENCE_TODAY_2 = SERVER_LINK + "api/santri/$/presensi/";
@@ -33,5 +35,8 @@ public class Constant {
 
     public static final int TYPE_NEWS_HOME = 0;
     public static final int TYPE_NEWS_PAGE = 1;
+
+    public static final int TYPE_HOME = 1;
+    public static final int TYPE_WELCOME_MSG = 2;
 
 }
