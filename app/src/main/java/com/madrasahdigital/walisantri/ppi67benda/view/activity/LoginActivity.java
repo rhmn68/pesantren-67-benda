@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
 
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 finish();
             } else if (resultCode == Activity.RESULT_CANCELED) {
@@ -246,6 +247,7 @@ public class LoginActivity extends AppCompatActivity {
                     else
                         intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                 } else {

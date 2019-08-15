@@ -55,10 +55,10 @@ public class SplashScreen extends AppCompatActivity {
             msg.what = GOTOGUIDEPAGE;
             session.setFirstTimeLaunch(false);
         } else {
-            if (session.isLoggedIn())
-                msg.what = GOTOHOMEPAGE;
-            else
-                msg.what = GOTOLOGINPAGE;
+//            if (session.isLoggedIn())
+            msg.what = GOTOHOMEPAGE;
+//            else
+//                msg.what = GOTOLOGINPAGE;
         }
 
         mHandler.sendMessageDelayed(msg, SPLASHTIME);

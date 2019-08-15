@@ -79,6 +79,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private RelativeLayout rellayTotalTagihan;
     private LinearLayout linlayWelcomeNotLogin;
     private LinearLayout linlayInfoSantri;
+    private LinearLayout linlayTagihanPembayaran;
     private SwipeRefreshLayout swipeRefreshLayout;
     private boolean isThreadPresenceWork = true;
     private boolean isThreadTotalTagihanWork = true;
@@ -99,6 +100,7 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_news = findViewById(R.id.rv_news);
         linlayWelcomeNotLogin = findViewById(R.id.linlayWelcomeNotLogin);
         linlayInfoSantri = findViewById(R.id.linlayInfoSantri);
+        linlayTagihanPembayaran = findViewById(R.id.linlayTagihanPembayaran);
         rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
@@ -132,9 +134,9 @@ public class HomeActivityV2 extends AppCompatActivity
     }
 
     private void initializeListener() {
-
         btnLogin.setOnClickListener(l -> {
-
+            Intent intent = new Intent(HomeActivityV2.this, LoginActivity.class);
+            startActivity(intent);
         });
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -192,6 +194,9 @@ public class HomeActivityV2 extends AppCompatActivity
         int size = navigationView.getMenu().size();
         for (int i = 0; i < size; i++) {
             navigationView.getMenu().getItem(i).setCheckable(false);
+            if (!sharedPrefManager.isLoggedIn() && (i == 1 || i == 2 || i == 4 || i == 6)) {
+                navigationView.getMenu().getItem(i).setVisible(false);
+            }
         }
     }
 
@@ -325,9 +330,11 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (type == TYPE_NOT_LOGGED_IN) {
             linlayInfoSantri.setVisibility(View.GONE);
             linlayWelcomeNotLogin.setVisibility(View.VISIBLE);
+            linlayTagihanPembayaran.setVisibility(View.GONE);
         } else if (type == TYPE_LOGGED_IN) {
             linlayInfoSantri.setVisibility(View.VISIBLE);
             linlayWelcomeNotLogin.setVisibility(View.GONE);
+            linlayTagihanPembayaran.setVisibility(View.VISIBLE);
         }
     }
 
