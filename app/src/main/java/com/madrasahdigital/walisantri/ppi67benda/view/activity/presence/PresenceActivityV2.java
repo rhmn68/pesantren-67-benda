@@ -1,7 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.presence;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -205,7 +204,6 @@ public class PresenceActivityV2 extends AppCompatActivity {
     }
 
     private void setStatusPresenceInCalendar() {
-        Typeface custom_font = Typeface.createFromAsset(getAssets(), "fonts/Roboto-Black.ttf");
         List<EventDay> events = new ArrayList<>();
 
         Calendar calendar;
