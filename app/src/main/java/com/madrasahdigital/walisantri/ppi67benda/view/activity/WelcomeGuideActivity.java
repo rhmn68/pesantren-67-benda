@@ -110,7 +110,7 @@ public class WelcomeGuideActivity extends AppCompatActivity {
     }
 
     private void launchHomeScreen() {
-        startActivity(new Intent(WelcomeGuideActivity.this, LoginActivity.class));
+        startActivity(new Intent(WelcomeGuideActivity.this, HomeActivityV2.class));
         finish();
     }
 
