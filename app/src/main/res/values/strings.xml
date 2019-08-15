@@ -57,7 +57,7 @@
     <string name="tidak" translatable="false">Tidak</string>
     <string name="belumdaftar" translatable="false">Anda belum terdaftar?</string>
     <string name="daftardisini" translatable="false">Daftar disini</string>
-    <string name="reg_nama" translatable="false">Nama lengkap orang tua</string>
+    <string name="reg_nama" translatable="false">Nama Lengkap</string>
     <string name="reg_tanggal_lahir" translatable="false">Tanggal Lahir</string>
     <string name="reg_no_telepon" translatable="false">Nomor Telepon</string>
     <string name="lengkapidata" translatable="false">Lengkapi Data Berikut</string>
