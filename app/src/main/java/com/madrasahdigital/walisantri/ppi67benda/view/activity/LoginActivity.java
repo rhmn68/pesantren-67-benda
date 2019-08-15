@@ -1,5 +1,6 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -101,6 +102,28 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Log.d(TAG, "onActivityResult RESULT OK");
+                int pagetype = data.getIntExtra("pagetype", Constant.TYPE_WELCOME_MSG);
+                Intent intent;
+
+                if (pagetype == Constant.TYPE_HOME)
+                    intent = new Intent(LoginActivity.this, HomeActivityV2.class);
+                else
+                    intent = new Intent(LoginActivity.this, WelcomeMsgAddSantri.class);
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+                finish();
+            } else if (resultCode == Activity.RESULT_CANCELED) {
+                Log.d(TAG, "onActivityResult RESULT CANCELED");
+            }
+        }
+    }
+
     public void gotoHomePage(View view) {
         email = etEmail.getText().toString().trim();
         password = etPassword.getText().toString().trim();
@@ -114,7 +137,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void gotoRegister(View view) {
         Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
     }
 
     public void gotoLupaSandi(View view) {
@@ -226,8 +249,8 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    Log.w(TAG, "message : " + jsonObject.getString("message"));
                     showError(jsonObject.getString("message"));
+                    Log.w(TAG, "message : " + jsonObject.getString("message"));
                 }
             } catch (Exception e) {
                 showError(getResources().getString(R.string.cekkoneksi));
