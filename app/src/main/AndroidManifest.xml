@@ -12,10 +12,15 @@
         android:roundIcon="@drawable/icon_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.payment.HowToPayActivity"
+        <activity android:name=".view.activity.OtpActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.payment.HowToPayActivity"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.DetailPembayaran"
             android:configChanges="locale|orientation"
@@ -111,12 +116,6 @@
             android:configChanges="locale|orientation"
             android:label="@string/dopayment"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".view.activity.FinanceActivity"
-            android:configChanges="locale|orientation"
-            android:label="@string/title_activity_finance"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:configChanges="locale|orientation"
