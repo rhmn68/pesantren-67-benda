@@ -25,6 +25,51 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/linlayWelcomeNotLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white1"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Selamat datang di aplikasi resmi Pesantren Persatuan Islam 67 Benda Tasikmalaya"
+                        android:fontFamily="@font/roboto_regular"
+                        android:textColor="@color/greytextcolor"
+                        android:textSize="22sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anda belum login, login terlebih dahulu untuk melihat aktivitas santri"
+                        android:textColor="@color/greytextcolor"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="35dp"
+                        android:layout_marginRight="35dp"
+                        android:gravity="center"
+                        android:layout_gravity="center_horizontal"
+                        android:textSize="12sp" />
+
+                    <Button
+                        android:id="@+id/btnLogin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/btn_green"
+                        android:paddingLeft="20dp"
+                        android:paddingTop="5dp"
+                        android:paddingRight="20dp"
+                        android:paddingBottom="5dp"
+                        android:text="Login Wali santri"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linlayInfoSantri"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white1"
@@ -72,6 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:layout_marginTop="20dp"
+                            android:textSize="12sp"
                             android:text="@string/home_text2" />
 
                         <Button
