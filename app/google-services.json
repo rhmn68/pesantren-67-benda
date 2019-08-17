@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "46769568359",
+    "firebase_url": "https://benda-8d712.firebaseio.com",
+    "project_id": "benda-8d712",
+    "storage_bucket": "benda-8d712.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46769568359:android:11b89ef4e7987c88",
+        "android_client_info": {
+          "package_name": "com.madrasahdigital.walisantri.ppi67benda"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46769568359-lbt4h4h157qjh7p5vorotosmiqknkpsi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.madrasahdigital.walisantri.ppi67benda",
+            "certificate_hash": "e794debf129c8915e2efcf32b04699268c6d838d"
+          }
+        },
+        {
+          "client_id": "46769568359-3u9sm9ts7vf4coruesqj8ukkj2rsdl4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiKhn3IhGNqaHOELnoz-KCBXTcQv063pE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46769568359-3u9sm9ts7vf4coruesqj8ukkj2rsdl4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

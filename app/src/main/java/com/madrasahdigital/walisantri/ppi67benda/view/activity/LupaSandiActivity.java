@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
@@ -37,6 +38,7 @@ import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class LupaSandiActivity extends AppCompatActivity {
 
+    private final String TAG = LupaSandiActivity.class.getSimpleName();
     private ActionBar aksibar;
     private EditText etEmail;
     private Button btnLanjut;
@@ -160,6 +162,8 @@ public class LupaSandiActivity extends AppCompatActivity {
                     return true;
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -177,6 +181,8 @@ public class LupaSandiActivity extends AppCompatActivity {
                     UtilsManager.showToast(LupaSandiActivity.this, message);
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 UtilsManager.showToast(LupaSandiActivity.this, getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

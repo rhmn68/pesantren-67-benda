@@ -18,6 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.detailpayment.DetailPaymentModel;
@@ -28,13 +29,18 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerDetailMakePayment;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+
 public class DetailMakePaymentActivity extends AppCompatActivity {
 
+    private final String TAG = DetailMakePaymentActivity.class.getSimpleName();
     private ActionBar aksibar;
     private TextView tvSubTotal;
     private TextView tvFee;
@@ -127,7 +133,11 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(detailPaymentModel.getConfirmUrl())
@@ -146,6 +156,8 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 

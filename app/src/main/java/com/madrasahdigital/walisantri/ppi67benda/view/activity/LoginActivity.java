@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
@@ -197,6 +198,8 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -227,6 +230,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     return true;
                 } catch (Exception e) {
+                    Crashlytics.setString(TAG, "2-" + e.getMessage());
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }
@@ -255,6 +260,8 @@ public class LoginActivity extends AppCompatActivity {
                     Log.w(TAG, "message : " + jsonObject.getString("message"));
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "3-" + e.getMessage());
+                Crashlytics.logException(e);
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

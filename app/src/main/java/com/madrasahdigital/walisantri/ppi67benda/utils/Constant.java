@@ -31,7 +31,7 @@ public class Constant {
 
     public static final String URL_HOW_TO_PAY = "https://www.67benda.com/carapembayaran";
 
-    public static final int TIMEOUT = 120;
+    public static final int TIMEOUT = 180;
 
     public static final int TYPE_NEWS_HOME = 0;
     public static final int TYPE_NEWS_PAGE = 1;

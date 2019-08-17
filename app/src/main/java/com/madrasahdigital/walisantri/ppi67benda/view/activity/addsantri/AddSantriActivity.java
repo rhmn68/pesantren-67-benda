@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.datasantri.AssignSantriModel;
@@ -29,12 +30,16 @@ import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LoadingDialog;
 
 import org.json.JSONObject;
 
+import java.util.concurrent.TimeUnit;
+
 import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class AddSantriActivity extends AppCompatActivity {
 
@@ -130,7 +135,11 @@ public class AddSantriActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(urlConfirm)
@@ -151,6 +160,8 @@ public class AddSantriActivity extends AppCompatActivity {
                     return true;
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -177,6 +188,8 @@ public class AddSantriActivity extends AppCompatActivity {
                     UtilsManager.showToast(AddSantriActivity.this, message);
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 UtilsManager.showToast(AddSantriActivity.this, getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
@@ -200,7 +213,11 @@ public class AddSantriActivity extends AppCompatActivity {
 
         @Override
         protected Integer doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             RequestBody body = new MultipartBody.Builder()
                     .setType(MultipartBody.FORM)
@@ -232,6 +249,8 @@ public class AddSantriActivity extends AppCompatActivity {
                     return 1;
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "3-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 

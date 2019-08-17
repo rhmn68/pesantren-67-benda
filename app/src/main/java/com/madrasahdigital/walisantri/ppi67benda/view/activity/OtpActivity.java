@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
@@ -58,7 +59,6 @@ public class OtpActivity extends AppCompatActivity {
     private String email;
     private String password;
     private String idUser;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -202,6 +202,8 @@ public class OtpActivity extends AppCompatActivity {
                     return true;
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
             return false;
@@ -220,6 +222,8 @@ public class OtpActivity extends AppCompatActivity {
                     showError(message);
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
@@ -301,6 +305,8 @@ public class OtpActivity extends AppCompatActivity {
                         }
 
                     } catch (Exception e) {
+                        Crashlytics.setString(TAG, "3-" + e.getMessage());
+                        Crashlytics.logException(e);
                         e.printStackTrace();
                     }
 
@@ -340,13 +346,19 @@ public class OtpActivity extends AppCompatActivity {
                                 message = jsonObject.getString("message");
                             }
                         } catch (Exception e) {
+                            Crashlytics.setString(TAG, "4-" + e.getMessage());
+                            Crashlytics.logException(e);
                             e.printStackTrace();
                         }
                     }
                 }
             } catch (IOException e) {
+                Crashlytics.setString(TAG, "5-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "6-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -374,6 +386,8 @@ public class OtpActivity extends AppCompatActivity {
                     showError(message);
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "7-" + e.getMessage());
+                Crashlytics.logException(e);
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

@@ -21,6 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.register.RegisterModel;
@@ -39,7 +40,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-import okhttp3.logging.HttpLoggingInterceptor;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
@@ -272,30 +272,28 @@ public class RegisterActivity extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-            logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-            OkHttpClient client = new OkHttpClient.Builder()
-                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
-                    .addInterceptor(logging)
-                    .build();
-
-            RequestBody body = new MultipartBody.Builder()
-                    .setType(MultipartBody.FORM)
-                    .addFormDataPart("email", email)
-                    .addFormDataPart("nomorhp", noHp)
-                    .addFormDataPart("password", password)
-                    .addFormDataPart("confirm_password", konfirmasiPassword)
-                    .addFormDataPart("name", nama)
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(Constant.LINK_REGISTER)
-                    .post(body)
-                    .build();
 
             try {
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                        .build();
+
+                RequestBody body = new MultipartBody.Builder()
+                        .setType(MultipartBody.FORM)
+                        .addFormDataPart("email", email)
+                        .addFormDataPart("nomorhp", noHp)
+                        .addFormDataPart("password", password)
+                        .addFormDataPart("confirm_password", konfirmasiPassword)
+                        .addFormDataPart("name", nama)
+                        .build();
+
+                Request request = new Request.Builder()
+                        .url(Constant.LINK_REGISTER)
+                        .post(body)
+                        .build();
+
                 Response response = client.newCall(request).execute();
                 ResponseBody responseBody = response.body();
                 int statusCode = response.code();
@@ -307,12 +305,16 @@ public class RegisterActivity extends AppCompatActivity {
                     message = registerModel.getMessage();
                     return true;
                 } else {
-                    JSONObject jsonObject = new JSONObject(responseBody.string().replace("\\n",""));
+                    JSONObject jsonObject = new JSONObject(response.body().string().replace("\\n",""));
                     message = jsonObject.getString("message");
                 }
             } catch (IOException e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -335,6 +337,8 @@ public class RegisterActivity extends AppCompatActivity {
                     showError(message);
                 }
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "3-" + e.getMessage());
+                Crashlytics.logException(e);
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

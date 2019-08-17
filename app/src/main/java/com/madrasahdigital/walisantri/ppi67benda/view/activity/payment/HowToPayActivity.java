@@ -17,11 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 
 public class HowToPayActivity extends AppCompatActivity {
 
+    private final String TAG = HowToPayActivity.class.getSimpleName();
     private ActionBar aksibar;
     private ProgressBar progressBarweb;
     private WebView webView2;
@@ -91,6 +93,8 @@ public class HowToPayActivity extends AppCompatActivity {
                         }
                     }
                 } catch (Exception e) {
+                    Crashlytics.setString(TAG, "1-" + e.getMessage());
+                    Crashlytics.logException(e);
                     e.printStackTrace();
                 }
             }

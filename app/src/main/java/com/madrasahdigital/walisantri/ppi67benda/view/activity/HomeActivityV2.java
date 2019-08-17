@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -45,11 +46,14 @@ import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class HomeActivityV2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -345,7 +349,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_TAGIHAN_ALL_SANTRI)
@@ -370,6 +378,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return status;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -413,7 +423,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_NEWS)
@@ -432,6 +446,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -472,7 +488,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_PRESENCE_TODAY_2.replace("$", id) + date)
@@ -491,6 +511,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "3-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -534,7 +556,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            OkHttpClient client = new OkHttpClient();
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
 
             Request request = new Request.Builder()
                     .url(Constant.LINK_GET_ALL_SANTRI)
@@ -555,6 +581,8 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "4-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
