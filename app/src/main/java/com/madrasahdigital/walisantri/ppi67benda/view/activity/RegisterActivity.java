@@ -39,7 +39,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
@@ -298,10 +297,9 @@ public class RegisterActivity extends AppCompatActivity {
                 int statusCode = response.code();
 
                 if (statusCode == 200) {
-                    ResponseBody responseBody = response.body();
                     Gson gson = new Gson();
                     registerModel =
-                            gson.fromJson(responseBody.string(), RegisterModel.class);
+                            gson.fromJson(response.body().string(), RegisterModel.class);
                     message = registerModel.getMessage();
                     return true;
                 } else {
