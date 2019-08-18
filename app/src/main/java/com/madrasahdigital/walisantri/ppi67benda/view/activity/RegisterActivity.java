@@ -295,10 +295,10 @@ public class RegisterActivity extends AppCompatActivity {
                         .build();
 
                 Response response = client.newCall(request).execute();
-                ResponseBody responseBody = response.body();
                 int statusCode = response.code();
 
                 if (statusCode == 200) {
+                    ResponseBody responseBody = response.body();
                     Gson gson = new Gson();
                     registerModel =
                             gson.fromJson(responseBody.string(), RegisterModel.class);
