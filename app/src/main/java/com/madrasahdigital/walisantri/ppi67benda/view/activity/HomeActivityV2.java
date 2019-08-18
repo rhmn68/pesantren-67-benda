@@ -371,8 +371,6 @@ public class HomeActivityV2 extends AppCompatActivity
         }
     }
 
-
-
     private class GetLatestVersionCode extends AsyncTask<Void, Integer, Boolean> {
 
         private VersionCodeModel versionCodeModel;
