@@ -24,6 +24,37 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:id="@+id/rellayPerbarui"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent">
+
+                    <TextView
+                        android:id="@+id/tvPembaruan"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Terdapat pembaruan aplikasi, klik tombol Perbarui untuk memperbarui aplikasi"
+                        android:textSize="16sp"
+                        android:paddingLeft="10dp"
+                        android:paddingRight="10dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
+                        android:layout_toStartOf="@id/btnPerbarui"
+                        android:background="@color/colorAccent"/>
+
+                    <Button
+                        android:id="@+id/btnPerbarui"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/btn_silver"
+                        android:text="Perbarui"
+                        android:layout_marginEnd="10dp"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
                 <LinearLayout
                     android:id="@+id/linlayWelcomeNotLogin"
                     android:layout_width="match_parent"

@@ -23,6 +23,7 @@ public class Constant {
     public static final String LINK_POST_TAGIHAN_PAYMENT = SERVER_LINK + "api/tagihan/payment";
     public static final String LINK_POST_OTP = SERVER_LINK + "api/user/auth/confirm_otp";
     public static final String LINK_GET_OTP = SERVER_LINK + "api/user/auth/resend_otp/$"; // replace $ with id user
+    public static final String LINK_GET_LATEST_VERSION = "https://www.67benda.com/api/setting/presensi.app_version";
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri
     public static final String LINK_GET_PRESENCE_TODAY_2 = SERVER_LINK + "api/santri/$/presensi/";
@@ -30,8 +31,10 @@ public class Constant {
     public static final String Authorization = "Authorization";
 
     public static final String URL_HOW_TO_PAY = "https://www.67benda.com/carapembayaran";
+    public static final String URL_APP_IN_PLAYSTORE = "https://play.google.com/store/apps/details?id=com.madrasahdigital.walisantri.ppi67benda";
 
     public static final int TIMEOUT = 180;
+    public static final int TIMEOUT_2 = 60;
 
     public static final int TYPE_NEWS_HOME = 0;
     public static final int TYPE_NEWS_PAGE = 1;

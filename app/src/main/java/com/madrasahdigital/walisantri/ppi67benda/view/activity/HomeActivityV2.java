@@ -2,6 +2,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
+import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
@@ -54,6 +57,7 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT_2;
 
 public class HomeActivityV2 extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -79,8 +83,10 @@ public class HomeActivityV2 extends AppCompatActivity
     private TextView tvTextTagihanPembayaran;
     private Button btnTambahkanSantri;
     private Button btnLogin;
+    private Button btnPerbarui;
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
+    private RelativeLayout rellayPerbarui;
     private LinearLayout linlayWelcomeNotLogin;
     private LinearLayout linlayInfoSantri;
     private LinearLayout linlayTagihanPembayaran;
@@ -94,6 +100,8 @@ public class HomeActivityV2 extends AppCompatActivity
     private final int TYPE_NO_SANTRI_PRESENCE_TODAY = 3;
     private final int TYPE_NOT_LOGGED_IN = 4;
     private final int TYPE_LOGGED_IN = 5;
+    private final int TYPE_SHOW_GET_LATEST_VERSION_APP = 6;
+    private final int TYPE_HIDDEN_GET_LATEST_VERSION_APP = 7;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,11 +114,13 @@ public class HomeActivityV2 extends AppCompatActivity
         linlayInfoSantri = findViewById(R.id.linlayInfoSantri);
         linlayTagihanPembayaran = findViewById(R.id.linlayTagihanPembayaran);
         rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
+        rellayPerbarui = findViewById(R.id.rellayPerbarui);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
         tvBelumAdaSantri = findViewById(R.id.tvBelumAdaSantri);
         btnTambahkanSantri = findViewById(R.id.btnTambahkanSantri);
         btnLogin = findViewById(R.id.btnLogin);
+        btnPerbarui = findViewById(R.id.btnPerbarui);
         progressBarNews = findViewById(R.id.progressBarNews);
         tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
@@ -134,6 +144,13 @@ public class HomeActivityV2 extends AppCompatActivity
             setView(TYPE_NOT_LOGGED_IN);
         }
 
+        if (sharedPrefManager.getStatusShowVersionApp()) {
+            setView(TYPE_SHOW_GET_LATEST_VERSION_APP);
+        } else {
+            setView(TYPE_HIDDEN_GET_LATEST_VERSION_APP);
+        }
+
+        new GetLatestVersionCode().execute();
         new GetNews().execute();
     }
 
@@ -193,6 +210,14 @@ public class HomeActivityV2 extends AppCompatActivity
             }
             startActivity(intent);
             finish();
+        });
+
+        btnPerbarui.setOnClickListener(l -> {
+            try {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.URL_APP_IN_PLAYSTORE)));
+            } catch (android.content.ActivityNotFoundException anfe) {
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.URL_APP_IN_PLAYSTORE)));
+            }
         });
 
         int size = navigationView.getMenu().size();
@@ -339,6 +364,66 @@ public class HomeActivityV2 extends AppCompatActivity
             linlayInfoSantri.setVisibility(View.VISIBLE);
             linlayWelcomeNotLogin.setVisibility(View.GONE);
             linlayTagihanPembayaran.setVisibility(View.VISIBLE);
+        } else if (type == TYPE_SHOW_GET_LATEST_VERSION_APP) {
+            rellayPerbarui.setVisibility(View.VISIBLE);
+        } else if (type == TYPE_HIDDEN_GET_LATEST_VERSION_APP) {
+            rellayPerbarui.setVisibility(View.GONE);
+        }
+    }
+
+
+
+    private class GetLatestVersionCode extends AsyncTask<Void, Integer, Boolean> {
+
+        private VersionCodeModel versionCodeModel;
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT_2, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT_2, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT_2, TimeUnit.SECONDS)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_LATEST_VERSION)
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                int statusCode = response.code();
+
+                if (statusCode == 200) {
+                    Gson gson = new Gson();
+                    versionCodeModel =
+                            gson.fromJson(bodyString, VersionCodeModel.class);
+                    return true;
+                }
+            } catch (Exception e) {
+                Crashlytics.setString(TAG, "0-" + e.getMessage());
+                Crashlytics.logException(e);
+                e.printStackTrace();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            if (isSuccess) {
+                if (BuildConfig.VERSION_CODE < versionCodeModel.getValue()) {
+                    sharedPrefManager.setShowGetLatestVersionApp(true);
+                    setView(TYPE_SHOW_GET_LATEST_VERSION_APP);
+                } else {
+                    sharedPrefManager.setShowGetLatestVersionApp(false);
+                    setView(TYPE_HIDDEN_GET_LATEST_VERSION_APP);
+                }
+            }
         }
     }
 

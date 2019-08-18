@@ -3,17 +3,21 @@ package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 
 public class AboutActivity extends AppCompatActivity {
 
     private ActionBar aksibar;
+    private TextView tvKodeVersi;
+    private TextView tvVersiAplikasi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,15 @@ public class AboutActivity extends AppCompatActivity {
         aksibar = AboutActivity.this.getSupportActionBar();
         assert aksibar != null;
         aksibar.setDisplayHomeAsUpEnabled(true);
+
+        tvKodeVersi = findViewById(R.id.tvKodeVersi);
+        tvVersiAplikasi = findViewById(R.id.tvVersiAplikasi);
+
+        String versionCode = "Versi Kode : " + BuildConfig.VERSION_CODE;
+        String versionName = "Versi Aplikasi : " + BuildConfig.VERSION_NAME;
+
+        tvKodeVersi.setText(versionCode);
+        tvVersiAplikasi.setText(versionName);
 
     }
 

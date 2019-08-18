@@ -36,6 +36,28 @@
         android:layout_marginEnd="20sp"/>
 
     <TextView
+        android:id="@+id/tvKodeVersi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Kode versi : "
+        android:textSize="14sp"
+        android:textColor="@color/greytextcolor2"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"/>
+
+    <TextView
+        android:id="@+id/tvVersiAplikasi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Versi Aplikasi : "
+        android:textSize="14sp"
+        android:textColor="@color/greytextcolor2"
+        android:layout_marginTop="1dp"
+        android:layout_marginStart="20sp"
+        android:layout_marginEnd="20sp"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tentang_app_description"

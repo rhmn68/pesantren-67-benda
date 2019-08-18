@@ -37,6 +37,7 @@ public class SharedPrefManager {
     private final String KEY_TOTAL_TAGIHAN = "tottagihan21";
     private final String KEY_TAGIHAN_ALL_SANTRI = "tagihanallsantri32";
     private final String KEY_IS_GUIDE_SHOWED = "isguideshw32";
+    private final String KEY_SHOW_GET_LATEST_VERSION = "gtltsttvers12";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -68,6 +69,16 @@ public class SharedPrefManager {
      */
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
+    }
+
+    public void setShowGetLatestVersionApp(boolean doShow) {
+        editor = pref.edit();
+        editor.putBoolean(KEY_SHOW_GET_LATEST_VERSION, doShow);
+        editor.apply();
+    }
+
+    public boolean getStatusShowVersionApp() {
+        return pref.getBoolean(KEY_SHOW_GET_LATEST_VERSION, false);
     }
 
     public String getToken() {
