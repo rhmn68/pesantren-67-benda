@@ -190,9 +190,14 @@ public class PresenceActivityV2 extends AppCompatActivity {
                             "Sakit",
                             presenceModel.getPresensi().get(i).getDate(),
                             deskripsi);
-                } else {
+                } else if (status.equals("permit")) {
                     detailDialog = new DetailDialog(PresenceActivityV2.this,
                             "Izin",
+                            presenceModel.getPresensi().get(i).getDate(),
+                            deskripsi);
+                } else {
+                    detailDialog = new DetailDialog(PresenceActivityV2.this,
+                            "Tidak ada keterangan",
                             presenceModel.getPresensi().get(i).getDate(),
                             deskripsi);
                 }
@@ -225,11 +230,36 @@ public class PresenceActivityV2 extends AppCompatActivity {
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
                 events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
+            } else {
+                calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
+                        UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
+                        UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
+                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
             }
             calendarList.add(calendar);
         }
 
         calendarView.setEvents(events);
+//
+//        Calendar calendar2 = new GregorianCalendar();
+//        Calendar calendar3 = new GregorianCalendar();
+//        Calendar calendar4 = new GregorianCalendar();
+//        Calendar calendar5 = new GregorianCalendar();
+//        calendar2.set(2019,7,5);
+//        calendar3.set(2019,7,6);
+//        calendar4.set(2019,7,7);
+//        calendar5.set(2019,7,8);
+//
+//        List<Calendar> cal = new ArrayList<>();
+//        cal.add(calendar2);
+//        cal.add(calendar3);
+//        cal.add(calendar4);
+//        cal.add(calendar5);
+//
+////        calendarView.setHighlightedDays(cal);
+//
+//        calendarView.setSelectedDates(cal);
+
     }
 
     private void getPresenceStatusToday() {
