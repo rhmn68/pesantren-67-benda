@@ -5,7 +5,8 @@ package com.madrasahdigital.walisantri.ppi67benda.utils;
  */
 public class Constant {
     public static final String this_app = "com.madrasahdigital.walisantri";
-    private static final String SERVER_LINK = "http://pesantrenbenda.cloudapp.web.id/";
+    private static final String SERVER_LINK_OLD = "http://pesantrenbenda.cloudapp.web.id/";
+    private static final String SERVER_LINK = "https://www.67benda.com/";
 
     public static final String LINK_REGISTER = SERVER_LINK + "api/user/auth/register";
     public static final String LINK_LOGIN = SERVER_LINK + "api/user/auth/login";
