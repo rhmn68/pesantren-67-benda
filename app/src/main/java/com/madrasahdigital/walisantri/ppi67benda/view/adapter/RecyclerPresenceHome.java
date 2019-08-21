@@ -46,7 +46,6 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
         final int position = i;
 
         viewHolderCategory.tvSantriName.setText(presenceList.get(position).getSantriName());
-        viewHolderCategory.tvStatusPresence.setText(presenceList.get(position).getStatus());
         viewHolderCategory.tvKeteranganAbsen.setText(presenceList.get(position).getDescription());
 
         if (presenceList.get(i).getUrlPhoto() != null) {
@@ -64,12 +63,27 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
             }
         }
 
-        if (presenceList.get(i).getStatus().equals("present")) {
+        if (presenceList.get(i).getStatus().toLowerCase().equals("present")) {
+            viewHolderCategory.tvStatusPresence.setText("Hadir");
             viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_green));
+            viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.white));
             viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.greytextcolor2));
+        } else if (presenceList.get(i).getStatus().toLowerCase().equals("ill")) {
+            viewHolderCategory.tvStatusPresence.setText("Sakit");
+            viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_red));
+            viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.white));
+            viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.colorIll));
+        } else if (presenceList.get(i).getStatus().toLowerCase().equals("permit")) {
+            viewHolderCategory.tvStatusPresence.setText("Izin");
+            viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_orange));
+            viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.greytextcolor3));
+            viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.colorPermit));
         } else {
             viewHolderCategory.tvStatusPresence.setText("Absen");
+            viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_red));
+            viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.white));
             viewHolderCategory.tvKeteranganAbsen.setText("Tanpa keterangan");
+            viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.colorIll));
         }
 
         viewHolderCategory.mViewContainer.setOnClickListener(view -> {
