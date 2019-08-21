@@ -186,6 +186,7 @@ public class AddSantriActivity extends AppCompatActivity {
                     infoDialog.show();
                 } else {
                     UtilsManager.showToast(AddSantriActivity.this, message);
+                    Crashlytics.setString(TAG, "not success - " + message);
                 }
             } catch (Exception e) {
                 Crashlytics.setString(TAG, "2-" + e.getMessage());
