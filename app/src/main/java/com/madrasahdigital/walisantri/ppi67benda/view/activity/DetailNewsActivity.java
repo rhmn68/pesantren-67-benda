@@ -144,13 +144,15 @@ public class DetailNewsActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean isSuccess) {
             progressBar.setVisibility(View.GONE);
             if (isSuccess) {
-                Glide
-                        .with(DetailNewsActivity.this)
-                        .load(detailNewsModel.getFeaturedImage())
-                        .centerCrop()
-                        .placeholder(R.drawable.bg_silver)
-                        .error(R.drawable.bg_silver)
-                        .into(ivNewsImage);
+                if (detailNewsModel.getFeaturedImage() != null) {
+                    Glide
+                            .with(DetailNewsActivity.this)
+                            .load(detailNewsModel.getFeaturedImage())
+                            .centerCrop()
+                            .placeholder(R.drawable.bg_silver)
+                            .error(R.drawable.bg_silver)
+                            .into(ivNewsImage);
+                }
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
                     tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());

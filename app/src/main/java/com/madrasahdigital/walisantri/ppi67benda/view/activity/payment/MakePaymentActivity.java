@@ -237,6 +237,7 @@ public class MakePaymentActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             } else {
                 UtilsManager.showToast(MakePaymentActivity.this, "Terjadi kesalahan " + statusCode);
+                Crashlytics.setString(TAG, "2-Terjadi kesalahan");
             }
         }
     }
@@ -276,7 +277,7 @@ public class MakePaymentActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.setString(TAG, "4-" + e.getMessage());
                 Crashlytics.logException(e);
                 e.printStackTrace();
             }

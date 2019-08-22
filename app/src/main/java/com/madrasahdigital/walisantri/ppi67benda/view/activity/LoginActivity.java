@@ -160,6 +160,7 @@ public class LoginActivity extends AppCompatActivity {
 
         private JSONObject jsonObject;
         private int statusSuccess;
+        private int successCode = 0;
 
         @Override
         protected void onPreExecute() {
@@ -195,12 +196,14 @@ public class LoginActivity extends AppCompatActivity {
 
                 if (statusCode == 200) {
                     status = true;
+                    successCode = 1;
                 }
 
             } catch (Exception e) {
                 Crashlytics.setString(TAG, "1-" + e.getMessage());
                 Crashlytics.logException(e);
                 e.printStackTrace();
+                successCode = 0;
             }
 
             if (status) {
@@ -233,6 +236,7 @@ public class LoginActivity extends AppCompatActivity {
                     Crashlytics.setString(TAG, "2-" + e.getMessage());
                     Crashlytics.logException(e);
                     e.printStackTrace();
+                    successCode = 0;
                 }
             }
 
@@ -256,11 +260,18 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(intent);
                     finish();
                 } else {
-                    showError(jsonObject.getString("message"));
-                    Log.w(TAG, "message : " + jsonObject.getString("message"));
+                    String msg = jsonObject.getString("message");
+                    if (msg != null)
+                        showError(msg);
+                    else {
+                        Crashlytics.setString(TAG, "3a - terjadi kesalahan login");
+                        showError("Terjadi kesalahan koneksi");
+                    }
+
+                    Log.w(TAG, "message : " + msg);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "3-" + e.getMessage());
+                Crashlytics.setString(TAG, "3b-" + e.getMessage());
                 Crashlytics.logException(e);
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
