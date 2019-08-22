@@ -4,7 +4,10 @@ package com.madrasahdigital.walisantri.ppi67benda.utils;
  * Created by Alhudaghifari on 21:51 26/04/19
  */
 public class Constant {
+
     public static final String this_app = "com.madrasahdigital.walisantri";
+    public static final String TAG = "67Benda";
+
     private static final String SERVER_LINK_OLD = "http://pesantrenbenda.cloudapp.web.id/";
     private static final String SERVER_LINK = "https://www.67benda.com/";
 
@@ -24,7 +27,8 @@ public class Constant {
     public static final String LINK_POST_TAGIHAN_PAYMENT = SERVER_LINK + "api/tagihan/payment";
     public static final String LINK_POST_OTP = SERVER_LINK + "api/user/auth/confirm_otp";
     public static final String LINK_GET_OTP = SERVER_LINK + "api/user/auth/resend_otp/$"; // replace $ with id user
-    public static final String LINK_GET_LATEST_VERSION = "https://www.67benda.com/api/setting/presensi.app_version";
+    public static final String LINK_GET_LATEST_VERSION = SERVER_LINK + "api/setting/presensi.app_version";
+    public static final String LINK_GET_ABOUT_DETAIL = SERVER_LINK + "api/variable/tentang_aplikasi";
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri
     public static final String LINK_GET_PRESENCE_TODAY_2 = SERVER_LINK + "api/santri/$/presensi/";

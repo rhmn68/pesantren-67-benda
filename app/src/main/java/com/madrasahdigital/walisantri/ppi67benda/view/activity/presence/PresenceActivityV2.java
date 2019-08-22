@@ -224,12 +224,12 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
+                events.add(new EventDay(calendar, R.drawable.ic_first_aid_kit));
             } else if (presenceModel.getPresensi().get(i).getStatus().equals("permit")) {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
+                events.add(new EventDay(calendar, R.drawable.ic_letter));
             } else {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,

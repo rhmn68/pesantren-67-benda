@@ -70,9 +70,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Selamat datang di aplikasi resmi Pesantren Persatuan Islam 67 Benda Tasikmalaya"
-                        android:fontFamily="@font/roboto_regular"
                         android:textColor="@color/greytextcolor"
-                        android:textSize="22sp" />
+                        android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -230,11 +229,14 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/white1"
                     android:orientation="vertical"
-                    android:padding="20dp">
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
                         android:text="@string/home_text5"
                         android:textColor="@color/greytextcolor"
                         android:textSize="16sp" />
