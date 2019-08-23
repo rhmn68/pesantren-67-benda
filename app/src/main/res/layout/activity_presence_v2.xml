@@ -11,228 +11,161 @@
         android:id="@+id/progressBar"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:visibility="gone"
-        android:layout_centerInParent="true"/>
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
-    <ScrollView
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_marginTop="10dp">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:fillViewport="true">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="90dp"
-                android:layout_gravity="center_horizontal">
-
-                <RelativeLayout
-                    android:id="@+id/rellayCiv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/civProfPic"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
-                        android:padding="10dp"
-                        android:background="@drawable/circle_green"/>
-
-                    <TextView
-                        android:id="@+id/tvFirstCharForImageProfil"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="6"
-                        android:layout_centerInParent="true"
-                        android:textSize="22sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/white"/>
-
-                </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/rellayCiv"
-                    android:layout_marginStart="10dp">
-
-                    <TextView
-                        android:id="@+id/tvSantriName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Farhan Ghifari"
-                        android:textColor="@color/greytextcolor2"
-                        android:textSize="14sp"
-                        />
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <com.applandeo.materialcalendarview.CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:headerColor="@color/white"
-                app:headerLabelColor="@color/greytextcolor3"
-                app:todayLabelColor="@color/orange"
-                app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_green_24dp"
-                app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_green_24dp"/>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
-                android:background="@drawable/border_black">
-
-                <ProgressBar
-                    android:id="@+id/progressBarToday"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:indeterminateDrawable="@drawable/progressbar_color"
-                    android:layout_centerInParent="true"/>
-
-                <ImageView
-                    android:id="@+id/ivRefreshToday"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    app:srcCompat="@drawable/ic_refresh_white_24dp" />
-
-                <RelativeLayout
-                    android:id="@+id/rellayTglHariIni"
-                    android:layout_width="90dp"
                     android:layout_height="90dp"
-                    android:background="@drawable/round_left_green_darker">
+                    android:layout_gravity="center_horizontal">
 
-                    <TextView
-                        android:id="@+id/tvDateToday"
+                    <RelativeLayout
+                        android:id="@+id/rellayCiv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="16\nApril"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"/>
+                        android:layout_centerVertical="true">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/civProfPic"
+                            android:layout_width="55dp"
+                            android:layout_height="55dp"
+                            android:background="@drawable/circle_green"
+                            android:padding="10dp" />
+
+                        <TextView
+                            android:id="@+id/tvFirstCharForImageProfil"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:text="6"
+                            android:textColor="@color/white"
+                            android:textSize="22sp"
+                            android:textStyle="bold" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="10dp"
+                        android:layout_toEndOf="@id/rellayCiv">
+
+                        <TextView
+                            android:id="@+id/tvSantriName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Farhan Ghifari"
+                            android:textColor="@color/greytextcolor2"
+                            android:textSize="14sp" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:id="@+id/rellayInfoPresenceToday"
+                <com.applandeo.materialcalendarview.CalendarView
+                    android:id="@+id/calendarView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/rellayTglHariIni">
-
-                    <TextView
-                        android:id="@+id/todayTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/today"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"/>
-
-                    <TextView
-                        android:id="@+id/tvStatusPresenceToday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/todayTitle"
-                        android:text="Masuk"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"/>
-
-                </RelativeLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:layout_marginStart="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:background="@drawable/border_black">
-
-                <ProgressBar
-                    android:id="@+id/progressBarYesterday"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:indeterminateDrawable="@drawable/progressbar_color"
-                    android:layout_centerInParent="true"/>
-
-                <ImageView
-                    android:id="@+id/ivRefreshYesterday"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:visibility="gone"
-                    android:layout_centerInParent="true"
-                    app:srcCompat="@drawable/ic_refresh_white_24dp" />
+                    app:forwardButtonSrc="@drawable/ic_keyboard_arrow_right_green_24dp"
+                    app:headerColor="@color/white"
+                    app:headerLabelColor="@color/greytextcolor3"
+                    app:previousButtonSrc="@drawable/ic_keyboard_arrow_left_green_24dp"
+                    app:todayLabelColor="@color/blue_flatui_ausie" />
 
                 <RelativeLayout
-                    android:id="@+id/rellayTglYesterday"
-                    android:layout_width="90dp"
-                    android:layout_height="90dp"
-                    android:background="@drawable/round_left_green_darker">
-
-                    <TextView
-                        android:id="@+id/tvDateYesterday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:text="16\nApril"
-                        android:gravity="center"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"/>
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/rellayInfoPresenceYesterday"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toRightOf="@id/rellayTglYesterday">
+                    android:layout_height="70dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="30dp"
+                    android:background="@drawable/border_black">
 
-                    <TextView
-                        android:id="@+id/tvTitleYesterday"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/yesterday"
-                        android:textSize="14sp"
-                        android:textColor="@color/black"/>
+                    <ProgressBar
+                        android:id="@+id/progressBarToday"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:indeterminateDrawable="@drawable/progressbar_color"
+                        android:visibility="gone" />
 
-                    <TextView
-                        android:id="@+id/tvStatusPresenceYesterday"
-                        android:layout_width="wrap_content"
+                    <ImageView
+                        android:id="@+id/ivRefreshToday"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_centerInParent="true"
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_refresh_white_24dp" />
+
+                    <RelativeLayout
+                        android:id="@+id/rellayTglHariIni"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:background="@drawable/round_left_green_darker">
+
+                        <TextView
+                            android:id="@+id/tvDateToday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:gravity="center"
+                            android:text="16\nApril"
+                            android:textColor="@color/white"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rellayInfoPresenceToday"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tvTitleYesterday"
-                        android:text="Masuk"
-                        android:textSize="16sp"
-                        android:textColor="@color/black"/>
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:layout_toRightOf="@id/rellayTglHariIni">
+
+                        <TextView
+                            android:id="@+id/todayTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/today"
+                            android:textColor="@color/black"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvStatusPresenceToday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/todayTitle"
+                            android:text="Masuk"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+
+                    </RelativeLayout>
 
                 </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
 
-    </ScrollView>
-
-
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

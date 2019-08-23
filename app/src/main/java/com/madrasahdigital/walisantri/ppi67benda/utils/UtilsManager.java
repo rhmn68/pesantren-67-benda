@@ -118,6 +118,13 @@ public class UtilsManager {
         return dateFormat.format(date);
     }
 
+    public static String getMonthRelativeFromNow(int month) {
+        DateFormat dateFormat = new SimpleDateFormat("MM");
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.MONTH, month);
+        return dateFormat.format(cal.getTime());
+    }
+
     public static String getYesterdayDateString() {
         DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
         return dateFormat.format(yesterday());

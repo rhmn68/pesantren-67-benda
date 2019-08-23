@@ -1,6 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity.presence;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,9 +16,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.crashlytics.android.Crashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.PresenceModel;
@@ -26,6 +29,8 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.DetailDialog;
+
+import org.json.JSONObject;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -44,31 +49,27 @@ public class PresenceActivityV2 extends AppCompatActivity {
     private final String TAG = PresenceActivityV2.class.getSimpleName();
 
     private ProgressBar progressBarToday;
-    private ProgressBar progressBarYesterday;
     private ImageView ivRefreshToday;
-    private ImageView ivRefreshYesterday;
     private TextView tvDateToday;
-    private TextView tvDateYesterday;
     private TextView tvStatusPresenceToday;
-    private TextView tvStatusPresenceYesterday;
     private TextView tvSantriName;
     private TextView tvFirstCharForImageProfil;
     private RelativeLayout rellayTglHariIni;
-    private RelativeLayout rellayTglYesterday;
     private RelativeLayout rellayInfoPresenceToday;
-    private RelativeLayout rellayInfoPresenceYesterday;
     private SharedPrefManager sharedPrefManager;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private CalendarView calendarView;
     private ProgressBar progressBar;
     private PresenceModel presenceModel;
     private List<Calendar> calendarList;
-//    private List<Presensi> presence;
     private ActionBar aksibar;
     private String idSantri;
 
-    private final int TODAY = 0;
-    private final int YESTERDAY = 1;
+    private int month;
+    private int year;
     private boolean isActivityActive;
+    private boolean isPresenceStatusThreadWork = true;
+    private boolean isPresenceStatusYearMonthWork = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,23 +77,19 @@ public class PresenceActivityV2 extends AppCompatActivity {
         setContentView(R.layout.activity_presence_v2);
         progressBar = findViewById(R.id.progressBar);
         progressBarToday = findViewById(R.id.progressBarToday);
-        progressBarYesterday = findViewById(R.id.progressBarYesterday);
         ivRefreshToday = findViewById(R.id.ivRefreshToday);
-        ivRefreshYesterday = findViewById(R.id.ivRefreshYesterday);
         tvDateToday = findViewById(R.id.tvDateToday);
-        tvDateYesterday = findViewById(R.id.tvDateYesterday);
         tvStatusPresenceToday = findViewById(R.id.tvStatusPresenceToday);
         tvSantriName = findViewById(R.id.tvSantriName);
-        tvStatusPresenceYesterday = findViewById(R.id.tvStatusPresenceYesterday);
         tvFirstCharForImageProfil = findViewById(R.id.tvFirstCharForImageProfil);
         rellayTglHariIni = findViewById(R.id.rellayTglHariIni);
-        rellayTglYesterday = findViewById(R.id.rellayTglYesterday);
         calendarView = findViewById(R.id.calendarView);
         rellayInfoPresenceToday = findViewById(R.id.rellayInfoPresenceToday);
-        rellayInfoPresenceYesterday = findViewById(R.id.rellayInfoPresenceYesterday);
+        swipeRefreshLayout = findViewById(R.id.swipeRefresh);
         sharedPrefManager = new SharedPrefManager(PresenceActivityV2.this);
         isActivityActive = true;
         calendarList = new ArrayList<>();
+        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(ContextCompat
@@ -111,6 +108,9 @@ public class PresenceActivityV2 extends AppCompatActivity {
             tvFirstCharForImageProfil.setText(namaSantri.substring(0,1));
         }
 
+        month = Integer.parseInt(UtilsManager.getMonth());
+        year = Integer.parseInt(UtilsManager.getYear());
+        
         initializeListener();
 
         getPresenceStatusToday();
@@ -162,9 +162,43 @@ public class PresenceActivityV2 extends AppCompatActivity {
     }
 
     private void initializeListener() {
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            swipeRefreshLayout.setRefreshing(false);
+            if (!isPresenceStatusThreadWork) {
+                getPresenceStatusToday();
+            }
+            if (!isPresenceStatusYearMonthWork) {
+                new GetPresenceByYearAndMonth(idSantri, String.valueOf(year), String.valueOf(month)).execute();
+            }
+        });
+
         ivRefreshToday.setOnClickListener(l -> getPresenceStatusToday());
 
-        ivRefreshYesterday.setOnClickListener(l -> getPresenceStatusYesterday());
+        calendarView.setOnForwardPageChangeListener(() -> {
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            } else if (month < 1) {
+                month = 12;
+                year--;
+            }
+            Log.d(TAG, "month : " + month + " year : " + year);
+            new GetPresenceByYearAndMonth(idSantri, String.valueOf(year), String.valueOf(month)).execute();
+        });
+
+        calendarView.setOnPreviousPageChangeListener(() -> {
+            month--;
+            if (month > 12) {
+                month = 1;
+                year++;
+            } else if (month < 1) {
+                month = 12;
+                year--;
+            }
+            Log.d(TAG, "month : " + month + " year : " + year);
+            new GetPresenceByYearAndMonth(idSantri, String.valueOf(year), String.valueOf(month)).execute();
+        });
 
         calendarView.setOnDayClickListener((EventDay eventDay) -> {
             Calendar clickedDayCalendar = eventDay.getCalendar();
@@ -219,55 +253,31 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, R.drawable.ic_thumb_up_green_24dp));
+                events.add(new EventDay(calendar, R.drawable.ic_check_circle_green_24dp));
             } else if (presenceModel.getPresensi().get(i).getStatus().equals("ill")) {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, R.drawable.ic_first_aid_kit));
+                events.add(new EventDay(calendar, R.drawable.ic_remove_circle_orange_24dp));
             } else if (presenceModel.getPresensi().get(i).getStatus().equals("permit")) {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, R.drawable.ic_letter));
+                events.add(new EventDay(calendar, R.drawable.ic_remove_circle_grey_24dp));
             } else {
                 calendar.set(UtilsManager.getYearFromString(presenceModel.getPresensi().get(i).getDate()),
                         UtilsManager.getMonthFromString(presenceModel.getPresensi().get(i).getDate()) - 1,
                         UtilsManager.getDayFromString(presenceModel.getPresensi().get(i).getDate()));
-                events.add(new EventDay(calendar, UtilsManager.getRotateDrawable(getResources().getDrawable(R.drawable.ic_add_circle_red_24dp), 45)));
+                events.add(new EventDay(calendar, R.drawable.ic_remove_circle_red_24dp));
             }
             calendarList.add(calendar);
         }
 
         calendarView.setEvents(events);
-//
-//        Calendar calendar2 = new GregorianCalendar();
-//        Calendar calendar3 = new GregorianCalendar();
-//        Calendar calendar4 = new GregorianCalendar();
-//        Calendar calendar5 = new GregorianCalendar();
-//        calendar2.set(2019,7,5);
-//        calendar3.set(2019,7,6);
-//        calendar4.set(2019,7,7);
-//        calendar5.set(2019,7,8);
-//
-//        List<Calendar> cal = new ArrayList<>();
-//        cal.add(calendar2);
-//        cal.add(calendar3);
-//        cal.add(calendar4);
-//        cal.add(calendar5);
-//
-////        calendarView.setHighlightedDays(cal);
-//
-//        calendarView.setSelectedDates(cal);
-
     }
 
     private void getPresenceStatusToday() {
-        new GetPresenceStatusByDate(idSantri, UtilsManager.getTodayDateString(), TODAY).execute();
-    }
-
-    private void getPresenceStatusYesterday() {
-        new GetPresenceStatusByDate(idSantri, UtilsManager.getYesterdayDateString(), YESTERDAY).execute();
+        new GetPresenceStatusByDate(idSantri, UtilsManager.getTodayDateString()).execute();
     }
 
     private class GetPresenceByYearAndMonth extends AsyncTask<Void, Integer, Boolean> {
@@ -284,6 +294,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            isPresenceStatusYearMonthWork = true;
             if (isActivityActive) {
                 progressBar.setVisibility(View.VISIBLE);
             }
@@ -310,6 +321,8 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "1-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -319,6 +332,7 @@ public class PresenceActivityV2 extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             progressBar.setVisibility(View.GONE);
+            isPresenceStatusYearMonthWork = false;
             if (isSuccess) {
                 setStatusPresenceInCalendar();
             }
@@ -329,27 +343,21 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         private String id;
         private String date;
+        private String message;
         private Presensi presence;
-        private int statusDay;
 
-        public GetPresenceStatusByDate(String id, String date, int statusDay) {
+        public GetPresenceStatusByDate(String id, String date) {
             this.id = id;
             this.date = date;
-            this.statusDay = statusDay;
         }
 
         @Override
         protected void onPreExecute() {
+            isPresenceStatusThreadWork = true;
             if (isActivityActive) {
-                if (statusDay == TODAY) {
-                    progressBarToday.setVisibility(View.VISIBLE);
-                    rellayTglHariIni.setVisibility(View.GONE);
-                    rellayInfoPresenceToday.setVisibility(View.GONE);
-                } else {
-                    progressBarYesterday.setVisibility(View.VISIBLE);
-                    rellayTglYesterday.setVisibility(View.GONE);
-                    rellayInfoPresenceYesterday.setVisibility(View.GONE);
-                }
+                progressBarToday.setVisibility(View.VISIBLE);
+                rellayTglHariIni.setVisibility(View.GONE);
+                rellayInfoPresenceToday.setVisibility(View.GONE);
             }
         }
 
@@ -369,11 +377,24 @@ public class PresenceActivityV2 extends AppCompatActivity {
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
 
+                Log.d(TAG, "presence : " + bodyString);
+
+                int statusCode = response.code();
+
                 Gson gson = new Gson();
                 presence = gson.fromJson(bodyString, Presensi.class);
 
+                if (statusCode == 200) {
+                    message = presence.getStatus();
+                } else {
+                    JSONObject jsonObject = new JSONObject(bodyString);
+                    message = jsonObject.getString("message");
+                }
+
                 return true;
             } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
                 e.printStackTrace();
             }
 
@@ -382,37 +403,25 @@ public class PresenceActivityV2 extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
+            isPresenceStatusThreadWork = false;
             if (isActivityActive) {
                 if (isSuccess) {
                     DateFormat dayFormat = new SimpleDateFormat("dd");
                     DateFormat monthFormat = new SimpleDateFormat("MM");
                     Date date = new Date();
-
-                    if (statusDay == TODAY) {
-                        String dateToday = dayFormat.format(date) + "\n" + UtilsManager.getMonthFromNumber(PresenceActivityV2.this, monthFormat.format(date));
-                        progressBarToday.setVisibility(View.GONE);
-                        rellayTglHariIni.setVisibility(View.VISIBLE);
-                        rellayInfoPresenceToday.setVisibility(View.VISIBLE);
-                        ivRefreshToday.setVisibility(View.GONE);
-                        tvDateToday.setText(dateToday);
-                        tvStatusPresenceToday.setText(presence.getStatus());
-                    } else {
-                        String dateYesterday = dayFormat.format(UtilsManager.yesterday()) + "\n" + UtilsManager.getMonthFromNumber(PresenceActivityV2.this, monthFormat.format(date));
-                        progressBarYesterday.setVisibility(View.GONE);
-                        rellayTglYesterday.setVisibility(View.VISIBLE);
-                        rellayInfoPresenceYesterday.setVisibility(View.VISIBLE);
-                        ivRefreshYesterday.setVisibility(View.GONE);
-                        tvDateYesterday.setText(dateYesterday);
-                        tvStatusPresenceYesterday.setText(presence.getStatus());
-                    }
+                    String dateToday = dayFormat.format(date) + "\n" + UtilsManager.getMonthFromNumber(PresenceActivityV2.this, monthFormat.format(date));
+                    progressBarToday.setVisibility(View.GONE);
+                    rellayTglHariIni.setVisibility(View.VISIBLE);
+                    rellayInfoPresenceToday.setVisibility(View.VISIBLE);
+                    ivRefreshToday.setVisibility(View.GONE);
+                    tvDateToday.setText(dateToday);
+                    if (message != null)
+                        tvStatusPresenceToday.setText(message);
+                    else
+                        tvStatusPresenceToday.setText("Belum ada data");
                 } else {
-                    if (statusDay == TODAY) {
-                        progressBarToday.setVisibility(View.GONE);
-                        ivRefreshToday.setVisibility(View.VISIBLE);
-                    } else {
-                        progressBarYesterday.setVisibility(View.GONE);
-                        ivRefreshYesterday.setVisibility(View.VISIBLE);
-                    }
+                    progressBarToday.setVisibility(View.GONE);
+                    ivRefreshToday.setVisibility(View.VISIBLE);
                 }
             }
         }

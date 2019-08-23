@@ -129,6 +129,7 @@ public class HomeActivityV2 extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
+        swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
         initializeListener();
         if (sharedPrefManager.isLoggedIn()) {
@@ -136,7 +137,6 @@ public class HomeActivityV2 extends AppCompatActivity
             allSantri = sharedPrefManager.getAllSantri();
             String titleToday = getResources().getString(R.string.home_text1) + UtilsManager.getTodayDateStringMonthLinguistik(HomeActivityV2.this);
             tvTitleToday.setText(titleToday);
-            swipeRefreshLayout.setColorSchemeColors(Color.GREEN, Color.BLUE, Color.MAGENTA);
 
             new GetDataSantri().execute();
             new GetTagihanAlLSantri().execute();

@@ -51,9 +51,9 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:text="Ok"
+        android:layout_marginTop="15dp"
         android:background="@drawable/btn_silver"
         android:layout_below="@id/scrollView"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         />
 </RelativeLayout>
