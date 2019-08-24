@@ -61,7 +61,7 @@ public class AboutActivity extends AppCompatActivity {
         wvDescription = findViewById(R.id.wvDescription);
         progressBar = findViewById(R.id.progressBar);
 
-        String versionCode = "Kode : " + BuildConfig.VERSION_CODE;
+        String versionCode = "Tipe : " + BuildConfig.VERSION_CODE;
         String versionName = "Versi Aplikasi : " + BuildConfig.VERSION_NAME;
 
         tvKodeVersi.setText(versionCode);
