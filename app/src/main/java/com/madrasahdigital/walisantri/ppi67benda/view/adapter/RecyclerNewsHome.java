@@ -29,68 +29,93 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
     private Context mContext;
     private OnArtikelClickListener mOnArtikelClickListener;
     private int type;
+    private int sizeList;
+    private final int TAG_NORMAL_LIST = 1;
+    private final int TAG_END_LIST = 2;
 
     public RecyclerNewsHome(Context context, List<Post> postList, int type) {
         mContext = context;
         this.postList = postList;
         this.type = type;
+        sizeList = postList.size() + 1;
     }
     
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view;
-        if (type == Constant.TYPE_NEWS_HOME)
-            view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
-        else
+        if (type == Constant.TYPE_NEWS_HOME) {
+            switch (viewType) {
+                case TAG_NORMAL_LIST:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+                    return new RecyclerNewsHome.ViewHolderCategory(view);
+                case TAG_END_LIST:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.item_small_width, parent, false);
+                    return new RecyclerNewsHome.ViewHolderCategory(view);
+                default:
+                    view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
+                    return new RecyclerNewsHome.ViewHolderCategory(view);
+            }
+        } else
             view = LayoutInflater.from(mContext).inflate(R.layout.item_news_large, parent, false);
         return new ViewHolderCategory(view);
     }
 
     @Override
+    public int getItemViewType(int position) {
+        super.getItemViewType(position);
+        if (position < sizeList - 1)
+            return TAG_NORMAL_LIST;
+        else return TAG_END_LIST;
+    }
+
+    @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int i) {
-        ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
-        final int position = i;
-        final Post post = postList.get(position);
+        int viewCode = getItemViewType(i);
+        if (viewCode == TAG_NORMAL_LIST) {
+            ViewHolderCategory viewHolderCategory = (ViewHolderCategory) holder;
+            final int position = i;
+            final Post post = postList.get(position);
 
-        viewHolderCategory.tvTitleNews.setText(post.getTitle());
-        if (post.getIntro() != null)
-        viewHolderCategory.tvDescriptionNews.setText(post.getIntro());
-        else
-            viewHolderCategory.tvDescriptionNews.setText("");
+            viewHolderCategory.tvTitleNews.setText(post.getTitle());
+            if (post.getIntro() != null)
+                viewHolderCategory.tvDescriptionNews.setText(post.getIntro());
+            else
+                viewHolderCategory.tvDescriptionNews.setText("");
 
-        Glide
-                .with(mContext)
-                .load(post.getFeaturedImage())
-                .centerCrop()
-                .placeholder(R.drawable.bg_silver)
-                .error(R.drawable.bg_silver)
-                .into(viewHolderCategory.ivThumbnailNews);
+            Glide
+                    .with(mContext)
+                    .load(post.getFeaturedImage())
+                    .centerCrop()
+                    .placeholder(R.drawable.bg_silver)
+                    .error(R.drawable.bg_silver)
+                    .into(viewHolderCategory.ivThumbnailNews);
 
-        viewHolderCategory.mViewContainer.setOnClickListener(view -> {
-            if (mOnArtikelClickListener != null) {
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    if (mOnArtikelClickListener != null)
-                        mOnArtikelClickListener.onClick(position, post);
-                }, 250);
-            }
-        });
+            viewHolderCategory.mViewContainer.setOnClickListener(view -> {
+                if (mOnArtikelClickListener != null) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        if (mOnArtikelClickListener != null)
+                            mOnArtikelClickListener.onClick(position, post);
+                    }, 250);
+                }
+            });
 
-        viewHolderCategory.btnMore.setOnClickListener(view -> {
-            if (mOnArtikelClickListener != null) {
-                Handler handler = new Handler();
-                handler.postDelayed(() -> {
-                    if (mOnArtikelClickListener != null)
-                        mOnArtikelClickListener.onClick(position, post);
-                }, 250);
-            }
-        });
+            viewHolderCategory.btnMore.setOnClickListener(view -> {
+                if (mOnArtikelClickListener != null) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(() -> {
+                        if (mOnArtikelClickListener != null)
+                            mOnArtikelClickListener.onClick(position, post);
+                    }, 250);
+                }
+            });
+        }
     }
 
     @Override
     public int getItemCount() {
-        return postList.size();
+        return sizeList;
     }
 
     private class ViewHolderCategory extends RecyclerView.ViewHolder {
