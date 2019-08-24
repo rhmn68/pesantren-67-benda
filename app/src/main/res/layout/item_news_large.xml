@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardView"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="320dp"
     android:layout_marginTop="10dp"
     android:layout_marginLeft="15dp"
     android:layout_marginRight="15dp"
@@ -34,18 +34,18 @@
                 android:id="@+id/tvTitleNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Persiapan Menghadapi Ujian"
+                android:text="Persiapan Menghadapi Ujian asda fad ad afd asdfa dfadfs adsf adsf adf adf adf adf ad faf da da sd sd"
                 android:textStyle="bold"
                 android:textColor="@color/greytextcolor2"
                 android:textSize="14sp"/>
 
             <TextView
-                android:id="@+id/tvDescriptionNews"
+                android:id="@+id/tvTanggal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_above="@id/btnMore"
-                android:text="@string/loremipsumhalflong"
+                android:text="Diposting pada 3/5/2019"
                 android:layout_below="@id/tvTitleNews"/>
 
             <Button
@@ -58,8 +58,7 @@
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
                 android:textSize="12sp"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"/>
+                android:layout_alignParentBottom="true"/>
 
         </RelativeLayout>
 

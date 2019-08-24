@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.ActionBar;
@@ -91,6 +92,8 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             if (!isThreadWork)
                 new GetNews().execute();
+            else
+                swipeRefreshLayout.setRefreshing(false);
         });
     }
 
@@ -144,6 +147,7 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+            Log.d(TAG, "onpre");
             isThreadWork = true;
             swipeRefreshLayout.setRefreshing(true);
         }
@@ -151,7 +155,8 @@ public class NewsFromPesantrenActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             swipeRefreshLayout.setRefreshing(false);
-            isThreadWork = true;
+            isThreadWork = false;
+            Log.d(TAG, "onpost");
             if (isSuccess) {
                 initializationOfNewsViewer();
             } else {

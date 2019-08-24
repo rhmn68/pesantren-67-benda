@@ -513,7 +513,7 @@ public class HomeActivityV2 extends AppCompatActivity
                     .build();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_NEWS)
+                    .url(Constant.LINK_GET_NEWS + "?perpage=5")
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();

@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
+import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
 import java.util.List;
 
@@ -37,7 +38,10 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
         mContext = context;
         this.postList = postList;
         this.type = type;
-        sizeList = postList.size() + 1;
+        if (type == Constant.TYPE_NEWS_HOME)
+            sizeList = postList.size() + 1;
+        else
+            sizeList = postList.size();
     }
     
     @NonNull
@@ -64,9 +68,12 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public int getItemViewType(int position) {
         super.getItemViewType(position);
-        if (position < sizeList - 1)
+        if (type == Constant.TYPE_NEWS_HOME) {
+            if (position < sizeList - 1)
+                return TAG_NORMAL_LIST;
+            else return TAG_END_LIST;
+        } else
             return TAG_NORMAL_LIST;
-        else return TAG_END_LIST;
     }
 
     @Override
@@ -77,11 +84,24 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
             final int position = i;
             final Post post = postList.get(position);
 
-            viewHolderCategory.tvTitleNews.setText(post.getTitle());
-            if (post.getIntro() != null)
-                viewHolderCategory.tvDescriptionNews.setText(post.getIntro());
+            String title = post.getTitle();
+            if (type == Constant.TYPE_NEWS_PAGE) {
+                if (title.length() > 90) {
+                    title = title.substring(0, 90);
+                    title += "...";
+                }
+            } else {
+                if (title.length() > 50) {
+                    title = title.substring(0, 50);
+                    title += "...";
+                }
+            }
+
+            viewHolderCategory.tvTitleNews.setText(title);
+            if (post.getPublishedAt() != null)
+                viewHolderCategory.tvTanggal.setText(UtilsManager.getDateAnotherFormatFromString2(String.valueOf(post.getPublishedAt())));
             else
-                viewHolderCategory.tvDescriptionNews.setText("");
+                viewHolderCategory.tvTanggal.setText("");
 
             Glide
                     .with(mContext)
@@ -123,7 +143,7 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
 
         public ImageView ivThumbnailNews;
         public TextView tvTitleNews;
-        public TextView tvDescriptionNews;
+        public TextView tvTanggal;
         public Button btnMore;
 
         public ViewHolderCategory(View itemView) {
@@ -132,7 +152,7 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
             ivThumbnailNews = itemView.findViewById(R.id.ivThumbnailNews);
             btnMore = itemView.findViewById(R.id.btnMore);
             tvTitleNews = itemView.findViewById(R.id.tvTitleNews);
-            tvDescriptionNews = itemView.findViewById(R.id.tvDescriptionNews);
+            tvTanggal = itemView.findViewById(R.id.tvTanggal);
         }
     }
 
