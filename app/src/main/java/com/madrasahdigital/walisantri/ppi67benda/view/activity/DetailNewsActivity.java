@@ -145,13 +145,18 @@ public class DetailNewsActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
             if (isSuccess) {
                 if (detailNewsModel.getFeaturedImage() != null) {
-                    Glide
-                            .with(DetailNewsActivity.this)
-                            .load(detailNewsModel.getFeaturedImage())
-                            .centerCrop()
-                            .placeholder(R.drawable.bg_silver)
-                            .error(R.drawable.bg_silver)
-                            .into(ivNewsImage);
+                    try {
+                        Glide
+                                .with(DetailNewsActivity.this)
+                                .load(detailNewsModel.getFeaturedImage())
+                                .centerCrop()
+                                .placeholder(R.drawable.bg_silver)
+                                .error(R.drawable.bg_silver)
+                                .into(ivNewsImage);
+                    } catch (Exception e) {
+                        Crashlytics.setString(TAG, "2-" + e.getMessage());
+                        Crashlytics.logException(e);
+                    }
                 }
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
