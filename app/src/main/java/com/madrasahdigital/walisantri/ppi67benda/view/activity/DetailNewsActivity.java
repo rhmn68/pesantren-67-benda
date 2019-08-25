@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -75,6 +76,8 @@ public class DetailNewsActivity extends AppCompatActivity {
         wvDescription.getSettings().setSupportZoom(true);
         wvDescription.getSettings().setBuiltInZoomControls(true);
         wvDescription.getSettings().setDisplayZoomControls(true);
+        WebSettings webSettings = wvDescription.getSettings();
+        webSettings.setJavaScriptEnabled(true);
 
         Intent intent = getIntent();
         urlBerita = intent.getStringExtra("urlberita");

@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -61,6 +62,9 @@ public class AboutActivity extends AppCompatActivity {
         wvDescription = findViewById(R.id.wvDescription);
         progressBar = findViewById(R.id.progressBar);
 
+        WebSettings webSettings = wvDescription.getSettings();
+        webSettings.setJavaScriptEnabled(true);
+
         String versionCode = "Tipe : " + BuildConfig.VERSION_CODE;
         String versionName = "Versi Aplikasi : " + BuildConfig.VERSION_NAME;
 
@@ -83,7 +87,6 @@ public class AboutActivity extends AppCompatActivity {
     private void setDetailArticle(String detail) {
         wvDescription.loadData(detail, "text/html", "utf-8");
     }
-
 
     private class GetAboutDetail extends AsyncTask<Void, Integer, Boolean> {
 
@@ -112,9 +115,13 @@ public class AboutActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(bodyString.replace("\\n", ""));
                     aboutText = jsonObject.getString("value");
                     return true;
+                } else {
+                    JSONObject jsonObject = new JSONObject(bodyString.replace("\\n", ""));
+                    String msg = jsonObject.getString("message");
+                    Crashlytics.setString(Constant.TAG + "-About", "1-" + msg);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(Constant.TAG, "1-" + e.getMessage());
+                Crashlytics.setString(Constant.TAG + "-About", "2-" + e.getMessage());
                 Crashlytics.logException(e);
                 e.printStackTrace();
             }
