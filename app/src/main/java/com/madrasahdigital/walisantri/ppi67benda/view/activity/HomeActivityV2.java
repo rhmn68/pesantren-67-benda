@@ -585,9 +585,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
             try {
                 Response response = client.newCall(request).execute();
-
-                ResponseBody responseBody = response.body();
-                String bodyString = responseBody.string();
+                String bodyString = response.body().string();
 
                 Gson gson = new Gson();
                 presence = gson.fromJson(bodyString, Presensi.class);
@@ -614,9 +612,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 if (allSantri.getSantri().get(i).getPhoto() != null)
                     presence.setUrlPhoto(allSantri.getSantri().get(i).getPhoto().toString());
                 presenceList.add(presence);
-                Log.d(TAG, "call GetPresenceToday santri : " + presence.getSantriName());
                 if (presenceList.size() == allSantri.getTotal()) {
-                    Log.d(TAG, "call GetPresenceToday total");
                     isThreadPresenceWork = false;
                     setView(TYPE_DONE_LOAD_PRESENCE_TODAY);
                     initializationOfPresenceViewer();

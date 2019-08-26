@@ -2,6 +2,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
             }
         }
 
+        Log.d(TAG, "oke : " + presenceList.get(i).getStatus());
+
         if (presenceList.get(i).getStatus().toLowerCase().equals("present")) {
             viewHolderCategory.tvStatusPresence.setText("Hadir");
             viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_green));
@@ -78,6 +81,11 @@ public class RecyclerPresenceHome extends RecyclerView.Adapter<RecyclerView.View
             viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_orange));
             viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.greytextcolor3));
             viewHolderCategory.tvKeteranganAbsen.setTextColor(mContext.getResources().getColor(R.color.colorPermit));
+        } else if (presenceList.get(i).getStatus().toLowerCase().equals("failed")) {
+            viewHolderCategory.tvStatusPresence.setText("Belum ada data");
+            viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_silver));
+            viewHolderCategory.tvStatusPresence.setTextColor(mContext.getResources().getColor(R.color.greytextcolor3));
+            viewHolderCategory.tvKeteranganAbsen.setText("");
         } else {
             viewHolderCategory.tvStatusPresence.setText("Absen");
             viewHolderCategory.tvStatusPresence.setBackground(mContext.getResources().getDrawable(R.drawable.btn_red));

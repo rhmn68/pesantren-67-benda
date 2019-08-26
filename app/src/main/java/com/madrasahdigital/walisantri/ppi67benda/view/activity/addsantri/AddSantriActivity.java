@@ -69,7 +69,13 @@ public class AddSantriActivity extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(AddSantriActivity.this);
         loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        try {
+            loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
 
         etNomorIndukSantri = findViewById(R.id.etNomorIndukSantri);
         sharedPrefManager = new SharedPrefManager(AddSantriActivity.this);

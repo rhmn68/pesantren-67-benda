@@ -75,7 +75,13 @@ public class DetailMakePaymentActivity extends AppCompatActivity {
 
         loadingDialog = new LoadingDialog(DetailMakePaymentActivity.this);
         loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        try {
+            loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
 
         sharedPrefManager = new SharedPrefManager(DetailMakePaymentActivity.this);
         detailPaymentModel = getIntent().getParcelableExtra("detailpayment");

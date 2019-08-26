@@ -67,7 +67,13 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         loadingDialog = new LoadingDialog(LoginActivity.this);
         loadingDialog.setCancelable(false);
-        loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        try {
+            loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
         sharedPrefManager = new SharedPrefManager(LoginActivity.this);
 
         etEmail.addTextChangedListener(new TextWatcher() {
