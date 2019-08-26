@@ -10,7 +10,10 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TAG;
 
 /**
  * Created by Alhudaghifari on 13:57 24/05/19
@@ -40,8 +43,14 @@ public class DetailDialog extends Dialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG + "-DetDial", "1-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
         setContentView(R.layout.dialog_detail);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         tvStatusPresence = findViewById(R.id.tvStatusPresence);
         tvTanggal = findViewById(R.id.tvTanggal);
         tvDescription = findViewById(R.id.tvDeskripsi);

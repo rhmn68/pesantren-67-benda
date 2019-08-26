@@ -5,19 +5,20 @@ import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.Santrus;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TAG;
 
 /**
  * Created by Alhudaghifari on 2:39 14/05/19
@@ -41,8 +42,14 @@ public class SantriChooserDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG + "-SantriChDial", "1-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
         setContentView(R.layout.dialog_santri_chooser);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         listView = findViewById(R.id.listView);
         arrayListName = new ArrayList<>();
@@ -59,10 +66,9 @@ public class SantriChooserDialog extends Dialog {
     private AdapterView.OnItemClickListener myListClickListener = new AdapterView.OnItemClickListener() {
         public void onItemClick (AdapterView av, View v, int arg2, long arg3)
         {
-            String name = ((TextView) v).getText().toString();
+//            String name = ((TextView) v).getText().toString();
             mDialogResult.finish(santriList.get(arg2).getId());
             dismiss();
-            Log.d("DIALOG", "posisi : " + arg2);
         }
     };
 

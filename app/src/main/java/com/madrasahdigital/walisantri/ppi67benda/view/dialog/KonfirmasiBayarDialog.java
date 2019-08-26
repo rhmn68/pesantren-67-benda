@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TAG;
 
 /**
  * Created by Alhudaghifari on 16:32 22/06/19
@@ -31,8 +34,14 @@ public class KonfirmasiBayarDialog extends Dialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG + "-KonfirmBDial", "1-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
         setContentView(R.layout.dialog_confirm_payment);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         btnOk = findViewById(R.id.btnOk);
         btnBatal = findViewById(R.id.btnBatal);
         btnOk.setOnClickListener(this);

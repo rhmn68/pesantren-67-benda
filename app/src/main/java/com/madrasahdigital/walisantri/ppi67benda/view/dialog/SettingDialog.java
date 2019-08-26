@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
+
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TAG;
 
 /**
  * Created by Alhudaghifari on 8:31 22/05/19
@@ -31,8 +34,14 @@ public class SettingDialog extends Dialog implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            Crashlytics.setString(TAG + "-SetDial", "1-" + e.getMessage());
+            Crashlytics.logException(e);
+            e.printStackTrace();
+        }
         setContentView(R.layout.dialog_setting);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         tvLogout = findViewById(R.id.tvLogout);
         tvAbout = findViewById(R.id.tvAbout);
         tvLogout.setOnClickListener(this);

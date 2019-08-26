@@ -37,7 +37,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
@@ -107,17 +106,25 @@ public class AddSantriActivity extends AppCompatActivity {
     }
 
     private void openConfirmDialog(AssignSantriModel assignSantriModel) {
-        KonfirmasiSantriDialog konfirmasiSantriDialog =
-                new KonfirmasiSantriDialog(AddSantriActivity.this, assignSantriModel.getData().getNis(),
-                        assignSantriModel.getData().getFullname(), assignSantriModel.getData().getDateOfBirth());
-        konfirmasiSantriDialog.setDialogResult(isConfirmClicked -> {
-            if (isConfirmClicked) {
-                new KonfirmasiAssignSantri(assignSantriModel.getData().getUrlConfirm()).execute();
+        if (assignSantriModel != null) {
+            try {
+                KonfirmasiSantriDialog konfirmasiSantriDialog =
+                        new KonfirmasiSantriDialog(AddSantriActivity.this, assignSantriModel.getData().getNis(),
+                                assignSantriModel.getData().getFullname(), assignSantriModel.getData().getDateOfBirth());
+                konfirmasiSantriDialog.setDialogResult(isConfirmClicked -> {
+                    if (isConfirmClicked) {
+                        new KonfirmasiAssignSantri(assignSantriModel.getData().getUrlConfirm()).execute();
+                    }
+                });
+                konfirmasiSantriDialog.show(); // 171810100
+            } catch (Exception e) {
+                Crashlytics.setString(TAG, "0-" + e.getMessage());
+                Crashlytics.logException(e);
             }
-        });
-        konfirmasiSantriDialog.show();
+        } else {
+            UtilsManager.showToast(AddSantriActivity.this, "data tidak tersedia, mohon hubungi developer");
+        }
     }
-
 
     private class KonfirmasiAssignSantri extends AsyncTask<Void, Integer, Boolean> {
 
@@ -149,9 +156,8 @@ public class AddSantriActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-                ResponseBody responseBody = response.body();
 
-                JSONObject jsonObject = new JSONObject(responseBody.string());
+                JSONObject jsonObject = new JSONObject(response.body().string());
                 message = jsonObject.getString("message");
 
                 int statusCode = response.code();
@@ -232,9 +238,8 @@ public class AddSantriActivity extends AppCompatActivity {
 
             try {
                 Response response = client.newCall(request).execute();
-                ResponseBody responseBody = response.body();
 
-                String bodyString = responseBody.string();
+                String bodyString = response.body().string();
 
                 Gson gson = new Gson();
                 assignSantriModel =

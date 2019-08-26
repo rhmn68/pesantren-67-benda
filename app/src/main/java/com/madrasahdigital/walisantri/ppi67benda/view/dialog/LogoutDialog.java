@@ -37,7 +37,11 @@ public class LogoutDialog extends Dialog implements
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.dialog_logout);
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        try {
+            getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         btnLogout = findViewById(R.id.btn_logout);
         btnTidak = findViewById(R.id.btn_tidak);
         btnLogout.setOnClickListener(this);
