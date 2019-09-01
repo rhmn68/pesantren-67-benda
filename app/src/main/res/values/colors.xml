@@ -13,6 +13,7 @@
     <color name="black">#000000</color>
     <color name="silverlow">#E2E2E2</color>
     <color name="silverlow2">#EBEBEB</color>
+    <color name="silvertransparant">#ffe2e2e2</color>
     <color name="silver">#bcbdbd</color>
     <color name="silverstrong">#a9a9a9</color>
     <color name="lightsilver">#E5E5E5</color>

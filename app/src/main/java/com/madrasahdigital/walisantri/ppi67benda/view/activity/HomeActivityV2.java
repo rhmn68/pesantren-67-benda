@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.viewpager.widget.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
@@ -32,6 +34,7 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
@@ -45,10 +48,14 @@ import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.ChooseSa
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
+import com.madrasahdigital.walisantri.ppi67benda.view.adapter.SlidingImageAdapter;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
+import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -87,10 +94,12 @@ public class HomeActivityV2 extends AppCompatActivity
     private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
     private RelativeLayout rellayPerbarui;
+    private RelativeLayout rellayBanner;
     private LinearLayout linlayWelcomeNotLogin;
     private LinearLayout linlayInfoSantri;
     private LinearLayout linlayTagihanPembayaran;
     private SwipeRefreshLayout swipeRefreshLayout;
+    private ViewPager mPager;
     private boolean isThreadPresenceWork = true;
     private boolean isThreadTotalTagihanWork = true;
 
@@ -103,6 +112,9 @@ public class HomeActivityV2 extends AppCompatActivity
     private final int TYPE_SHOW_GET_LATEST_VERSION_APP = 6;
     private final int TYPE_HIDDEN_GET_LATEST_VERSION_APP = 7;
 
+    private int currentPage = 0;
+    private int NUM_PAGES = 3;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,11 +122,13 @@ public class HomeActivityV2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBarToday = findViewById(R.id.progressBarToday);
         rv_news = findViewById(R.id.rv_news);
+        mPager = findViewById(R.id.viewPagerBanner);
         linlayWelcomeNotLogin = findViewById(R.id.linlayWelcomeNotLogin);
         linlayInfoSantri = findViewById(R.id.linlayInfoSantri);
         linlayTagihanPembayaran = findViewById(R.id.linlayTagihanPembayaran);
         rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
         rellayPerbarui = findViewById(R.id.rellayPerbarui);
+        rellayBanner = findViewById(R.id.rellayBanner);
         ivRefreshPresenceToday = findViewById(R.id.ivRefreshPresenceToday);
         rv_presence_today = findViewById(R.id.rv_presence_today);
         tvBelumAdaSantri = findViewById(R.id.tvBelumAdaSantri);
@@ -319,6 +333,41 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_presence_today.setAdapter(recyclerListChat);
     }
 
+    private void initializeSlideBanner(List<Post> articleList) {
+        final PageIndicatorView pageIndicatorView = findViewById(R.id.pageIndicatorView);
+        pageIndicatorView.setCount(NUM_PAGES); // specify total count of indicators
+        mPager.setAdapter(new SlidingImageAdapter(HomeActivityV2.this, articleList.subList(0, NUM_PAGES)));
+        // Auto start of viewpager
+        final Handler handler = new Handler();
+        final Runnable Update = () -> {
+            if (currentPage == NUM_PAGES) {
+                currentPage = 0;
+            }
+            mPager.setCurrentItem(currentPage++, true);
+        };
+        Timer swipeTimer = new Timer();
+        swipeTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                handler.post(Update);
+            }
+        }, 3000, 3000);
+
+        // Pager listener over indicator
+        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {/*empty*/}
+
+            @Override
+            public void onPageSelected(int position) {
+                pageIndicatorView.setSelection(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {/*empty*/}
+        });
+    }
+
     private void initializationOfNewsViewer() {
         final LinearLayoutManager mLinearLayoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
@@ -369,6 +418,11 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (type == TYPE_HIDDEN_GET_LATEST_VERSION_APP) {
             rellayPerbarui.setVisibility(View.GONE);
         }
+    }
+
+    public void gotoNews(View view) {
+        Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
+        startActivity(intent);
     }
 
     private class GetLatestVersionCode extends AsyncTask<Void, Integer, Boolean> {
@@ -540,13 +594,16 @@ public class HomeActivityV2 extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             progressBarNews.setVisibility(View.VISIBLE);
+            rellayBanner.setVisibility(View.GONE);
         }
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
             progressBarNews.setVisibility(View.GONE);
             if (isSuccess) {
+                rellayBanner.setVisibility(View.VISIBLE);
                 initializationOfNewsViewer();
+                initializeSlideBanner(newsModel.getPosts());
             } else {
                 UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
             }

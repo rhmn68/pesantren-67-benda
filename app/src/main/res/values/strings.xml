@@ -87,7 +87,7 @@
     <string name="home_text2" translatable="false">Belum ada santri yang ditambahkan</string>
     <string name="home_text3" translatable="false">Tagihan Pembayaran</string>
     <string name="home_text4" translatable="false">Total Tagihan</string>
-    <string name="home_text5" translatable="false">Berita Terbaru dari Pesantren</string>
+    <string name="home_text5" translatable="false">Berita dari Pesantren</string>
     <string name="menu_presence" translatable="false">Presensi</string>
     <string name="menu_payment" translatable="false">Pembayaran</string>
     <string name="menu_news" translatable="false">Berita dari Pesantren</string>
