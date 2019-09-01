@@ -7,6 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Alhudaghifari on 14:23 01/09/19
  */
 public class Result {
+
     @SerializedName("id")
     @Expose
     private String id;
@@ -15,7 +16,7 @@ public class Result {
     private String title;
     @SerializedName("featured_image")
     @Expose
-    private String featuredImage;
+    private FeaturedImage featuredImage;
     @SerializedName("status")
     @Expose
     private String status;
@@ -54,11 +55,11 @@ public class Result {
         this.title = title;
     }
 
-    public String getFeaturedImage() {
+    public FeaturedImage getFeaturedImage() {
         return featuredImage;
     }
 
-    public void setFeaturedImage(String featuredImage) {
+    public void setFeaturedImage(FeaturedImage featuredImage) {
         this.featuredImage = featuredImage;
     }
 

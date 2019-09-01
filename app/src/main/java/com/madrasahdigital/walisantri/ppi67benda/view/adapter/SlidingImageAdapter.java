@@ -2,6 +2,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,7 +14,6 @@ import androidx.viewpager.widget.PagerAdapter;
 import com.bumptech.glide.Glide;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
-import com.madrasahdigital.walisantri.ppi67benda.view.activity.DetailNewsActivity;
 
 import java.util.List;
 
@@ -51,15 +51,21 @@ public class SlidingImageAdapter extends PagerAdapter {
 
         Glide
                 .with(context)
-                .load(articleList.get(position).getFeaturedImage())
+                .load(articleList.get(position).getFeaturedImage().getThumb700x350())
                 .into(imageView);
 
         view.addView(imageLayout, 0);
 
         imageLayout.setOnClickListener(l -> {
-            Intent intent = new Intent(context, DetailNewsActivity.class);
-            intent.putExtra("urlberita", articleList.get(position).getUrl());
-            context.startActivity(intent);
+            String urlBerita = articleList.get(position).getUrl();
+
+            if (urlBerita != null) {
+                if (!urlBerita.isEmpty()) {
+                    Intent i = new Intent(Intent.ACTION_VIEW);
+                    i.setData(Uri.parse(urlBerita));
+                    context.startActivity(i);
+                }
+            }
         });
 
         return imageLayout;

@@ -382,6 +382,8 @@ public class HomeActivityV2 extends AppCompatActivity
         });
     }
 
+    String thumb_200x200;
+
     private void initializationOfNewsViewer() {
         final LinearLayoutManager mLinearLayoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
