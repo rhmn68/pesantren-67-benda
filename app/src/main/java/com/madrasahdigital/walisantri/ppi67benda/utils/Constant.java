@@ -29,6 +29,7 @@ public class Constant {
     public static final String LINK_GET_OTP = SERVER_LINK + "api/user/auth/resend_otp/$"; // replace $ with id user
     public static final String LINK_GET_LATEST_VERSION = SERVER_LINK + "api/setting/presensi.app_version";
     public static final String LINK_GET_ABOUT_DETAIL = SERVER_LINK + "api/variable/tentang_aplikasi";
+    public static final String LINK_GET_IMAGE_BANNER = SERVER_LINK + "api/entry/index/slider?orderby=order&direction=asc&filter[status]=1";
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri
     public static final String LINK_GET_PRESENCE_TODAY_2 = SERVER_LINK + "api/santri/$/presensi/";

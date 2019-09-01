@@ -107,7 +107,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Anda belum login, login terlebih dahulu untuk melihat aktivitas santri"
+                        android:text="Anda belum login, login terlebih dahulu untuk memaksimalkan fungsi aplikasi"
                         android:textColor="@color/greytextcolor"
                         android:layout_marginTop="20dp"
                         android:layout_marginLeft="35dp"

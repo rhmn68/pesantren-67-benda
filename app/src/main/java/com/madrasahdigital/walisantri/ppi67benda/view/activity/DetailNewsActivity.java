@@ -82,7 +82,17 @@ public class DetailNewsActivity extends AppCompatActivity {
         Intent intent = getIntent();
         urlBerita = intent.getStringExtra("urlberita");
 
-        new GetDetailArticle().execute();
+        if (urlBerita != null) {
+            if (!urlBerita.isEmpty()) {
+                new GetDetailArticle().execute();
+            } else {
+                tvDipostingPada.setText("");
+                tvTitleNews.setText("");
+            }
+        } else {
+            tvDipostingPada.setText("");
+            tvTitleNews.setText("");
+        }
     }
 
     @Override

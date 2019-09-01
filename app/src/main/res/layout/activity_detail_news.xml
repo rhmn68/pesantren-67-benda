@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/image_news"/>
+                android:src="@drawable/bg_silver"/>
 
             <TextView
                 android:id="@+id/tvTitleNews"
@@ -43,7 +43,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Persiapan Menghadapi Ujian"/>
+                android:text="-"/>
 
             <TextView
                 android:id="@+id/tvDipostingPada"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="3dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
-                android:text="Diposting pada hari Ahad, 9 Juni 2019"/>
+                android:text="-"/>
 
             <WebView
                 android:id="@+id/wvDescription"

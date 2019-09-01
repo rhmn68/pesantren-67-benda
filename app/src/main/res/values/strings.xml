@@ -94,6 +94,7 @@
     <string name="menu_add_santri" translatable="false">Tambah Santri</string>
     <string name="menu_about" translatable="false">Tentang Aplikasi</string>
     <string name="menu_logout" translatable="false">Keluar</string>
+    <string name="menu_login" translatable="false">Login Wali Santri</string>
     <string name="home_text6" translatable="false">Masuk</string>
     <string name="loremipsum" translatable="false">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
     <string name="loremipsumhalflong" translatable="false">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>

@@ -20,7 +20,6 @@
             android:id="@+id/nav_news"
             android:icon="@drawable/ic_folded_newspaper"
             android:title="@string/menu_news" />
-
         <item
             android:id="@+id/nav_add_santri"
             android:icon="@drawable/ic_add_circle_black_24dp"
@@ -29,6 +28,10 @@
             android:id="@+id/nav_about"
             android:icon="@drawable/ic_info_black_24dp"
             android:title="@string/menu_about" />
+        <item
+            android:id="@+id/nav_login"
+            android:icon="@drawable/ic_login"
+            android:title="@string/menu_login" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout"

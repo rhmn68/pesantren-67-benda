@@ -34,9 +34,10 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
-import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
+import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
+import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
@@ -102,6 +103,8 @@ public class HomeActivityV2 extends AppCompatActivity
     private ViewPager mPager;
     private boolean isThreadPresenceWork = true;
     private boolean isThreadTotalTagihanWork = true;
+    private boolean isThreadGetNewsWork = true;
+    private boolean isThreadGetImageBannerWork = true;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
     private final int TYPE_DONE_LOAD_PRESENCE_TODAY = 1;
@@ -113,7 +116,7 @@ public class HomeActivityV2 extends AppCompatActivity
     private final int TYPE_HIDDEN_GET_LATEST_VERSION_APP = 7;
 
     private int currentPage = 0;
-    private int NUM_PAGES = 3;
+    private int NUM_PAGES;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,6 +169,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         new GetLatestVersionCode().execute();
         new GetNews().execute();
+        new GetImageBanner().execute();
     }
 
     private void initializeListener() {
@@ -181,6 +185,10 @@ public class HomeActivityV2 extends AppCompatActivity
             }
             if (!isThreadTotalTagihanWork)
                 new GetTagihanAlLSantri().execute();
+            if (!isThreadGetNewsWork)
+                new GetNews().execute();
+            if (!isThreadGetImageBannerWork)
+                new GetImageBanner().execute();
         });
 
         ivRefreshPresenceToday.setOnClickListener(l -> new GetDataSantri().execute());
@@ -237,7 +245,9 @@ public class HomeActivityV2 extends AppCompatActivity
         int size = navigationView.getMenu().size();
         for (int i = 0; i < size; i++) {
             navigationView.getMenu().getItem(i).setCheckable(false);
-            if (!sharedPrefManager.isLoggedIn() && (i == 1 || i == 2 || i == 4 || i == 6)) {
+            if (!sharedPrefManager.isLoggedIn() && (i == 1 || i == 2 || i == 4 || i == 7)) {
+                navigationView.getMenu().getItem(i).setVisible(false);
+            } else if (sharedPrefManager.isLoggedIn() && i == 6) {
                 navigationView.getMenu().getItem(i).setVisible(false);
             }
         }
@@ -302,6 +312,9 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (id == R.id.nav_about) {
             Intent intent = new Intent(HomeActivityV2.this, AboutActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_login) {
+            Intent intent = new Intent(HomeActivityV2.this, LoginActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
             LogoutDialog logoutDialog = new LogoutDialog(HomeActivityV2.this);
             logoutDialog.show();
@@ -333,7 +346,8 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_presence_today.setAdapter(recyclerListChat);
     }
 
-    private void initializeSlideBanner(List<Post> articleList) {
+    private void initializeSlideBanner(List<Result> articleList) {
+        NUM_PAGES = articleList.size();
         final PageIndicatorView pageIndicatorView = findViewById(R.id.pageIndicatorView);
         pageIndicatorView.setCount(NUM_PAGES); // specify total count of indicators
         mPager.setAdapter(new SlidingImageAdapter(HomeActivityV2.this, articleList.subList(0, NUM_PAGES)));
@@ -407,7 +421,7 @@ public class HomeActivityV2 extends AppCompatActivity
             ivRefreshPresenceToday.setVisibility(View.VISIBLE);
         } else if (type == TYPE_NOT_LOGGED_IN) {
             linlayInfoSantri.setVisibility(View.GONE);
-            linlayWelcomeNotLogin.setVisibility(View.VISIBLE);
+            linlayWelcomeNotLogin.setVisibility(View.GONE);
             linlayTagihanPembayaran.setVisibility(View.GONE);
         } else if (type == TYPE_LOGGED_IN) {
             linlayInfoSantri.setVisibility(View.VISIBLE);
@@ -556,6 +570,60 @@ public class HomeActivityV2 extends AppCompatActivity
         }
     }
 
+    private class GetImageBanner extends AsyncTask<Void, Integer, Boolean> {
+
+        private SlideBannerModel slideBannerModel;
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_IMAGE_BANNER)
+                    .get()
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                slideBannerModel = gson.fromJson(bodyString, SlideBannerModel.class);
+
+                return true;
+            } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            isThreadGetImageBannerWork = true;
+            rellayBanner.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            isThreadGetImageBannerWork = false;
+            if (isSuccess) {
+                rellayBanner.setVisibility(View.VISIBLE);
+                initializeSlideBanner(slideBannerModel.getResults());
+            } else {
+                UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
+            }
+        }
+    }
+
     private class GetNews extends AsyncTask<Void, Integer, Boolean> {
 
         @Override
@@ -593,17 +661,18 @@ public class HomeActivityV2 extends AppCompatActivity
 
         @Override
         protected void onPreExecute() {
+            isThreadGetNewsWork = true;
             progressBarNews.setVisibility(View.VISIBLE);
             rellayBanner.setVisibility(View.GONE);
         }
 
         @Override
         protected void onPostExecute(Boolean isSuccess) {
+            isThreadGetNewsWork = false;
             progressBarNews.setVisibility(View.GONE);
             if (isSuccess) {
                 rellayBanner.setVisibility(View.VISIBLE);
                 initializationOfNewsViewer();
-                initializeSlideBanner(newsModel.getPosts());
             } else {
                 UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
             }

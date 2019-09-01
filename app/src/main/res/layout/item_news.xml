@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_news"
+            android:src="@drawable/bg_silver"
             android:background="@drawable/rounded_full_white_40dp"/>
 
         <RelativeLayout
