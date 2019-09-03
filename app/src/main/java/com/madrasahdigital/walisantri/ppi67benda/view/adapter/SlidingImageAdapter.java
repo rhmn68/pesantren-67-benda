@@ -62,7 +62,7 @@ public class SlidingImageAdapter extends PagerAdapter {
 
             if (article_id != null) {
                 if (!article_id.isEmpty()) {
-                    String urlBerita = Constant.LINK_GET_NEWS + article_id;
+                    String urlBerita = Constant.LINK_GET_NEWS + "/" + article_id;
                     Intent intent = new Intent(context, DetailNewsActivity.class);
                     intent.putExtra("urlberita", urlBerita);
                     context.startActivity(intent);

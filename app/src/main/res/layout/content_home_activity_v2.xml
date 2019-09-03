@@ -153,6 +153,7 @@
                             android:layout_marginRight="20dp"
                             android:text="@string/home_text5"
                             android:textColor="@color/greytextcolor"
+                            android:textStyle="bold"
                             android:textSize="16sp" />
 
                         <TextView
@@ -207,6 +208,7 @@
                         android:id="@+id/tvTextTagihanPembayaran"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textStyle="bold"
                         android:text="@string/home_text3"
                         android:textColor="@color/greytextcolor"
                         android:textSize="16sp" />
@@ -259,6 +261,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/home_text1"
                         android:textColor="@color/greytextcolor"
+                        android:textStyle="bold"
                         android:textSize="16sp" />
 
                     <RelativeLayout
