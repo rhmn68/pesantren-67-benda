@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardView"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginStart="15dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginEnd="15dp"
+    app:cardCornerRadius="8dp"
+    android:background="@drawable/rounded_full_white_40dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/ivThumbnailNews"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerVertical="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_silver"
+            android:background="@drawable/rounded_full_white_40dp"/>
+
+        <TextView
+            android:id="@+id/tvTitleNews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Persiapan Menghadapi Ujian asda fad ad afd asdfa dfadfs adsf adsf"
+            android:textColor="@color/greytextcolor2"
+            android:layout_toEndOf="@id/ivThumbnailNews"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tvTanggal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_toEndOf="@id/ivThumbnailNews"
+            android:layout_marginTop="2dp"
+            android:layout_marginStart="10dp"
+            android:text="Diposting pada 3/8/2019"
+            android:layout_below="@id/tvTitleNews"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

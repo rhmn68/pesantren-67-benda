@@ -47,7 +47,7 @@ import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.Welcome
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.payment.ChooseSantriPaymentActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.ChooseSantriPresenceActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
-import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
+import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHomeV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.SlidingImageAdapter;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
@@ -83,8 +83,8 @@ public class HomeActivityV2 extends AppCompatActivity
     private RecyclerView rv_news;
     private RecyclerPresenceHome recyclerListChat;
     private RecyclerPresenceHome.OnArtikelClickListener onArtikelClickListener;
-    private RecyclerNewsHome recyclerNewsHome;
-    private RecyclerNewsHome.OnArtikelClickListener onArtikelClickListenerNewsHome;
+    private RecyclerNewsHomeV2 recyclerNewsHome;
+    private RecyclerNewsHomeV2.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private TextView tvBelumAdaSantri;
     private TextView tvTitleToday;
     private TextView tvTotalTagihan;
@@ -385,12 +385,17 @@ public class HomeActivityV2 extends AppCompatActivity
     String thumb_200x200;
 
     private void initializationOfNewsViewer() {
-        final LinearLayoutManager mLinearLayoutManager =
-                new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        mLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
         rv_news.setLayoutManager(mLinearLayoutManager);
         rv_news.setHasFixedSize(true);
 
-        recyclerNewsHome = new RecyclerNewsHome(HomeActivityV2.this, newsModel.getPosts(), Constant.TYPE_NEWS_HOME);
+        recyclerNewsHome = new RecyclerNewsHomeV2(HomeActivityV2.this, newsModel.getPosts(), Constant.TYPE_NEWS_HOME);
         recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
 
         rv_news.setAdapter(recyclerNewsHome);
