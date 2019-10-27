@@ -78,11 +78,14 @@
     <string name="menu_tools" translatable="false">Tools</string>
     <string name="menu_share" translatable="false">Share</string>
     <string name="menu_send" translatable="false">Send</string>
+    <string name="menu_profil" translatable="false">Profil Pesantren</string>
+    <string name="menu_info_pendaftaran" translatable="false">Info Pendaftaran</string>
+    <string name="menu_info_wali_santri" translatable="false">Info Wali Santri</string>
     <string name="welcome_msg_add_santri" translatable="false">Kamu belum memiliki satu pun data santri terhubung. Untuk memaksimalkan fungsi app ini, silahkan hubungkan akunmu dengan salah seorang santri terlebih dahulu dengan cara klik tombol Tambahkan Santri di bawah ini.</string>
     <string name="tambahkan_santri" translatable="false">Tambahkan Santri</string>
     <string name="addsantri_text1" translatable="false">Masukkan Nomor Induk Santri</string>
     <string name="addsantri_text2" translatable="false">Nomor Induk Santri</string>
-    <string name="ahlanwasahlan" translatable="false">Ahlan wa Sahlan</string>
+    <string name="ahlanwasahlan" translatable="false">67Benda</string>
     <string name="home_text1" translatable="false">"Kehadiran Hari Ini, "</string>
     <string name="home_text2" translatable="false">Belum ada santri yang ditambahkan</string>
     <string name="home_text3" translatable="false">Tagihan Pembayaran</string>

@@ -245,9 +245,11 @@ public class HomeActivityV2 extends AppCompatActivity
         int size = navigationView.getMenu().size();
         for (int i = 0; i < size; i++) {
             navigationView.getMenu().getItem(i).setCheckable(false);
-            if (!sharedPrefManager.isLoggedIn() && (i == 1 || i == 2 || i == 4 || i == 7)) {
+            if (!sharedPrefManager.isLoggedIn() && (i == 5 || i == 6 || i == 7 || i == 8 || i == 10)) {
+                // info wali santri, presensi, pembayaran, tambah santri, keluar
                 navigationView.getMenu().getItem(i).setVisible(false);
-            } else if (sharedPrefManager.isLoggedIn() && i == 6) {
+            } else if (sharedPrefManager.isLoggedIn() && i == 9) {
+                // login wali santri
                 navigationView.getMenu().getItem(i).setVisible(false);
             }
         }

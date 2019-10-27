@@ -3,11 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
 
-    <group android:checkableBehavior="single">
+    <group android:id="@+id/group_public_info"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_high_school"
+            android:title="@string/menu_profil" />
+        <item
+            android:id="@+id/nav_news"
+            android:icon="@drawable/ic_folded_newspaper"
+            android:title="@string/menu_news" />
+        <item
+            android:id="@+id/nav_info_pendaftaran"
+            android:icon="@drawable/ic_browser"
+            android:title="@string/menu_info_pendaftaran" />
+        <item
+            android:id="@+id/nav_about"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/menu_about" />
+    </group>
+
+    <group
+        android:id="@+id/group_special_info"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_info_wali_santri"
+            android:icon="@drawable/ic_family"
+            android:title="@string/menu_info_wali_santri" />
         <item
             android:id="@+id/nav_presensi"
             android:icon="@drawable/ic_open_book"
@@ -17,17 +43,9 @@
             android:icon="@drawable/ic_bill"
             android:title="@string/menu_payment" />
         <item
-            android:id="@+id/nav_news"
-            android:icon="@drawable/ic_folded_newspaper"
-            android:title="@string/menu_news" />
-        <item
             android:id="@+id/nav_add_santri"
             android:icon="@drawable/ic_add_circle_black_24dp"
             android:title="@string/menu_add_santri" />
-        <item
-            android:id="@+id/nav_about"
-            android:icon="@drawable/ic_info_black_24dp"
-            android:title="@string/menu_about" />
         <item
             android:id="@+id/nav_login"
             android:icon="@drawable/ic_login"
@@ -37,5 +55,4 @@
             android:icon="@drawable/ic_logout"
             android:title="@string/menu_logout" />
     </group>
-
 </menu>
