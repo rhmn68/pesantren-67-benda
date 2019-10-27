@@ -2,9 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.madrasahdigital.walisantri.ppi67benda">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon_green"
@@ -12,10 +9,15 @@
         android:roundIcon="@drawable/icon_green"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.activity.OtpActivity"
+        <activity android:name=".view.activity.InfoPendaftaranActivity"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.OtpActivity"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.HowToPayActivity"
             android:configChanges="locale|orientation"
@@ -134,5 +136,8 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

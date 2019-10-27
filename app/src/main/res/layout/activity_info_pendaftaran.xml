@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.activity.InfoWaliSantriActivity">
+    android:orientation="vertical"
+    tools:context=".view.activity.InfoPendaftaranActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,21 +16,31 @@
         app:title="@string/menu_info_wali_santri"
         app:titleTextColor="@color/black"/>
 
+    <LinearLayout
+        android:id="@+id/layoutprogress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/progressBarweb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:indeterminate="false"
+            android:max="100"
+            android:progress="1"/>
+
+    </LinearLayout>
+
     <WebView
         android:id="@+id/wvDescription"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"/>
+        android:layout_height="match_parent"/>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/toolbar"
-        android:layout_centerHorizontal="true"
-        android:visibility="gone"
-        android:indeterminateDrawable="@drawable/progressbar_color"/>
-
-</RelativeLayout>
+</LinearLayout>

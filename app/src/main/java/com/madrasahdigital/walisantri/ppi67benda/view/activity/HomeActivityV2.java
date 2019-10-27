@@ -329,6 +329,9 @@ public class HomeActivityV2 extends AppCompatActivity
                     HomeActivityV2.this.finish();
                 }
             });
+        } else if (id == R.id.nav_info_pendaftaran) {
+            Intent intent = new Intent(HomeActivityV2.this, InfoPendaftaranActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
