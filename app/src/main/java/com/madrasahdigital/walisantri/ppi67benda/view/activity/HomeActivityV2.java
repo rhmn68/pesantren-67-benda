@@ -302,6 +302,9 @@ public class HomeActivityV2 extends AppCompatActivity
         } else if (id == R.id.nav_news) {
             Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_info_wali_santri) {
+            Intent intent = new Intent(HomeActivityV2.this, InfoWaliSantriActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_add_santri) {
             Intent intent;
             if (allSantri.getTotal() == 0) {

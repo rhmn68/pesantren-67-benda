@@ -156,6 +156,14 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
         }
     }
 
+    public void addNewData(List<Post> posts) {
+        this.postList.addAll(posts);
+        if (type == Constant.TYPE_NEWS_HOME)
+            sizeList = postList.size() + 1;
+        else
+            sizeList = postList.size();
+    }
+
     /**
      * interface ketika container di click
      */
