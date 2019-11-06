@@ -695,7 +695,7 @@ public class HomeActivityV2 extends AppCompatActivity
                     .build();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_NEWS + "?perpage=5")
+                    .url(Constant.LINK_GET_NEWS)
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
@@ -750,7 +750,7 @@ public class HomeActivityV2 extends AppCompatActivity
                     .build();
 
             Request request = new Request.Builder()
-                    .url(Constant.LINK_GET_INFO_WALI_SANTRI + "?perpage=5")
+                    .url(Constant.LINK_GET_INFO_WALI_SANTRI)
                     .get()
                     .addHeader(Constant.Authorization, sharedPrefManager.getToken())
                     .build();
