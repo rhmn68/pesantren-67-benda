@@ -13,7 +13,7 @@
         android:layout_height="56dp"
         android:background="@color/white"
         app:popupTheme="@style/AppTheme.PopupOverlay"
-        app:title="Info Wali Sanri"
+        app:title="Info Wali Santri"
         app:titleTextColor="@color/black"/>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

@@ -76,15 +76,20 @@ public class HomeActivityV2 extends AppCompatActivity
     private List<Presensi> presenceList;
     private List<NotificationModel> notificationModelList;
     private NewsModel newsModel;
+    private NewsModel newsModelWaliSantri;
     private ProgressBar progressBarToday;
     private ProgressBar progressBarNews;
+    private ProgressBar progressBarNewsInfoWS;
     private ImageView ivRefreshPresenceToday;
     private RecyclerView rv_presence_today;
     private RecyclerView rv_news;
+    private RecyclerView rv_news_info_ws;
     private RecyclerPresenceHome recyclerListChat;
     private RecyclerPresenceHome.OnArtikelClickListener onArtikelClickListener;
     private RecyclerNewsHomeV2 recyclerNewsHome;
     private RecyclerNewsHomeV2.OnArtikelClickListener onArtikelClickListenerNewsHome;
+    private RecyclerNewsHomeV2 recyclerNewsWaliSantriHome;
+    private RecyclerNewsHomeV2.OnArtikelClickListener onWaliSantriClickListenerNewsHome;
     private TextView tvBelumAdaSantri;
     private TextView tvTitleToday;
     private TextView tvTotalTagihan;
@@ -99,11 +104,13 @@ public class HomeActivityV2 extends AppCompatActivity
     private LinearLayout linlayWelcomeNotLogin;
     private LinearLayout linlayInfoSantri;
     private LinearLayout linlayTagihanPembayaran;
+    private LinearLayout linlayInfoWaliSantri;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ViewPager mPager;
     private boolean isThreadPresenceWork = true;
     private boolean isThreadTotalTagihanWork = true;
     private boolean isThreadGetNewsWork = true;
+    private boolean isThreadGetNewsInfoWSWork = true;
     private boolean isThreadGetImageBannerWork = true;
 
     private final int TYPE_LOAD_PRESENCE_TODAY = 0;
@@ -125,10 +132,12 @@ public class HomeActivityV2 extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         progressBarToday = findViewById(R.id.progressBarToday);
         rv_news = findViewById(R.id.rv_news);
+        rv_news_info_ws = findViewById(R.id.rv_news_info_ws);
         mPager = findViewById(R.id.viewPagerBanner);
         linlayWelcomeNotLogin = findViewById(R.id.linlayWelcomeNotLogin);
         linlayInfoSantri = findViewById(R.id.linlayInfoSantri);
         linlayTagihanPembayaran = findViewById(R.id.linlayTagihanPembayaran);
+        linlayInfoWaliSantri = findViewById(R.id.linlayInfoWaliSantri);
         rellayTotalTagihan = findViewById(R.id.rellayTotalTagihan);
         rellayPerbarui = findViewById(R.id.rellayPerbarui);
         rellayBanner = findViewById(R.id.rellayBanner);
@@ -139,6 +148,7 @@ public class HomeActivityV2 extends AppCompatActivity
         btnLogin = findViewById(R.id.btnLogin);
         btnPerbarui = findViewById(R.id.btnPerbarui);
         progressBarNews = findViewById(R.id.progressBarNews);
+        progressBarNewsInfoWS = findViewById(R.id.progressBarNewsInfoWS);
         tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
         tvTextTagihanPembayaran = findViewById(R.id.tvTextTagihanPembayaran);
@@ -157,6 +167,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
             new GetDataSantri().execute();
             new GetTagihanAlLSantri().execute();
+            new GetInfoWaliSantri().execute();
         } else {
             setView(TYPE_NOT_LOGGED_IN);
         }
@@ -180,11 +191,14 @@ public class HomeActivityV2 extends AppCompatActivity
 
         swipeRefreshLayout.setOnRefreshListener(() -> {
             swipeRefreshLayout.setRefreshing(false);
-            if (!isThreadPresenceWork) {
-                new GetDataSantri().execute();
+            if (sharedPrefManager.isLoggedIn()) {
+                if (!isThreadPresenceWork)
+                    new GetDataSantri().execute();
+                if (!isThreadTotalTagihanWork)
+                    new GetTagihanAlLSantri().execute();
+                if (!isThreadGetNewsInfoWSWork)
+                    new GetInfoWaliSantri().execute();
             }
-            if (!isThreadTotalTagihanWork)
-                new GetTagihanAlLSantri().execute();
             if (!isThreadGetNewsWork)
                 new GetNews().execute();
             if (!isThreadGetImageBannerWork)
@@ -199,6 +213,12 @@ public class HomeActivityV2 extends AppCompatActivity
         });
 
         onArtikelClickListenerNewsHome = (posisi, newsModel) -> {
+            Intent intent = new Intent(HomeActivityV2.this, DetailNewsActivity.class);
+            intent.putExtra("urlberita", newsModel.getUrl());
+            startActivity(intent);
+        };
+
+        onWaliSantriClickListenerNewsHome = (posisi, newsModel) -> {
             Intent intent = new Intent(HomeActivityV2.this, DetailNewsActivity.class);
             intent.putExtra("urlberita", newsModel.getUrl());
             startActivity(intent);
@@ -393,7 +413,22 @@ public class HomeActivityV2 extends AppCompatActivity
         });
     }
 
-    String thumb_200x200;
+    private void initializationOfNewsWaliSantriViewer() {
+        final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        };
+        mLinearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+        rv_news_info_ws.setLayoutManager(mLinearLayoutManager);
+        rv_news_info_ws.setHasFixedSize(true);
+
+        recyclerNewsWaliSantriHome = new RecyclerNewsHomeV2(HomeActivityV2.this, newsModelWaliSantri.getPosts(), Constant.TYPE_NEWS_HOME);
+        recyclerNewsWaliSantriHome.setOnArtikelClickListener(onWaliSantriClickListenerNewsHome);
+
+        rv_news_info_ws.setAdapter(recyclerNewsWaliSantriHome);
+    }
 
     private void initializationOfNewsViewer() {
         final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this) {
@@ -441,10 +476,12 @@ public class HomeActivityV2 extends AppCompatActivity
             linlayInfoSantri.setVisibility(View.GONE);
             linlayWelcomeNotLogin.setVisibility(View.GONE);
             linlayTagihanPembayaran.setVisibility(View.GONE);
+            linlayInfoWaliSantri.setVisibility(View.GONE);
         } else if (type == TYPE_LOGGED_IN) {
             linlayInfoSantri.setVisibility(View.VISIBLE);
             linlayWelcomeNotLogin.setVisibility(View.GONE);
             linlayTagihanPembayaran.setVisibility(View.VISIBLE);
+            linlayInfoWaliSantri.setVisibility(View.VISIBLE);
         } else if (type == TYPE_SHOW_GET_LATEST_VERSION_APP) {
             rellayPerbarui.setVisibility(View.VISIBLE);
         } else if (type == TYPE_HIDDEN_GET_LATEST_VERSION_APP) {
@@ -454,6 +491,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
     public void gotoNews(View view) {
         Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
+        startActivity(intent);
+    }
+
+    public void gotoInfoWaliSantri(View view) {
+        Intent intent = new Intent(HomeActivityV2.this, InfoWaliSantriActivity.class);
         startActivity(intent);
     }
 
@@ -691,6 +733,61 @@ public class HomeActivityV2 extends AppCompatActivity
             if (isSuccess) {
                 rellayBanner.setVisibility(View.VISIBLE);
                 initializationOfNewsViewer();
+            } else {
+                UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
+            }
+        }
+    }
+
+    private class GetInfoWaliSantri extends AsyncTask<Void, Integer, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_INFO_WALI_SANTRI + "?perpage=5")
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+
+                Gson gson = new Gson();
+                newsModelWaliSantri = gson.fromJson(bodyString, NewsModel.class);
+
+                return true;
+            } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            isThreadGetNewsInfoWSWork = true;
+            progressBarNewsInfoWS.setVisibility(View.VISIBLE);
+            rellayBanner.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            isThreadGetNewsInfoWSWork = false;
+            progressBarNewsInfoWS.setVisibility(View.GONE);
+            if (isSuccess) {
+                rellayBanner.setVisibility(View.VISIBLE);
+                initializationOfNewsWaliSantriViewer();
             } else {
                 UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
             }
