@@ -24,6 +24,7 @@ public class Constant {
     public static final String LINK_GET_NOTIFICATION = SERVER_LINK + "api/notification";
     public static final String LINK_GET_NEWS_OLD = SERVER_LINK + "api/post";
     public static final String LINK_GET_NEWS = SERVER_LINK + "api/post/category/all?exclude=info-wali-santri";
+    public static final String LINK_GET_DETAIL_NEWS = SERVER_LINK + "api/post/";
     public static final String LINK_GET_INFO_WALI_SANTRI = SERVER_LINK + "api/post/category/info-wali-santri";
     public static final String LINK_GET_TAGIHAN_ALL_SANTRI = SERVER_LINK + "api/tagihan";
     public static final String LINK_POST_TAGIHAN_PAYMENT = SERVER_LINK + "api/tagihan/payment";

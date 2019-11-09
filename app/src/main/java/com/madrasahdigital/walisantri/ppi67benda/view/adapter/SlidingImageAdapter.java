@@ -3,6 +3,7 @@ package com.madrasahdigital.walisantri.ppi67benda.view.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,14 +60,20 @@ public class SlidingImageAdapter extends PagerAdapter {
 
         imageLayout.setOnClickListener(l -> {
             String article_id = articleList.get(position).getArticleId();
+            String url = articleList.get(position).getUrl();
 
             if (article_id != null) {
                 if (!article_id.isEmpty()) {
-                    String urlBerita = Constant.LINK_GET_NEWS + "/" + article_id;
+                    String urlBerita = Constant.LINK_GET_DETAIL_NEWS + "/" + article_id;
+                    Log.d("Sliding", "urlberita : " + urlBerita + " artikel id : " + article_id);
                     Intent intent = new Intent(context, DetailNewsActivity.class);
                     intent.putExtra("urlberita", urlBerita);
                     context.startActivity(intent);
                 }
+            } else if (!url.equals("")) {
+                Intent intent = new Intent(context, DetailNewsActivity.class);
+                intent.putExtra("urlberita", url);
+                context.startActivity(intent);
             }
         });
 

@@ -396,7 +396,7 @@ public class HomeActivityV2 extends AppCompatActivity
             public void run() {
                 handler.post(Update);
             }
-        }, 3000, 3000);
+        }, 1000, 5000);
 
         // Pager listener over indicator
         mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
