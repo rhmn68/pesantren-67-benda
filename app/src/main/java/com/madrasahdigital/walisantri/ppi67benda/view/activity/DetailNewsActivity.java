@@ -1,18 +1,26 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -49,6 +57,9 @@ public class DetailNewsActivity extends AppCompatActivity {
     private String urlBerita;
     private WebView wvDescription;
 
+    private ValueCallback<Uri> mUploadMessage;
+    private final static int FILECHOOSER_RESULTCODE = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +87,7 @@ public class DetailNewsActivity extends AppCompatActivity {
         wvDescription.getSettings().setSupportZoom(true);
         wvDescription.getSettings().setBuiltInZoomControls(true);
         wvDescription.getSettings().setDisplayZoomControls(true);
+        wvDescription.getSettings().setAllowFileAccess(true);
         WebSettings webSettings = wvDescription.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
@@ -105,8 +117,109 @@ public class DetailNewsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if (wvDescription.canGoBack()) {
+            wvDescription.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void setDetailArticle(String detail) {
         wvDescription.loadData(detail, "text/html", "utf-8");
+    }
+
+    public void setListenersWebview() {
+
+        wvDescription.setWebViewClient(new WebViewClient() {
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                wvDescription.loadUrl("about:blank");
+                setDetailArticle(detailNewsModel.getContent());
+                view.clearHistory();
+            }
+        });
+
+        wvDescription.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+
+            }
+
+            //The undocumented magic method override
+            //Eclipse will swear at you if you try to put @Override here
+            // For Android 3.0+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("image/*");
+                startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
+            }
+
+            // For Android 3.0+
+            public void openFileChooser(ValueCallback uploadMsg, String acceptType) {
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("*/*");
+                startActivityForResult(
+                        Intent.createChooser(i, "File Browser"),
+                        FILECHOOSER_RESULTCODE);
+            }
+
+            //For Android 4.1
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+                mUploadMessage = uploadMsg;
+                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
+                i.addCategory(Intent.CATEGORY_OPENABLE);
+                i.setType("image/*");
+                startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
+
+            }
+        });
+
+        setDetailArticle(detailNewsModel.getContent());
+
+        final MyJavaScriptInterface myJavaScriptInterface
+                = new MyJavaScriptInterface(this);
+        wvDescription.addJavascriptInterface(myJavaScriptInterface, "AndroidFunction");
+    }
+
+    public class MyJavaScriptInterface {
+        Context mContext;
+
+        MyJavaScriptInterface(Context c) {
+            mContext = c;
+        }
+
+        @JavascriptInterface
+        public void showToast(String toast) {
+            Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
+            // webView.loadUrl("javascript:document.getElementById(\"Button3\").innerHTML = \"bye\";");
+        }
+
+        @JavascriptInterface
+        public void openAndroidDialog() {
+            AlertDialog.Builder myDialog
+                    = new AlertDialog.Builder(DetailNewsActivity.this);
+            myDialog.setTitle("Pertanyaan");
+            myDialog.setMessage("Apakah anda ingin mengaktifkan?");
+            myDialog.setPositiveButton("ON", null);
+            myDialog.show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent intent) {
+        if (requestCode == FILECHOOSER_RESULTCODE) {
+            if (null == mUploadMessage) return;
+            Uri result = intent == null || resultCode != RESULT_OK ? null
+                    : intent.getData();
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+        }
     }
 
     private class GetDetailArticle extends AsyncTask<Void, Integer, Boolean> {
@@ -174,7 +287,8 @@ public class DetailNewsActivity extends AppCompatActivity {
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
                     tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());
-                setDetailArticle(detailNewsModel.getContent());
+//                setDetailArticle(detailNewsModel.getContent());
+                setListenersWebview();
             } else {
                 ivRefreshPresenceToday.setVisibility(View.VISIBLE);
                 UtilsManager.showToast(DetailNewsActivity.this, getResources().getString(R.string.cekkoneksi));
