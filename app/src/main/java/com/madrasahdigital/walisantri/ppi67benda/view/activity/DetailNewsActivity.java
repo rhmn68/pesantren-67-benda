@@ -313,17 +313,22 @@ public class DetailNewsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSION_REQUEST_CODE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Log.e("value", "Permission Granted, Now you can use local drive .");
-                    if (isFromAndroid5) {
-                        openFileChooserImplForAndroid5();
-                    } else {
-                        openFileChooserImpl();
-                    }
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.e("value", "Permission Granted, Now you can use local drive .");
+                if (isFromAndroid5) {
+                    openFileChooserImplForAndroid5();
+                } else {
+                    openFileChooserImpl();
                 }
-                break;
+            } else {
+                if (isFromAndroid5) {
+                    mUploadMessageForAndroid5 = null;
+                } else {
+                    mUploadMessage = null;
+                }
+                UtilsManager.showToast(this, "Anda harus memberikan izin. Silahkan reload halaman.");
+            }
         }
     }
 
