@@ -1,11 +1,17 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -23,6 +29,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
@@ -34,6 +41,10 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -57,8 +68,15 @@ public class DetailNewsActivity extends AppCompatActivity {
     private String urlBerita;
     private WebView wvDescription;
 
+    private String mCurrentPhotoPath = "";
+    private boolean isFromAndroid5 = false;
     private ValueCallback<Uri> mUploadMessage;
+    private ValueCallback<Uri[]> mUploadMessageForAndroid5;
+    private static final int REQUEST_GET_THE_THUMBNAIL = 4000;
+    private static final long ANIMATION_DURATION = 200;
     private final static int FILECHOOSER_RESULTCODE = 1;
+    private final static int FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 2;
+    private final static int PERMISSION_REQUEST_CODE = 232;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,63 +145,222 @@ public class DetailNewsActivity extends AppCompatActivity {
     }
 
     private void setDetailArticle(String detail) {
-        wvDescription.loadData(detail, "text/html", "utf-8");
-    }
-
-    public void setListenersWebview() {
-
+        //set ChromeClient
         wvDescription.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-//                wvDescription.loadUrl("about:blank");
-                setDetailArticle(detailNewsModel.getContent());
+
+                wvDescription.loadData(detail, "text/html", "utf-8");
+
                 view.clearHistory();
             }
         });
-
-        wvDescription.setWebChromeClient(new WebChromeClient() {
-            public void onProgressChanged(WebView view, int progress) {
-
-            }
-
-            //The undocumented magic method override
-            //Eclipse will swear at you if you try to put @Override here
-            // For Android 3.0+
-            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
-
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("image/*");
-                startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
-            }
-
-            // For Android 3.0+
-            public void openFileChooser(ValueCallback uploadMsg, String acceptType) {
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("*/*");
-                startActivityForResult(
-                        Intent.createChooser(i, "File Browser"),
-                        FILECHOOSER_RESULTCODE);
-            }
-
-            //For Android 4.1
-            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
-                mUploadMessage = uploadMsg;
-                Intent i = new Intent(Intent.ACTION_GET_CONTENT);
-                i.addCategory(Intent.CATEGORY_OPENABLE);
-                i.setType("image/*");
-                startActivityForResult(Intent.createChooser(i, "File Chooser"), FILECHOOSER_RESULTCODE);
-
-            }
-        });
-
-        setDetailArticle(detailNewsModel.getContent());
+        wvDescription.setWebChromeClient(getChromeClient());
+        wvDescription.loadData(detail, "text/html", "utf-8");
 
         final MyJavaScriptInterface myJavaScriptInterface
                 = new MyJavaScriptInterface(this);
         wvDescription.addJavascriptInterface(myJavaScriptInterface, "AndroidFunction");
+    }
+
+    private WebChromeClient getChromeClient() {
+        return new WebChromeClient() {
+
+            //3.0++
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType) {
+                mUploadMessage = uploadMsg;
+                openFileChooserImpl();
+            }
+
+            //3.0--
+            public void openFileChooser(ValueCallback<Uri> uploadMsg) {
+                mUploadMessage = uploadMsg;
+                openFileChooserImpl();
+            }
+
+            public void openFileChooser(ValueCallback<Uri> uploadMsg, String acceptType, String capture) {
+                mUploadMessage = uploadMsg;
+                openFileChooserImpl();
+            }
+
+            // For Android > 5.0
+            public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> uploadMsg, WebChromeClient.FileChooserParams fileChooserParams) {
+                mUploadMessageForAndroid5 = uploadMsg;
+                openFileChooserImplForAndroid5();
+                return true;
+            }
+
+        };
+    }
+
+    private void openFileChooserImplForAndroid5() {
+        isFromAndroid5 = true;
+        AlertDialog.Builder myDialog
+                = new AlertDialog.Builder(DetailNewsActivity.this);
+        myDialog.setTitle("Ambil file gambar");
+        myDialog.setMessage("Apakah anda ingin mengambil file gambar dari penyimpanan?");
+
+        myDialog.setPositiveButton("Ya", (dialogInterface, i) -> {
+            if (havePermissionGranted(DetailNewsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Intent contentSelectionIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE);
+                contentSelectionIntent.setType("image/*");
+
+                Intent chooserIntent = new Intent(Intent.ACTION_CHOOSER);
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent);
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser");
+
+                startActivityForResult(chooserIntent, FILECHOOSER_RESULTCODE_FOR_ANDROID_5);
+            } else {
+                // request permission
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+        myDialog.setNegativeButton("Tidak", (dialogInterface, i) -> {
+            Log.v(TAG, TAG + " # onCancel");
+            //important to return new Uri[]{}, when nothing to do. This can slove input file wrok for once.
+            //InputEventReceiver: Attempted to finish an input event but the input event receiver has already been disposed.
+            mUploadMessageForAndroid5.onReceiveValue(new Uri[]{});
+            mUploadMessageForAndroid5 = null;
+        });
+        myDialog.show();
+    }
+
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+//            File file = new File(createImageFile());
+            Uri imageUri = null;
+            try {
+                imageUri = Uri.fromFile(createImageFile());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            //temp sd card file
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
+            startActivityForResult(takePictureIntent, REQUEST_GET_THE_THUMBNAIL);
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/don_test/");
+        if (!storageDir.exists()) {
+            storageDir.mkdirs();
+        }
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        Log.v(TAG, TAG + " # onActivityResult # requestCode=" + requestCode + " # resultCode=" + resultCode);
+        if (requestCode == FILECHOOSER_RESULTCODE) {
+            if (null == mUploadMessage)
+                return;
+            Uri result = intent == null || resultCode != Activity.RESULT_OK ? null : intent.getData();
+            mUploadMessage.onReceiveValue(result);
+            mUploadMessage = null;
+
+        } else if (requestCode == FILECHOOSER_RESULTCODE_FOR_ANDROID_5) {
+            if (null == mUploadMessageForAndroid5)
+                return;
+            Uri result;
+
+            if (intent == null || resultCode != Activity.RESULT_OK) {
+                result = null;
+            } else {
+                result = intent.getData();
+            }
+
+            if (result != null) {
+                Log.v(TAG, TAG + " # result.getPath()=" + result.getPath());
+                mUploadMessageForAndroid5.onReceiveValue(new Uri[]{result});
+            } else {
+                mUploadMessageForAndroid5.onReceiveValue(new Uri[]{});
+            }
+            mUploadMessageForAndroid5 = null;
+        } else if (requestCode == REQUEST_GET_THE_THUMBNAIL) {
+            if (resultCode == Activity.RESULT_OK) {
+                File file = new File(mCurrentPhotoPath);
+                Uri localUri = Uri.fromFile(file);
+                Intent localIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, localUri);
+                sendBroadcast(localIntent);
+
+                Uri result = Uri.fromFile(file);
+                mUploadMessageForAndroid5.onReceiveValue(new Uri[]{result});
+                mUploadMessageForAndroid5 = null;
+            } else {
+
+                File file = new File(mCurrentPhotoPath);
+                Log.v(TAG, TAG + " # file=" + file.exists());
+                if (file.exists()) {
+                    file.delete();
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case PERMISSION_REQUEST_CODE:
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Log.e("value", "Permission Granted, Now you can use local drive .");
+                    if (isFromAndroid5) {
+                        openFileChooserImplForAndroid5();
+                    } else {
+                        openFileChooserImpl();
+                    }
+                }
+                break;
+        }
+    }
+
+    public boolean havePermissionGranted(Context context, String permission) {
+        if (ActivityCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED) {
+            return true;
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                requestPermissions(new String[]{permission}, PERMISSION_REQUEST_CODE);
+
+            return false;
+        }
+    }
+
+    private void openFileChooserImpl() {
+        isFromAndroid5 = false;
+        AlertDialog.Builder myDialog
+                = new AlertDialog.Builder(DetailNewsActivity.this);
+        myDialog.setTitle("Ambil file gambar");
+        myDialog.setMessage("Apakah anda ingin mengambil file gambar dari penyimpanan?");
+        myDialog.setPositiveButton("Ya", (dialogInterface, i) -> {
+            if (havePermissionGranted(DetailNewsActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                intent.setType("image/*");
+                startActivityForResult(Intent.createChooser(intent, "File Chooser"), FILECHOOSER_RESULTCODE);
+            } else {
+                // request permission
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+            }
+        });
+        myDialog.setNegativeButton("Tidak", (dialogInterface, i) -> {
+            Log.v(TAG, TAG + " # onCancel");
+            mUploadMessage = null;
+        });
+        myDialog.show();
     }
 
     public class MyJavaScriptInterface {
@@ -201,24 +378,11 @@ public class DetailNewsActivity extends AppCompatActivity {
 
         @JavascriptInterface
         public void openAndroidDialog() {
-            AlertDialog.Builder myDialog
-                    = new AlertDialog.Builder(DetailNewsActivity.this);
-            myDialog.setTitle("Pertanyaan");
-            myDialog.setMessage("Apakah anda ingin mengaktifkan?");
-            myDialog.setPositiveButton("ON", null);
-            myDialog.show();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent intent) {
-        if (requestCode == FILECHOOSER_RESULTCODE) {
-            if (null == mUploadMessage) return;
-            Uri result = intent == null || resultCode != RESULT_OK ? null
-                    : intent.getData();
-            mUploadMessage.onReceiveValue(result);
-            mUploadMessage = null;
+           if (isFromAndroid5) {
+               openFileChooserImplForAndroid5();
+           } else {
+               openFileChooserImpl();
+           }
         }
     }
 
@@ -287,8 +451,7 @@ public class DetailNewsActivity extends AppCompatActivity {
                 tvTitleNews.setText(detailNewsModel.getTitle());
                 if (detailNewsModel.getPublishedAt() != null)
                     tvDipostingPada.setText("Diposting pada " + detailNewsModel.getPublishedAt());
-//                setDetailArticle(detailNewsModel.getContent());
-                setListenersWebview();
+                setDetailArticle(detailNewsModel.getContent());
             } else {
                 ivRefreshPresenceToday.setVisibility(View.VISIBLE);
                 UtilsManager.showToast(DetailNewsActivity.this, getResources().getString(R.string.cekkoneksi));
