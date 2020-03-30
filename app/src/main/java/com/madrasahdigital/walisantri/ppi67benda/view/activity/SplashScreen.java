@@ -8,6 +8,7 @@ import android.os.Message;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -37,7 +38,9 @@ public class SplashScreen extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
 
         // add FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS flag to the window
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        }
         setContentView(R.layout.activity_splash_screen); // Session manager
         session = new SharedPrefManager(getApplicationContext());
 
@@ -71,29 +74,27 @@ public class SplashScreen extends AppCompatActivity {
     private static class MyHandler extends Handler {
         private final WeakReference<SplashScreen> mActivity;
 
-        public MyHandler(SplashScreen activity) {
-            mActivity = new WeakReference<>(activity);
-        }
+        MyHandler(SplashScreen activity) { mActivity = new WeakReference<>(activity); }
 
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             SplashScreen activity = mActivity.get();
             if (activity != null) {
-                Intent intentpindah;
+                Intent intentMove;
                 switch (msg.what) {
                     case GOTOGUIDEPAGE:
-                        intentpindah = new Intent(activity, WelcomeGuideActivity.class);
-                        activity.startActivity(intentpindah);
+                        intentMove = new Intent(activity, WelcomeGuideActivity.class);
+                        activity.startActivity(intentMove);
                         activity.finish();
                         break;
                     case GOTOLOGINPAGE:
-                        intentpindah = new Intent(activity, LoginActivity.class);
-                        activity.startActivity(intentpindah);
+                        intentMove = new Intent(activity, LoginActivity.class);
+                        activity.startActivity(intentMove);
                         activity.finish();
                         break;
                     case GOTOHOMEPAGE:
-                        intentpindah = new Intent(activity, HomeActivityV2.class);
-                        activity.startActivity(intentpindah);
+                        intentMove = new Intent(activity, HomeActivityV2.class);
+                        activity.startActivity(intentMove);
                         activity.finish();
                         break;
                 }

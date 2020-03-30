@@ -66,7 +66,20 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:focusableInTouchMode="true"
-                        />
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginLeft="35dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="35dp"
+                            android:gravity="center"
+                            android:text="Anda belum login, login terlebih dahulu untuk memaksimalkan fungsi aplikasi"
+                            android:textColor="@color/greytextcolor"
+                            android:textSize="12sp" />
+                    </androidx.viewpager.widget.ViewPager>
 
                     <com.rd.PageIndicatorView
                         android:id="@+id/pageIndicatorView"
@@ -103,18 +116,6 @@
                         android:text="Selamat datang di aplikasi resmi Pesantren Persatuan Islam 67 Benda Tasikmalaya"
                         android:textColor="@color/greytextcolor"
                         android:textSize="16sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Anda belum login, login terlebih dahulu untuk memaksimalkan fungsi aplikasi"
-                        android:textColor="@color/greytextcolor"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginLeft="35dp"
-                        android:layout_marginRight="35dp"
-                        android:gravity="center"
-                        android:layout_gravity="center_horizontal"
-                        android:textSize="12sp" />
 
                     <Button
                         android:id="@+id/btnLogin"
