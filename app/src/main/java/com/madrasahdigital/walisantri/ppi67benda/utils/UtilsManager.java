@@ -126,13 +126,13 @@ public class UtilsManager {
     }
 
     public static String getYesterdayDateString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         return dateFormat.format(yesterday());
     }
 
     public static String getTodayDateStringMonthLinguistik(Context context) {
         String myDate = "";
-        DateFormat dateFormat = new SimpleDateFormat("dd");
+        DateFormat dateFormat = new SimpleDateFormat("dd", Locale.getDefault());
         Date date = new Date();
         myDate = dateFormat.format(date) + " ";
         myDate += getMonthFromNumber(context, getMonth()) + " ";
@@ -141,7 +141,7 @@ public class UtilsManager {
     }
 
     public static String getTodayDateString() {
-        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         Date date = new Date();
 
         return dateFormat.format(date);
