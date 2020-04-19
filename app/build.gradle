@@ -41,10 +41,10 @@ dependencies {
     implementation 'com.applandeo:material-calendar-view:1.6.0'
 
     //okhttp
-    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '3.14.7'
+    implementation group: 'com.squareup.okhttp3', name: 'okhttp', version: '4.2.2'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.okhttp3:okhttp:3.14.7'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.2.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.2.2'
 
     implementation 'com.github.bumptech.glide:glide:4.11.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
@@ -53,12 +53,12 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.11.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
 
     //page indicator view
     implementation 'com.romandanylyk:pageindicatorview:1.0.3@aar'
 
-    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.firebase:firebase-core:17.3.0'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
     testImplementation 'junit:junit:4.13'
