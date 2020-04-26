@@ -3,10 +3,12 @@ package com.madrasahdigital.walisantri.ppi67benda.model.newsmodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by Alhudaghifari on 15:06 22/06/19
  */
-public class Post {
+public class Post implements Serializable {
     @SerializedName("title")
     @Expose
     private String title;

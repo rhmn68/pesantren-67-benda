@@ -200,6 +200,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.d(TAG, "onActivityResult RESULT OK");
@@ -316,10 +317,12 @@ public class RegisterActivity extends AppCompatActivity {
                 Crashlytics.setString(TAG, "1-" + e.getMessage());
                 Crashlytics.logException(e);
                 e.printStackTrace();
+                Log.e("coba", "error: IOException : "+e.getMessage());
             } catch (Exception e) {
                 Crashlytics.setString(TAG, "2-" + e.getMessage());
                 Crashlytics.logException(e);
                 e.printStackTrace();
+                Log.e("coba", "error: exception : "+e.getMessage());
             }
 
             return false;

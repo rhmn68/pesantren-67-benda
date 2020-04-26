@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -34,11 +36,14 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
+import com.madrasahdigital.walisantri.ppi67benda.services.UpComingArticlesReceiver;
+import com.madrasahdigital.walisantri.ppi67benda.utils.AlarmHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
@@ -54,6 +59,7 @@ import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -84,20 +90,16 @@ public class HomeActivityV2 extends AppCompatActivity
     private RecyclerView rv_presence_today;
     private RecyclerView rv_news;
     private RecyclerView rv_news_info_ws;
-    private RecyclerPresenceHome recyclerListChat;
     private RecyclerPresenceHome.OnArtikelClickListener onArtikelClickListener;
-    private RecyclerNewsHomeV2 recyclerNewsHome;
     private RecyclerNewsHomeV2.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private RecyclerNewsHomeV2 recyclerNewsWaliSantriHome;
     private RecyclerNewsHomeV2.OnArtikelClickListener onWaliSantriClickListenerNewsHome;
     private TextView tvBelumAdaSantri;
-    private TextView tvTitleToday;
     private TextView tvTotalTagihan;
     private TextView tvTextTagihanPembayaran;
     private Button btnTambahkanSantri;
     private Button btnLogin;
     private Button btnPerbarui;
-    private NavigationView navigationView;
     private RelativeLayout rellayTotalTagihan;
     private RelativeLayout rellayPerbarui;
     private RelativeLayout rellayBanner;
@@ -149,7 +151,7 @@ public class HomeActivityV2 extends AppCompatActivity
         btnPerbarui = findViewById(R.id.btnPerbarui);
         progressBarNews = findViewById(R.id.progressBarNews);
         progressBarNewsInfoWS = findViewById(R.id.progressBarNewsInfoWS);
-        tvTitleToday = findViewById(R.id.tvTitleToday);
+        TextView tvTitleToday = findViewById(R.id.tvTitleToday);
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
         tvTextTagihanPembayaran = findViewById(R.id.tvTextTagihanPembayaran);
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
@@ -231,16 +233,13 @@ public class HomeActivityV2 extends AppCompatActivity
             startActivity(intent);
         };
 
-        findViewById(R.id.drawer_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // open right drawer
-                DrawerLayout drawer = findViewById(R.id.drawer_layout);
-                drawer.openDrawer(GravityCompat.END);
-            }
+        findViewById(R.id.drawer_button).setOnClickListener(v -> {
+            // open right drawer
+            DrawerLayout drawer = findViewById(R.id.drawer_layout);
+            drawer.openDrawer(GravityCompat.END);
         });
 
-        navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         btnTambahkanSantri.setOnClickListener(l -> {
@@ -307,7 +306,6 @@ public class HomeActivityV2 extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -371,7 +369,7 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_presence_today.setLayoutManager(mLinearLayoutManager);
         rv_presence_today.setHasFixedSize(true);
 
-        recyclerListChat = new RecyclerPresenceHome(HomeActivityV2.this, presenceList);
+        RecyclerPresenceHome recyclerListChat = new RecyclerPresenceHome(HomeActivityV2.this, presenceList);
         recyclerListChat.setOnArtikelClickListener(onArtikelClickListener);
 
         rv_presence_today.setAdapter(recyclerListChat);
@@ -441,10 +439,11 @@ public class HomeActivityV2 extends AppCompatActivity
         rv_news.setLayoutManager(mLinearLayoutManager);
         rv_news.setHasFixedSize(true);
 
-        recyclerNewsHome = new RecyclerNewsHomeV2(HomeActivityV2.this, newsModel.getPosts(), Constant.TYPE_NEWS_HOME);
+        RecyclerNewsHomeV2 recyclerNewsHome = new RecyclerNewsHomeV2(HomeActivityV2.this, newsModel.getPosts(), Constant.TYPE_NEWS_HOME);
         recyclerNewsHome.setOnArtikelClickListener(onArtikelClickListenerNewsHome);
 
         rv_news.setAdapter(recyclerNewsHome);
+
     }
 
     private void setView(int type) {
@@ -709,6 +708,7 @@ public class HomeActivityV2 extends AppCompatActivity
                 Gson gson = new Gson();
                 newsModel = gson.fromJson(bodyString, NewsModel.class);
 
+                AlarmHelper.INSTANCE.startAlarmNewArticle(HomeActivityV2.this, bodyString);
                 return true;
             } catch (Exception e) {
                 Crashlytics.setString(TAG, "2-" + e.getMessage());

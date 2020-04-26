@@ -3,12 +3,13 @@ package com.madrasahdigital.walisantri.ppi67benda.model.newsmodel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Alhudaghifari on 15:06 22/06/19
  */
-public class NewsModel {
+public class NewsModel implements Serializable {
     @SerializedName("posts")
     @Expose
     private List<Post> posts = null;

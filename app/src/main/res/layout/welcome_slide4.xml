@@ -14,7 +14,7 @@
         <ImageView
             android:layout_width="@dimen/img_width_height"
             android:layout_height="@dimen/img_width_height"
-            android:src="@drawable/icon_green" />
+            android:src="@drawable/ic_logo" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
