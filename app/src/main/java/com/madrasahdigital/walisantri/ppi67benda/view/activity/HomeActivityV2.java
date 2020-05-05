@@ -19,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -29,7 +30,12 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -183,6 +189,14 @@ public class HomeActivityV2 extends AppCompatActivity
         new GetLatestVersionCode().execute();
         new GetNews().execute();
         new GetImageBanner().execute();
+
+        //Setup Firebase Messaging
+        FirebaseMessaging.getInstance().subscribeToTopic("articles");
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                   Log.d("coba", "token: "+task.getResult().getToken());
+                });
     }
 
     private void initializeListener() {
@@ -709,6 +723,10 @@ public class HomeActivityV2 extends AppCompatActivity
                 newsModel = gson.fromJson(bodyString, NewsModel.class);
 
                 AlarmHelper.INSTANCE.startAlarmNewArticle(HomeActivityV2.this, bodyString);
+//                if (!sharedPrefManager.isSetAlarm()){
+//                    sharedPrefManager.setAlarm();
+//                }
+
                 return true;
             } catch (Exception e) {
                 Crashlytics.setString(TAG, "2-" + e.getMessage());

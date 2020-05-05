@@ -28,25 +28,27 @@ class UpComingArticlesReceiver : BroadcastReceiver() {
 
             for (i in 0 until posts.size){
                 if (DateHelper.compareDateForShowArticles(posts[i].createdAt)){
-                    SendNotification(context).execute(i.toString(), posts[i].title, posts[i].featuredImage)
+                    SendNotification(context).execute(i, posts[i], posts[i].featuredImage)
                 }
             }
         }
+        context.startService(intent)
     }
 
     companion object {
         const val EXTRA_DATA_ARTICLES = "extra_data_news"
     }
 
-    class SendNotification(private val context: Context): AsyncTask<String, Void, Bitmap>(){
-        private var title = ""
+    class SendNotification(private val context: Context): AsyncTask<Any, Void, Bitmap>(){
+        private lateinit var post: Post
         private var notificationId = 0
 
-        override fun doInBackground(vararg params: String?): Bitmap? {
-            notificationId = params[0]?.toInt()!!
-            title = params[1].toString()
+        override fun doInBackground(vararg params: Any?): Bitmap? {
+            notificationId = params[0] as Int
+            post = params[1] as Post
+            val image = params[2] as String
             if (params[2] != null){
-                return getBitmapFromURL(params[2])!!
+                return getBitmapFromURL(image)
             }
             return null
         }
@@ -54,7 +56,7 @@ class UpComingArticlesReceiver : BroadcastReceiver() {
         override fun onPostExecute(result: Bitmap?) {
             super.onPostExecute(result)
             val notificationHelper = NotificationArticleHelper(context)
-            val nb = notificationHelper.getChannelNotification(title, result!!)
+            val nb = notificationHelper.getChannelNotification(post, result!!)
             notificationHelper.getManager()?.notify(notificationId, nb?.build())
         }
 

@@ -11,12 +11,20 @@ object DateHelper{
     }
 
     fun compareDateForShowArticles(createdDateString: String): Boolean{
+        val dateString = "2020-05-04"
+
         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
         val currentTime = Calendar.getInstance().time
 
-        val createdDate = dateFormat.parse(createdDateString)
+        val currentString = dateFormat.format(currentTime)
 
-        if (currentTime == createdDate){
+        val dateCurrent = dateFormat.parse(currentString)
+
+        val dateCreated = dateFormat.parse(createdDateString)
+
+        val fakeDate = dateFormat.parse(dateString)
+
+        if (fakeDate == dateCreated){
             return true
         }
 

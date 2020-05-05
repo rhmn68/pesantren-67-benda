@@ -38,6 +38,7 @@ public class SharedPrefManager {
     private final String KEY_TAGIHAN_ALL_SANTRI = "tagihanallsantri32";
     private final String KEY_IS_GUIDE_SHOWED = "isguideshw32";
     private final String KEY_SHOW_GET_LATEST_VERSION = "gtltsttvers12";
+    private final String KEY_IS_SET_ALARM = "key_is_set_alarm";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -67,6 +68,7 @@ public class SharedPrefManager {
      * false : tidak login
      * @return boolean login
      */
+
     public boolean isLoggedIn() {
         return pref.getBoolean(KEY_IS_LOGGED_IN, false);
     }
@@ -190,4 +192,12 @@ public class SharedPrefManager {
         editor.clear();
         editor.apply();
     }
+
+    public void setAlarm() {
+        editor = pref.edit();
+        editor.putBoolean(KEY_IS_SET_ALARM, true);
+        editor.apply();
+    }
+
+    public boolean isSetAlarm() {return  pref.getBoolean(KEY_IS_SET_ALARM, false);}
 }

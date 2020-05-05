@@ -4,6 +4,7 @@
     <color name="colorPrimaryDark">#449425</color>
     <color name="colorAccent">#f9ca24</color>
 
+    <color name="logo_persis">#007443</color>
 
     <!--Public color-->
     <color name="white">#ffffff</color>
