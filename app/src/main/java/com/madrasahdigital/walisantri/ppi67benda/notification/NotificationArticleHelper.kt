@@ -48,7 +48,6 @@ class NotificationArticleHelper (context: Context?) : ContextWrapper(context){
     fun getChannelNotification(post: Post, image: Bitmap): NotificationCompat.Builder? {
         val intent = Intent(this, DetailNewsActivity::class.java)
         intent.putExtra("urlberita", post.url)
-//        val notificationIntent = Intent(this, HomeActivityV2::class.java)
         val notificationPendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         return NotificationCompat.Builder(applicationContext, CHANNEL_ID)

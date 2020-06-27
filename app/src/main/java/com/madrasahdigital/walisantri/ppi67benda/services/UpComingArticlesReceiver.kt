@@ -11,27 +11,43 @@ import com.google.gson.Gson
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post
 import com.madrasahdigital.walisantri.ppi67benda.notification.NotificationArticleHelper
-import com.madrasahdigital.walisantri.ppi67benda.notification.NotificationArticleHelper.Companion.NOTIFICATION_ID
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant
 import com.madrasahdigital.walisantri.ppi67benda.utils.DateHelper
+import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 
 class UpComingArticlesReceiver : BroadcastReceiver() {
+    private lateinit var sharedPrefManager: SharedPrefManager
     override fun onReceive(context: Context, intent: Intent?) {
+        sharedPrefManager = SharedPrefManager(context)
         if (intent != null){
             val dataString = intent.getStringExtra(EXTRA_DATA_ARTICLES)
             val gson = Gson()
             val newsModel = gson.fromJson(dataString, NewsModel::class.java)
             val posts = newsModel.posts
+            var lastAccessDate = sharedPrefManager.lastAccessDate
+
+            if (lastAccessDate.isEmpty()){
+                sharedPrefManager.lastAccessDate = DateHelper.getCurrentDate()
+                lastAccessDate = sharedPrefManager.lastAccessDate
+            }
+
+            Log.d("coba", "last access date: $lastAccessDate")
 
             for (i in 0 until posts.size){
-                if (DateHelper.compareDateForShowArticles(posts[i].createdAt)){
+                Log.d("coba", "published at : ${posts[i].publishedAt}")
+                if (DateHelper.compareDateForShowArticles(posts[i].publishedAt.toString(), lastAccessDate)){
                     SendNotification(context).execute(i, posts[i], posts[i].featuredImage)
                 }
             }
+
+            if (DateHelper.compareDateAfter(lastAccessDate)){
+                sharedPrefManager.lastAccessDate = DateHelper.getCurrentDate()
+            }
         }
+
         context.startService(intent)
     }
 

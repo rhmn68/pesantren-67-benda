@@ -1,7 +1,5 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -19,7 +17,6 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
@@ -30,11 +27,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
@@ -42,15 +36,14 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
-import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
-import com.madrasahdigital.walisantri.ppi67benda.services.UpComingArticlesReceiver;
 import com.madrasahdigital.walisantri.ppi67benda.utils.AlarmHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
+import com.madrasahdigital.walisantri.ppi67benda.utils.DateHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.AddSantriActivity;
@@ -65,7 +58,6 @@ import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
 import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -195,7 +187,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
-                   Log.d("coba", "token: "+task.getResult().getToken());
                 });
     }
 
@@ -723,9 +714,6 @@ public class HomeActivityV2 extends AppCompatActivity
                 newsModel = gson.fromJson(bodyString, NewsModel.class);
 
                 AlarmHelper.INSTANCE.startAlarmNewArticle(HomeActivityV2.this, bodyString);
-//                if (!sharedPrefManager.isSetAlarm()){
-//                    sharedPrefManager.setAlarm();
-//                }
 
                 return true;
             } catch (Exception e) {

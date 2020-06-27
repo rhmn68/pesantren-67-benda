@@ -47,19 +47,13 @@ public class RecyclerNotification extends RecyclerView.Adapter<RecyclerView.View
         viewHolderCategory.tvSubject.setText(notificationModel.getSubject());
         viewHolderCategory.tvDate.setText(UtilsManager.getDateAnotherFormatFromString(notificationModel.getDate()));
 
-        viewHolderCategory.mViewContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (mOnArtikelClickListener != null) {
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (mOnArtikelClickListener != null)
-                                mOnArtikelClickListener.onClick(position, notificationModel);
-                        }
-                    }, 250);
-                }
+        viewHolderCategory.mViewContainer.setOnClickListener(view -> {
+            if (mOnArtikelClickListener != null) {
+                Handler handler = new Handler();
+                handler.postDelayed(() -> {
+                    if (mOnArtikelClickListener != null)
+                        mOnArtikelClickListener.onClick(position, notificationModel);
+                }, 250);
             }
         });
     }

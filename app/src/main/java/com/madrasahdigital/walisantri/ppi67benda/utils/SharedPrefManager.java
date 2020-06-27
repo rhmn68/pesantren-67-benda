@@ -6,11 +6,15 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
+import com.madrasahdigital.walisantri.ppi67benda.model.notification.ListNotificationArticlesModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationArticlesModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,6 +43,8 @@ public class SharedPrefManager {
     private final String KEY_IS_GUIDE_SHOWED = "isguideshw32";
     private final String KEY_SHOW_GET_LATEST_VERSION = "gtltsttvers12";
     private final String KEY_IS_SET_ALARM = "key_is_set_alarm";
+    private final String KEY_CURRENT_DATE = "key_current_date";
+    private final String KEY_DATA_ARTICLES_NOTIFICATION = "key_data_articles_notification";
 
     /**
      * constructor session manager wajib mengirim context aktivitas
@@ -200,4 +206,56 @@ public class SharedPrefManager {
     }
 
     public boolean isSetAlarm() {return  pref.getBoolean(KEY_IS_SET_ALARM, false);}
+
+
+    public void addArticleNotification(NotificationArticlesModel notificationArticlesModel){
+        ArrayList<NotificationArticlesModel> notificationArticlesModelArrayList = new ArrayList<>();
+        String dataArticles;
+        ListNotificationArticlesModel listNotificationArticlesModel = new ListNotificationArticlesModel();
+        if (getNotificationsArticles() != null){
+            getNotificationsArticles().add(notificationArticlesModel);
+            dataArticles = new Gson().toJson(getNotificationsArticles());
+        }else {
+            notificationArticlesModelArrayList.add(notificationArticlesModel);
+            listNotificationArticlesModel.setListNotificationArticles(notificationArticlesModelArrayList);
+            dataArticles = new Gson().toJson(listNotificationArticlesModel);
+        }
+        editor = pref.edit();
+        editor.putString(KEY_DATA_ARTICLES_NOTIFICATION, dataArticles);
+        editor.apply();
+    }
+
+    public List<NotificationArticlesModel> getNotificationsArticles(){
+        String jsonDataArticles = pref.getString(KEY_DATA_ARTICLES_NOTIFICATION, "");
+        ListNotificationArticlesModel listNotificationArticlesModel;
+        if (jsonDataArticles.isEmpty()){
+            return null;
+        }else {
+            listNotificationArticlesModel = new Gson().fromJson(jsonDataArticles, ListNotificationArticlesModel.class);
+        }
+
+        return listNotificationArticlesModel.getListNotificationArticles();
+    }
+
+    public void deleteArticles(){
+        editor = pref.edit();
+        editor.remove(KEY_DATA_ARTICLES_NOTIFICATION);
+        editor.apply();
+    }
+
+    public void setLastAccessDate(String currentDate){
+        editor = pref.edit();
+        editor.putString(KEY_CURRENT_DATE, currentDate);
+        editor.apply();
+    }
+
+    public String getLastAccessDate(){
+        return pref.getString(KEY_CURRENT_DATE, "");
+    }
+
+    public void deleteLastAccessDate(){
+        editor = pref.edit();
+        editor.remove(KEY_CURRENT_DATE);
+        editor.apply();
+    }
 }
