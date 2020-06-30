@@ -19,8 +19,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <service
-            android:name=".services.NewArticleService"
-            android:enabled="true"/>
+            android:name=".services.NewArticleJobService"
+            android:enabled="true"
+            android:permission="android.permission.BIND_JOB_SERVICE"/>
 
         <receiver
             android:name=".services.UpComingArticlesReceiver"

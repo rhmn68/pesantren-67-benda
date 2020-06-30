@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.madrasahdigital.walisantri.ppi67benda"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 15
         versionName "1.1.2"
@@ -64,7 +64,7 @@ dependencies {
     //Learn fcm
     implementation 'com.google.firebase:firebase-core:17.4.3'
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
-    implementation 'com.google.firebase:firebase-messaging:20.2.0'
+    implementation 'com.google.firebase:firebase-messaging:20.2.1'
 
     testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test:runner:1.2.0'
