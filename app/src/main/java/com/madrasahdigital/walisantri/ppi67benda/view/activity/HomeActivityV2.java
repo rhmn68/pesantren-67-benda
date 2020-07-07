@@ -198,34 +198,6 @@ public class HomeActivityV2 extends AppCompatActivity
                         String token = task.getResult().getToken();
                     }
                 });
-
-        //Run Job Service
-        startJobNewArticle();
-    }
-
-    private void startJobNewArticle() {
-        Intent myServiceIntent = new Intent(this, NewArticleJobService.class);
-        startService(myServiceIntent);
-        if (!isJobNewArticleRunning()){
-            Log.d("coba", "sheduler not running");
-            ComponentName componentName = new ComponentName(HomeActivityV2.this, NewArticleJobService.class);
-            long timePeriodic = 1000 * 60 * 15;
-
-            JobInfo jobInfo = new JobInfo.Builder(JOB_ID_NEW_ARTICLE, componentName)
-                    .setRequiresCharging(false)
-                    .setRequiresDeviceIdle(false)
-                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                    .setPersisted(true)
-                    .setPeriodic(timePeriodic)
-                    .build();
-
-            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
-            if (jobScheduler != null) {
-                jobScheduler.schedule(jobInfo);
-            }
-        }else {
-            Log.d("coba", "sheduler not running");
-        }
     }
 
     private boolean isJobNewArticleRunning(){
