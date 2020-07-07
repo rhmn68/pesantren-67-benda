@@ -1,14 +1,9 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -46,10 +41,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
-import com.madrasahdigital.walisantri.ppi67benda.services.NewArticleJobService;
-import com.madrasahdigital.walisantri.ppi67benda.utils.AlarmHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
-import com.madrasahdigital.walisantri.ppi67benda.utils.DateHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.addsantri.AddSantriActivity;
@@ -130,7 +122,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
     private int currentPage = 0;
     private int NUM_PAGES;
-    private int JOB_ID_NEW_ARTICLE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -198,23 +189,6 @@ public class HomeActivityV2 extends AppCompatActivity
                         String token = task.getResult().getToken();
                     }
                 });
-    }
-
-    private boolean isJobNewArticleRunning(){
-        boolean isScheduled = false;
-
-        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
-
-        if (jobScheduler != null){
-            for (JobInfo jobInfo : jobScheduler.getAllPendingJobs()){
-                if (jobInfo.getId() == JOB_ID_NEW_ARTICLE){
-                    isScheduled = true;
-                    break;
-                }
-            }
-        }
-
-        return isScheduled;
     }
 
     private void initializeListener() {
