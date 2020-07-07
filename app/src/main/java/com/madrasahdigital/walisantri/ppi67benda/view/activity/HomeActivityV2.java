@@ -187,6 +187,9 @@ public class HomeActivityV2 extends AppCompatActivity
 
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()){
+                        String token = task.getResult().getToken();
+                    }
                 });
     }
 
@@ -712,8 +715,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 Gson gson = new Gson();
                 newsModel = gson.fromJson(bodyString, NewsModel.class);
-
-                AlarmHelper.INSTANCE.startAlarmNewArticle(HomeActivityV2.this, bodyString);
 
                 return true;
             } catch (Exception e) {

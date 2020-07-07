@@ -120,6 +120,7 @@
     <string name="slide_4_desc">Melalui aplikasi 67Benda, wali santri bisa mendapatkan pengumuman terbaru dari pesantren dan memantau segala kegiatan dan aktivitas yang diselenggarakan oleh pesantren</string>
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
+    <string name="default_notification_channel_id">com.madrasahdigital.walisantri.ppi67benda.FCM_NOTIFICATION</string>
 
     <string-array name="name_example">
         <item>Farhan Ghifari</item>
