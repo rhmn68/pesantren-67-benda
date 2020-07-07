@@ -1,9 +1,14 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -41,6 +46,7 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
+import com.madrasahdigital.walisantri.ppi67benda.services.NewArticleJobService;
 import com.madrasahdigital.walisantri.ppi67benda.utils.AlarmHelper;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.DateHelper;
@@ -124,6 +130,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
     private int currentPage = 0;
     private int NUM_PAGES;
+    private int JOB_ID_NEW_ARTICLE = 1000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -191,6 +198,51 @@ public class HomeActivityV2 extends AppCompatActivity
                         String token = task.getResult().getToken();
                     }
                 });
+
+        //Run Job Service
+        startJobNewArticle();
+    }
+
+    private void startJobNewArticle() {
+        Intent myServiceIntent = new Intent(this, NewArticleJobService.class);
+        startService(myServiceIntent);
+        if (!isJobNewArticleRunning()){
+            Log.d("coba", "sheduler not running");
+            ComponentName componentName = new ComponentName(HomeActivityV2.this, NewArticleJobService.class);
+            long timePeriodic = 1000 * 60 * 15;
+
+            JobInfo jobInfo = new JobInfo.Builder(JOB_ID_NEW_ARTICLE, componentName)
+                    .setRequiresCharging(false)
+                    .setRequiresDeviceIdle(false)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .setPersisted(true)
+                    .setPeriodic(timePeriodic)
+                    .build();
+
+            JobScheduler jobScheduler = (JobScheduler) getSystemService(JOB_SCHEDULER_SERVICE);
+            if (jobScheduler != null) {
+                jobScheduler.schedule(jobInfo);
+            }
+        }else {
+            Log.d("coba", "sheduler not running");
+        }
+    }
+
+    private boolean isJobNewArticleRunning(){
+        boolean isScheduled = false;
+
+        JobScheduler jobScheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
+
+        if (jobScheduler != null){
+            for (JobInfo jobInfo : jobScheduler.getAllPendingJobs()){
+                if (jobInfo.getId() == JOB_ID_NEW_ARTICLE){
+                    isScheduled = true;
+                    break;
+                }
+            }
+        }
+
+        return isScheduled;
     }
 
     private void initializeListener() {

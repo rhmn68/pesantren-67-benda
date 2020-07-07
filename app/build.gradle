@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.madrasahdigital.walisantri.ppi67benda"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 15
         versionName "1.1.2"
