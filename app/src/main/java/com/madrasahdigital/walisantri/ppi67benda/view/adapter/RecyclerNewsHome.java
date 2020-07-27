@@ -50,9 +50,6 @@ public class RecyclerNewsHome extends RecyclerView.Adapter<RecyclerView.ViewHold
         View view;
         if (type == Constant.TYPE_NEWS_HOME) {
             switch (viewType) {
-                case TAG_NORMAL_LIST:
-                    view = LayoutInflater.from(mContext).inflate(R.layout.item_news, parent, false);
-                    return new RecyclerNewsHome.ViewHolderCategory(view);
                 case TAG_END_LIST:
                     view = LayoutInflater.from(mContext).inflate(R.layout.item_small_width, parent, false);
                     return new RecyclerNewsHome.ViewHolderCategory(view);

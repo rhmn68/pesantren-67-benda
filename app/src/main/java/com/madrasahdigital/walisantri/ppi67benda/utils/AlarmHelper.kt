@@ -29,7 +29,7 @@ object AlarmHelper{
         alarmManager.setInexactRepeating(
                 AlarmManager.RTC_WAKEUP,
                 SystemClock.elapsedRealtime() + 1000 * 10,
-                AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                AlarmManager.INTERVAL_DAY,
                 getPendingIntent(context, newsModel)
         )
 

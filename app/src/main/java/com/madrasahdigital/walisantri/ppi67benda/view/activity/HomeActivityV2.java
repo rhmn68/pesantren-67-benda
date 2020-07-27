@@ -82,10 +82,12 @@ public class HomeActivityV2 extends AppCompatActivity
     private ProgressBar progressBarToday;
     private ProgressBar progressBarNews;
     private ProgressBar progressBarNewsInfoWS;
+    private ProgressBar progressBarNewsVideos;
     private ImageView ivRefreshPresenceToday;
     private RecyclerView rv_presence_today;
     private RecyclerView rv_news;
     private RecyclerView rv_news_info_ws;
+    private RecyclerView rv_news_videos;
     private RecyclerPresenceHome.OnArtikelClickListener onArtikelClickListener;
     private RecyclerNewsHomeV2.OnArtikelClickListener onArtikelClickListenerNewsHome;
     private RecyclerNewsHomeV2 recyclerNewsWaliSantriHome;
@@ -151,6 +153,8 @@ public class HomeActivityV2 extends AppCompatActivity
         tvTotalTagihan = findViewById(R.id.tvTotalTagihan);
         tvTextTagihanPembayaran = findViewById(R.id.tvTextTagihanPembayaran);
         swipeRefreshLayout = findViewById(R.id.swipeRefresh);
+        rv_news_videos = findViewById(R.id.rv_news_videos);
+        progressBarNewsVideos = findViewById(R.id.progressBarNewsVideos);
         setSupportActionBar(toolbar);
 
         sharedPrefManager = new SharedPrefManager(HomeActivityV2.this);
@@ -182,6 +186,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
         //Setup Firebase Messaging
         FirebaseMessaging.getInstance().subscribeToTopic("articles");
+        FirebaseMessaging.getInstance().subscribeToTopic("articles-staging");
 
         FirebaseInstanceId.getInstance().getInstanceId()
                 .addOnCompleteListener(task -> {
