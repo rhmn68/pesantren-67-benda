@@ -135,15 +135,6 @@ public class DetailNewsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onBackPressed() {
-        if (wvDescription.canGoBack()) {
-            wvDescription.goBack();
-        } else {
-            super.onBackPressed();
-        }
-    }
-
     private void setDetailArticle(String detail) {
         //set ChromeClient
         wvDescription.setWebViewClient(new WebViewClient() {
@@ -264,6 +255,7 @@ public class DetailNewsActivity extends AppCompatActivity {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         Log.v(TAG, TAG + " # onActivityResult # requestCode=" + requestCode + " # resultCode=" + resultCode);
         if (requestCode == FILECHOOSER_RESULTCODE) {
             if (null == mUploadMessage)

@@ -1,10 +1,12 @@
 package com.madrasahdigital.walisantri.ppi67benda.services
 
+import android.util.Log
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post
 import com.madrasahdigital.walisantri.ppi67benda.notification.NotificationHelper
+import com.madrasahdigital.walisantri.ppi67benda.notification.NotificationNewsVideoHelper
 
 
 class ArticlesFirebaseMessagingServices : FirebaseMessagingService(){
@@ -20,20 +22,23 @@ class ArticlesFirebaseMessagingServices : FirebaseMessagingService(){
             val dataString = data["post"]
             val post = Gson().fromJson(dataString, Post::class.java)
 
-            NotificationHelper(this).showNotification(post)
-        }
+            when(remoteMessage.from){
+                "/topics/articles-video"-> {
+                    NotificationNewsVideoHelper(this).showNotification(post)
+                }
 
-        if (remoteMessage.notification != null){
-            val title = remoteMessage.notification?.title
-            val desc = remoteMessage.notification?.body
-            val image = remoteMessage.notification?.imageUrl
-            val post = Post()
-            post.id = remoteMessage.messageId
-            post.title = title
-            post.featuredImage = image.toString()
-            post.slug = desc
+                "/topics/articles-video-staging"-> {
+                    NotificationNewsVideoHelper(this).showNotification(post)
+                }
 
-            NotificationHelper(this).showNotification(post)
+                "/topics/articles-staging"-> {
+                    NotificationHelper(this).showNotification(post)
+                }
+
+                "/topics/articles"->{
+                    NotificationHelper(this).showNotification(post)
+                }
+            }
         }
     }
 

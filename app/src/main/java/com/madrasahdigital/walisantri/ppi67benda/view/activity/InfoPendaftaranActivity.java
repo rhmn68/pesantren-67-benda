@@ -1,10 +1,12 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -62,12 +64,14 @@ public class InfoPendaftaranActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private void initializeWebview() {
         if (Build.VERSION.SDK_INT >= 21) {
             wvDescription.getSettings().setMixedContentMode( WebSettings.MIXED_CONTENT_ALWAYS_ALLOW );
         }
         wvDescription.getSettings().setJavaScriptEnabled(true);
         wvDescription.getSettings().setDomStorageEnabled(true);
+        wvDescription.getSettings().setAllowFileAccess(true);
         wvDescription.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int proses)
             {
@@ -90,8 +94,18 @@ public class InfoPendaftaranActivity extends AppCompatActivity {
                 }
             }
         });
-        wvDescription.setWebViewClient(new WebViewClient());
-        wvDescription.loadUrl(Constant.LINK_INFO_PENDAFTARAN);
+//        wvDescription.loadUrl(Constant.LINK_INFO_PENDAFTARAN);
+        wvDescription.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+                if (Constant.LINK_INFO_PENDAFTARAN != null && Constant.LINK_INFO_PENDAFTARAN .startsWith("myscheme://")){
+                    String newUrl = Constant.LINK_INFO_PENDAFTARAN.replace("myscheme://", "file://android_asset/");
+                    wvDescription.loadUrl(newUrl);
+                    return true;
+                }
+                return false;
+            }
+        });
 
     }
 }

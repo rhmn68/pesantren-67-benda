@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
@@ -20,10 +19,16 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+        <activity
+            android:name=".view.activity.DetailNewsVideoActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"/>
+
         <service
             android:name=".services.NewArticleJobService"
             android:enabled="true"
-            android:permission="android.permission.BIND_JOB_SERVICE"/>
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
             android:name=".services.UpComingArticlesReceiver"
@@ -52,140 +57,141 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/logo_persis" />
 
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_channel_id"
-            android:value="@string/default_notification_channel_id" />
-
         <activity
             android:name=".view.activity.InfoWaliSantriActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.ProfilPesantrenActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.InfoPendaftaranActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.OtpActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.HowToPayActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.DetailPembayaran"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.DetailMakePaymentActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.WelcomeGuideActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.LupaSandiActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.DetailTagihanActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.TagihanPembayaranPerSantriActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.RiwayatPembayaranActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.ChooseSantriPaymentActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.NewsFromPesantrenActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.activity.NewsVideoFromPesantrenActivity"
+            android:configChanges="locale|orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.AboutActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.presence.ChooseSantriPresenceActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.DetailNewsActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.addsantri.AddSantriActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.activity.addsantri.WelcomeMsgAddSantri"
             android:configChanges="locale|orientation"
             android:label="@string/title_activity_finance"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
         <activity
             android:name=".view.activity.HomeActivityV2"
             android:configChanges="locale|orientation"
             android:label="@string/title_activity_home_v2"
-            android:screenOrientation="unspecified"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.presence.PresenceActivityV2"
             android:configChanges="locale|orientation"
             android:label="@string/Presence"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.RegisterActivity"
             android:configChanges="locale|orientation"
             android:label="@string/tambahkan_santri"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.activity.payment.MakePaymentActivity"
             android:configChanges="locale|orientation"
             android:label="@string/dopayment"
-            android:screenOrientation="fullSensor" />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.LoginActivity"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".view.activity.SplashScreen"
             android:configChanges="locale|orientation"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

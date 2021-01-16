@@ -37,6 +37,7 @@ public class Constant {
     public static final String LINK_GET_IMAGE_BANNER = SERVER_LINK + "api/entry/index/slider?orderby=order&direction=asc&filter[status]=1";
     public static final String LINK_INFO_PENDAFTARAN = SERVER_LINK + "app/info-pendaftaran";
     public static final String LINK_PROFIL_PESANTREN = SERVER_LINK + "app/profil-pesantren";
+    public static final String LINK_GET_VIDEO_NEWS = SERVER_LINK + "api/post?type=video&orderby=published_at";
 
     // add date in the last, example api/santri/1/presensi/20190515
     // and change $ to id santri

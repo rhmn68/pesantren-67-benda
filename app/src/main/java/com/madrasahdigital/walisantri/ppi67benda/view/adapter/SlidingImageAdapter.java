@@ -50,11 +50,17 @@ public class SlidingImageAdapter extends PagerAdapter {
 
         assert imageLayout != null;
         final ImageView imageView = imageLayout.findViewById(R.id.ivImageBanner);
-
-        Glide
-                .with(context)
-                .load(articleList.get(position).getFeaturedImage().getThumb700x350())
-                .into(imageView);
+        if (articleList.get(position).getFeaturedImage().getThumb700x350() != null){
+            Glide
+                    .with(context)
+                    .load(articleList.get(position).getFeaturedImage().getThumb700x350())
+                    .into(imageView);
+        }else {
+            Glide
+                    .with(context)
+                    .load(articleList.get(position).getFeaturedImage().getOriginal())
+                    .into(imageView);
+        }
 
         view.addView(imageLayout, 0);
 
@@ -62,10 +68,10 @@ public class SlidingImageAdapter extends PagerAdapter {
             String article_id = articleList.get(position).getArticleId();
             String url = articleList.get(position).getUrl();
 
+
             if (article_id != null) {
                 if (!article_id.isEmpty()) {
                     String urlBerita = Constant.LINK_GET_DETAIL_NEWS + "/" + article_id;
-                    Log.d("Sliding", "urlberita : " + urlBerita + " artikel id : " + article_id);
                     Intent intent = new Intent(context, DetailNewsActivity.class);
                     intent.putExtra("urlberita", urlBerita);
                     context.startActivity(intent);

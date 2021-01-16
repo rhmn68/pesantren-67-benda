@@ -1,0 +1,104 @@
+{
+  "posts": [
+    {
+      "title": "Test Article 9 28 June (00.23)",
+      "intro": null,
+      "featured_image": "https://www.67benda.com/sites/benda/uploads/original/177/zOoOM_copy.jpg",
+      "embed_video": "GJVDXV1BbRc",
+      "author": "1",
+      "featured": null,
+      "slug": "test-article-9-28-june-0023",
+      "id": "65",
+      "status": "publish",
+      "created_at": "2020-06-28 00:23:07",
+      "published_at": "2020-06-28 00:23:11",
+      "category": {
+        "term_id": "6",
+        "slug": "berita-pesantren",
+        "name": "Berita Pesantren"
+      },
+      "url": "http://test.pesantrenbenda.cloudapp.web.id/api/post/65"
+    },
+    {
+      "title": "Test Article 8 28 June (00.18)",
+      "intro": null,
+      "featured_image": "https://www.67benda.com/sites/benda/uploads/original/177/zOoOM_copy.jpg",
+      "embed_video": "GJVDXV1BbRc",
+      "author": "1",
+      "featured": null,
+      "slug": "test-article-8-28-june-0018",
+      "id": "64",
+      "status": "publish",
+      "created_at": "2020-06-28 00:18:06",
+      "published_at": "2020-06-28 00:18:15",
+      "category": {
+        "term_id": "6",
+        "slug": "berita-pesantren",
+        "name": "Berita Pesantren"
+      },
+      "url": "http://test.pesantrenbenda.cloudapp.web.id/api/post/64"
+    },
+    {
+      "title": "Test Article 7 26 June (06.08)",
+      "intro": null,
+      "featured_image": "https://www.67benda.com/sites/benda/uploads/original/177/zOoOM_copy.jpg",
+      "embed_video": "GJVDXV1BbRc",
+      "author": "1",
+      "featured": null,
+      "slug": "test-article-7-26-june-0608",
+      "id": "63",
+      "status": "publish",
+      "created_at": "2020-06-26 06:08:18",
+      "published_at": "2020-06-26 06:08:22",
+      "category": {
+        "term_id": "6",
+        "slug": "berita-pesantren",
+        "name": "Berita Pesantren"
+      },
+      "url": "http://test.pesantrenbenda.cloudapp.web.id/api/post/63"
+    },
+    {
+      "title": "Test Article 6 25 June (15:46)",
+      "intro": null,
+      "featured_image": "https://www.67benda.com/sites/benda/uploads/original/177/zOoOM_copy.jpg",
+      "embed_video": "GJVDXV1BbRc",
+      "author": "1",
+      "featured": null,
+      "slug": "test-article-6-25-june-1546",
+      "id": "62",
+      "status": "publish",
+      "created_at": "2020-06-25 15:46:37",
+      "published_at": "2020-06-25 15:46:40",
+      "category": {
+        "term_id": "6",
+        "slug": "berita-pesantren",
+        "name": "Berita Pesantren"
+      },
+      "url": "http://test.pesantrenbenda.cloudapp.web.id/api/post/62"
+    },
+    {
+      "title": "Test-Articles-5",
+      "intro": null,
+      "featured_image": "https://www.67benda.com/sites/benda/uploads/original/177/zOoOM_copy.jpg",
+      "embed_video": "GJVDXV1BbRc",
+      "author": "1",
+      "featured": null,
+      "slug": "testarticles5",
+      "id": "61",
+      "status": "publish",
+      "created_at": "2020-06-24 18:10:43",
+      "published_at": "2020-06-24 18:10:47",
+      "category": {
+        "term_id": "6",
+        "slug": "berita-pesantren",
+        "name": "Berita Pesantren"
+      },
+      "url": "http://test.pesantrenbenda.cloudapp.web.id/api/post/61"
+    }
+  ],
+  "pagination": "http://test.pesantrenbenda.cloudapp.web.id/api/post?page=2",
+  "page_links": {
+    "prev": null,
+    "next": "http://test.pesantrenbenda.cloudapp.web.id/api/post?page=2"
+  }
+}
