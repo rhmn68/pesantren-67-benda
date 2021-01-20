@@ -1,16 +1,11 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Color
-import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.util.Log
 import android.webkit.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
@@ -33,11 +28,12 @@ class DetailNewsVideoActivity : AppCompatActivity() {
     private var sharedPrefManager: SharedPrefManager? = null
 
     companion object{
-        const val EXTRA_POST = "extra_post"
-        val TAG = DetailNewsVideoActivity::class.java.simpleName
+        const val EXTRA_URL_NEWS_VIDEO = "extra_url_news_video"
+        val TAG: String = DetailNewsVideoActivity::class.java.simpleName
     }
 
-    private lateinit var post: Post
+    private var post: Post? = null
+    private var urlNewsVideo: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,8 +42,6 @@ class DetailNewsVideoActivity : AppCompatActivity() {
         sharedPrefManager = SharedPrefManager(this)
         setupActionBar()
         getDataPost()
-        initYoutubeVideo()
-        setupView()
         onClick()
     }
 
@@ -57,9 +51,11 @@ class DetailNewsVideoActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupView() {
-        tvTitleNewsVideo.text = post.title
-        tvPublishedAtNewsVideo.text = UtilsManager.getDateAnotherFormatFromString2(post.publishedAt.toString())
+    private fun setupView(detailNewsModel: DetailNewsModel?) {
+        if (detailNewsModel != null){
+            tvTitleNewsVideo.text = detailNewsModel.title
+            tvPublishedAtNewsVideo.text = UtilsManager.getDateAnotherFormatFromString2(detailNewsModel.publishedAt.toString())
+        }
     }
 
     private fun setupActionBar() {
@@ -68,11 +64,18 @@ class DetailNewsVideoActivity : AppCompatActivity() {
     }
 
     private fun getDataPost() {
-        post = intent.getSerializableExtra(EXTRA_POST) as Post
+        if (intent != null){
+            urlNewsVideo = intent.getStringExtra(EXTRA_URL_NEWS_VIDEO)
+
+            if (urlNewsVideo != null){
+                GetDetailArticle(urlNewsVideo.toString(), sharedPrefManager!!.token).execute()
+            }
+        }
     }
 
     @SuppressLint("NewApi")
-    private fun initYoutubeVideo() {
+    private fun initYoutubeVideo(embedVideo: String?) {
+        Log.d("DetailNewsVideoActivity", "initYoutubeVideo: embedVideo: $embedVideo")
         val playbackEventListener = object : YouTubePlayer.PlaybackEventListener {
 
             override fun onPlaying() {
@@ -132,7 +135,9 @@ class DetailNewsVideoActivity : AppCompatActivity() {
                 youTubePlayer.setPlaybackEventListener(playbackEventListener)
 
                 if (!b){
-                    youTubePlayer.cueVideo(post.embedVideo)
+                    if (embedVideo != null){
+                        youTubePlayer.cueVideo(embedVideo)
+                    }
                 }else{
                     Crashlytics.setString(TAG, "1-" + "Video empty")
                     Log.d(TAG,"video empty")
@@ -149,8 +154,6 @@ class DetailNewsVideoActivity : AppCompatActivity() {
 
         val youtube = supportFragmentManager.findFragmentById(R.id.youtubeView) as YouTubePlayerSupportFragment
         youtube.initialize(getString(R.string.youtube_api_key), onInitializedListener)
-
-        GetDetailArticle(post.url, sharedPrefManager!!.token).execute()
     }
 
     private fun setDetailArticle(detail: String) {
@@ -195,7 +198,6 @@ class DetailNewsVideoActivity : AppCompatActivity() {
                 val bodyString = responseBody!!.string()
                 val gson = Gson()
                 detailNewsModel = gson.fromJson(bodyString, DetailNewsModel::class.java)
-                Log.d("coba", "response: $bodyString")
                 return true
             } catch (e: Exception) {
                 Crashlytics.setString(TAG, "1-" + e.message)
@@ -209,6 +211,8 @@ class DetailNewsVideoActivity : AppCompatActivity() {
             super.onPostExecute(isSuccess)
             if (isSuccess!!){
                 setDetailArticle(detailNewsModel!!.content)
+                initYoutubeVideo(detailNewsModel?.embedVideo)
+                setupView(detailNewsModel)
             }
         }
 

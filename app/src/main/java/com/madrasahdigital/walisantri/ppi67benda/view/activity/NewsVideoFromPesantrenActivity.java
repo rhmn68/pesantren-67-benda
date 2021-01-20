@@ -90,7 +90,7 @@ public class NewsVideoFromPesantrenActivity extends AppCompatActivity {
     private void initializeListener() {
         onArtikelClickListenerNewsHome = (posisi, notificationModel) -> {
             Intent intent = new Intent(NewsVideoFromPesantrenActivity.this, DetailNewsVideoActivity.class);
-            intent.putExtra(DetailNewsVideoActivity.EXTRA_POST, notificationModel);
+            intent.putExtra(DetailNewsVideoActivity.EXTRA_URL_NEWS_VIDEO, notificationModel.getUrl());
             startActivity(intent);
         };
 

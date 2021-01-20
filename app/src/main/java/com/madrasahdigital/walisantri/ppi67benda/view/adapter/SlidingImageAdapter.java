@@ -16,6 +16,8 @@ import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.DetailNewsActivity;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.DetailNewsVideoActivity;
+import com.madrasahdigital.walisantri.ppi67benda.view.activity.HomeActivityV2;
 
 import java.util.List;
 
@@ -47,6 +49,7 @@ public class SlidingImageAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
         View imageLayout = inflater.inflate(R.layout.item_image_banner, view, false);
+        Result article = articleList.get(position);
 
         assert imageLayout != null;
         final ImageView imageView = imageLayout.findViewById(R.id.ivImageBanner);
@@ -63,23 +66,32 @@ public class SlidingImageAdapter extends PagerAdapter {
         }
 
         view.addView(imageLayout, 0);
-
+        Log.d("SlidingImageAdapter", "instantiateItem: post type: "+article.getPostType());
         imageLayout.setOnClickListener(l -> {
             String article_id = articleList.get(position).getArticleId();
             String url = articleList.get(position).getUrl();
 
-
-            if (article_id != null) {
-                if (!article_id.isEmpty()) {
-                    String urlBerita = Constant.LINK_GET_DETAIL_NEWS + "/" + article_id;
-                    Intent intent = new Intent(context, DetailNewsActivity.class);
-                    intent.putExtra("urlberita", urlBerita);
+            if (article.getPostType() != null && article.getPostType().equals("video")){
+                if (article.getUrl().isEmpty()){
+                    Intent intent = new Intent(context, DetailNewsVideoActivity.class);
+                    String urlNews = Constant.LINK_GET_DETAIL_NEWS + article.getArticleId();
+                    Log.d("SlidingImageAdapter", "instantiateItem: url:"+urlNews);
+                    intent.putExtra(DetailNewsVideoActivity.EXTRA_URL_NEWS_VIDEO, urlNews);
                     context.startActivity(intent);
                 }
-            } else if (!url.equals("")) {
-                Intent intent = new Intent(context, DetailNewsActivity.class);
-                intent.putExtra("urlberita", url);
-                context.startActivity(intent);
+            }else {
+                if (article_id != null) {
+                    if (!article_id.isEmpty()) {
+                        String urlBerita = Constant.LINK_GET_DETAIL_NEWS + "/" + article_id;
+                        Intent intent = new Intent(context, DetailNewsActivity.class);
+                        intent.putExtra("urlberita", urlBerita);
+                        context.startActivity(intent);
+                    }
+                } else if (!url.equals("")) {
+                    Intent intent = new Intent(context, DetailNewsActivity.class);
+                    intent.putExtra("urlberita", url);
+                    context.startActivity(intent);
+                }
             }
         });
 

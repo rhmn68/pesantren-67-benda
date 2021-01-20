@@ -467,7 +467,7 @@ public class HomeActivityV2 extends AppCompatActivity
             rv_news_videos.setAdapter(recyclerNewsVideo);
             recyclerNewsVideo.onClick(post -> {
                 Intent intent = new Intent(HomeActivityV2.this, DetailNewsVideoActivity.class);
-                intent.putExtra(DetailNewsVideoActivity.EXTRA_POST, post);
+                intent.putExtra(DetailNewsVideoActivity.EXTRA_URL_NEWS_VIDEO, post.getUrl());
                 startActivity(intent);
             });
         }
@@ -683,7 +683,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
-                Log.d("coba", "json: "+bodyString);
                 Gson gson = new Gson();
                 slideBannerModel = gson.fromJson(bodyString, SlideBannerModel.class);
 

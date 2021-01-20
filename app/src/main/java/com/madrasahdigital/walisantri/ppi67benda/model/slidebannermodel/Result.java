@@ -39,6 +39,17 @@ public class Result {
     @Expose
     private Article article;
 
+    @SerializedName("post_type")
+    private String postType;
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+
     public String getId() {
         return id;
     }

@@ -41,7 +41,7 @@ class NotificationNewsVideoHelper(context: Context): ContextWrapper(context) {
     private fun createNotification(post: Post?, image: Bitmap?): Notification{
 
         val intent = Intent(this, DetailNewsVideoActivity::class.java)
-        intent.putExtra(DetailNewsVideoActivity.EXTRA_POST, post)
+        intent.putExtra(DetailNewsVideoActivity.EXTRA_URL_NEWS_VIDEO, post?.url)
         val pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent,  PendingIntent.FLAG_UPDATE_CURRENT)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
