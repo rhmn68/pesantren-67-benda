@@ -13,9 +13,14 @@ import kotlinx.android.synthetic.main.item_news_v2.view.*
 class RecyclerNewsVideo(private val posts: List<Post>) : RecyclerView.Adapter<RecyclerNewsVideo.ViewHolder>(){
 
     private lateinit var listener: (Post) -> Unit
+    private lateinit var itemClickListener: ItemClickListener
+
+    interface ItemClickListener{
+        fun onClick(post: Post)
+    }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        fun bind(post: Post, listener: (Post) -> Unit) {
+        fun bind(post: Post, listener: ItemClickListener) {
             Glide.with(itemView)
                 .load(post.featuredImage)
                 .centerCrop()
@@ -31,7 +36,7 @@ class RecyclerNewsVideo(private val posts: List<Post>) : RecyclerView.Adapter<Re
             }
 
             itemView.setOnClickListener {
-                listener(post)
+                listener.onClick(post)
             }
         }
     }
@@ -42,10 +47,10 @@ class RecyclerNewsVideo(private val posts: List<Post>) : RecyclerView.Adapter<Re
     override fun getItemCount(): Int = posts.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(posts[position], listener)
+        holder.bind(posts[position], itemClickListener)
     }
 
-    fun onClick(listener: (Post) -> Unit){
-        this.listener = listener
+    fun onClick(itemClickListener: ItemClickListener){
+        this.itemClickListener = itemClickListener
     }
 }

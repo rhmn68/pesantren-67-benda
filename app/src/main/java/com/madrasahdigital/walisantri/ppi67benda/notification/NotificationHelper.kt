@@ -9,7 +9,6 @@ import android.content.ContextWrapper
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.util.Log
@@ -21,7 +20,6 @@ import com.madrasahdigital.walisantri.ppi67benda.R
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.DetailNewsActivity
-import com.madrasahdigital.walisantri.ppi67benda.view.activity.HomeActivityV2
 import me.leolin.shortcutbadger.ShortcutBadger
 import java.io.IOException
 import java.lang.ref.WeakReference
@@ -40,6 +38,7 @@ class NotificationHelper(context: Context): ContextWrapper(context) {
     private var  mNotificationManager = NotificationManagerCompat.from(this)
 
     private fun createNotification(post: Post?, image: Bitmap?): Notification{
+
         val intent = Intent(this, DetailNewsActivity::class.java)
         intent.putExtra("urlberita", post?.url)
         val pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, intent,  PendingIntent.FLAG_UPDATE_CURRENT)
@@ -61,7 +60,7 @@ class NotificationHelper(context: Context): ContextWrapper(context) {
                 .setContentText(post?.slug)
                 .setLargeIcon(image)
                 .setStyle(NotificationCompat.BigPictureStyle().bigPicture(image))
-                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent)
                 .setGroup(GROUP_KEY_NOTIFICATION_ARTICLES)
                 .setNumber(1)

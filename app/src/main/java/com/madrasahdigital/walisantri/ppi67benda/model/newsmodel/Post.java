@@ -45,6 +45,16 @@ public class Post implements Serializable {
     @SerializedName("url")
     @Expose
     private String url;
+    @SerializedName("embed_video")
+    private String embedVideo;
+
+    public String getEmbedVideo() {
+        return embedVideo;
+    }
+
+    public void setEmbedVideo(String embedVideo) {
+        this.embedVideo = embedVideo;
+    }
 
     public String getTitle() {
         return title;

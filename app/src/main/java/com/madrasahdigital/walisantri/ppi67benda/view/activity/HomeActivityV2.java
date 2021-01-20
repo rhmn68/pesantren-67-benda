@@ -28,19 +28,19 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.VersionCodeModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
+import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post;
 import com.madrasahdigital.walisantri.ppi67benda.model.notification.NotificationModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
+import com.madrasahdigital.walisantri.ppi67benda.repository.RepoNewsVideo;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
@@ -50,6 +50,7 @@ import com.madrasahdigital.walisantri.ppi67benda.view.activity.payment.ChooseSan
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.ChooseSantriPresenceActivity;
 import com.madrasahdigital.walisantri.ppi67benda.view.activity.presence.PresenceActivityV2;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHomeV2;
+import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsVideo;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerPresenceHome;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.SlidingImageAdapter;
 import com.madrasahdigital.walisantri.ppi67benda.view.dialog.LogoutDialog;
@@ -183,17 +184,7 @@ public class HomeActivityV2 extends AppCompatActivity
         new GetLatestVersionCode().execute();
         new GetNews().execute();
         new GetImageBanner().execute();
-
-        //Setup Firebase Messaging
-        FirebaseMessaging.getInstance().subscribeToTopic("articles");
-        FirebaseMessaging.getInstance().subscribeToTopic("articles-staging");
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()){
-                        String token = task.getResult().getToken();
-                    }
-                });
+        new GetNewsVideo().execute();
     }
 
     private void initializeListener() {
@@ -218,7 +209,10 @@ public class HomeActivityV2 extends AppCompatActivity
                 new GetImageBanner().execute();
         });
 
-        ivRefreshPresenceToday.setOnClickListener(l -> new GetDataSantri().execute());
+        ivRefreshPresenceToday.setOnClickListener(l -> {
+            new GetDataSantri().execute();
+            new GetNewsVideo().execute();
+        });
 
         rellayTotalTagihan.setOnClickListener(l -> {
             Intent intent = new Intent(HomeActivityV2.this, ChooseSantriPaymentActivity.class);
@@ -362,7 +356,8 @@ public class HomeActivityV2 extends AppCompatActivity
                 }
             });
         } else if (id == R.id.nav_info_pendaftaran) {
-            Intent intent = new Intent(HomeActivityV2.this, InfoPendaftaranActivity.class);
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(Constant.LINK_INFO_PENDAFTARAN));
+//            Intent intent = new Intent(HomeActivityV2.this, InfoPendaftaranActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_profile) {
             Intent intent = new Intent(HomeActivityV2.this, ProfilPesantrenActivity.class);
@@ -457,6 +452,27 @@ public class HomeActivityV2 extends AppCompatActivity
 
     }
 
+    private void initNewsVideo(List<Post> posts) {
+        if (posts != null){
+            final LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this) {
+                @Override
+                public boolean canScrollVertically() {
+                    return false;
+                }
+            };
+            rv_news_videos.setLayoutManager(mLinearLayoutManager);
+            rv_news_videos.setHasFixedSize(true);
+
+            RecyclerNewsVideo recyclerNewsVideo = new RecyclerNewsVideo(posts);
+            rv_news_videos.setAdapter(recyclerNewsVideo);
+            recyclerNewsVideo.onClick(post -> {
+                Intent intent = new Intent(HomeActivityV2.this, DetailNewsVideoActivity.class);
+                intent.putExtra(DetailNewsVideoActivity.EXTRA_URL_NEWS_VIDEO, post.getUrl());
+                startActivity(intent);
+            });
+        }
+    }
+
     private void setView(int type) {
         if (type == TYPE_LOAD_PRESENCE_TODAY) {
             btnTambahkanSantri.setVisibility(View.GONE);
@@ -501,6 +517,11 @@ public class HomeActivityV2 extends AppCompatActivity
 
     public void gotoNews(View view) {
         Intent intent = new Intent(HomeActivityV2.this, NewsFromPesantrenActivity.class);
+        startActivity(intent);
+    }
+
+    public void gotoVideos(View view){
+        Intent intent = new Intent(HomeActivityV2.this, NewsVideoFromPesantrenActivity.class);
         startActivity(intent);
     }
 
@@ -662,7 +683,6 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 ResponseBody responseBody = response.body();
                 String bodyString = responseBody.string();
-
                 Gson gson = new Gson();
                 slideBannerModel = gson.fromJson(bodyString, SlideBannerModel.class);
 
@@ -743,6 +763,62 @@ public class HomeActivityV2 extends AppCompatActivity
             if (isSuccess) {
                 rellayBanner.setVisibility(View.VISIBLE);
                 initializationOfNewsViewer();
+            } else {
+                UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
+            }
+        }
+    }
+
+    private class GetNewsVideo extends AsyncTask<Void, Integer, Boolean> {
+
+        private NewsModel newsModel;
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            OkHttpClient client = new OkHttpClient.Builder()
+                    .connectTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .writeTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .readTimeout(TIMEOUT, TimeUnit.SECONDS)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(Constant.LINK_GET_VIDEO_NEWS)
+                    .get()
+                    .addHeader(Constant.Authorization, sharedPrefManager.getToken())
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                ResponseBody responseBody = response.body();
+                String bodyString = responseBody.string();
+                Gson gson = new Gson();
+                newsModel = gson.fromJson(bodyString, NewsModel.class);
+
+                return true;
+            } catch (Exception e) {
+                Crashlytics.setString(TAG, "2-" + e.getMessage());
+                Crashlytics.logException(e);
+                e.printStackTrace();
+            }
+
+            return false;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            isThreadGetNewsWork = true;
+            progressBarNewsVideos.setVisibility(View.VISIBLE);
+            rellayBanner.setVisibility(View.GONE);
+        }
+
+        @Override
+        protected void onPostExecute(Boolean isSuccess) {
+            isThreadGetNewsWork = false;
+            progressBarNewsVideos.setVisibility(View.GONE);
+            if (isSuccess) {
+                rellayBanner.setVisibility(View.VISIBLE);
+                initNewsVideo(newsModel.getPosts());
             } else {
                 UtilsManager.showToast(HomeActivityV2.this, getResources().getString(R.string.cekkoneksi));
             }

@@ -95,6 +95,16 @@ public class DetailNewsModel {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("embed_video")
+    private String embedVideo;
+
+    public String getEmbedVideo() {
+        return embedVideo;
+    }
+
+    public void setEmbedVideo(String embedVideo) {
+        this.embedVideo = embedVideo;
+    }
 
     public String getId() {
         return id;
