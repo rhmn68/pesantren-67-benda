@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
@@ -27,6 +27,7 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 
+import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -176,8 +177,7 @@ public class InfoWaliSantriActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 

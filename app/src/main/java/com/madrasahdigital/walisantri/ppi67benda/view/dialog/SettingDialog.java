@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 
 import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TAG;
@@ -37,8 +37,7 @@ public class SettingDialog extends Dialog implements
         try {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG + "-SetDial", "1-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG + "-SetDial", "1-" + e.getMessage());
             e.printStackTrace();
         }
         setContentView(R.layout.dialog_setting);

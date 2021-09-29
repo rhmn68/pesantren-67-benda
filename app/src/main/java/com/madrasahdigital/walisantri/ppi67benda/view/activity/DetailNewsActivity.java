@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
@@ -33,7 +35,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.DetailNewsModel;
@@ -51,8 +53,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class DetailNewsActivity extends AppCompatActivity {
 
@@ -305,6 +305,7 @@ public class DetailNewsActivity extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.e("value", "Permission Granted, Now you can use local drive .");
@@ -410,8 +411,7 @@ public class DetailNewsActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -441,8 +441,7 @@ public class DetailNewsActivity extends AppCompatActivity {
                                 .error(R.drawable.bg_silver)
                                 .into(ivNewsImage);
                     } catch (Exception e) {
-                        Crashlytics.setString(TAG, "2-" + e.getMessage());
-                        Crashlytics.logException(e);
+                        FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                     }
                 }
                 tvTitleNews.setText(detailNewsModel.getTitle());

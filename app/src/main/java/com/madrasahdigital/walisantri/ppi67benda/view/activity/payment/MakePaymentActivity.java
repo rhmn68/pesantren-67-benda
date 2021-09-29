@@ -18,7 +18,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.PaymentSelectedModel;
@@ -88,8 +88,7 @@ public class MakePaymentActivity extends AppCompatActivity {
         try {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG, "loadial-" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -112,8 +111,9 @@ public class MakePaymentActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
-            if(resultCode == Activity.RESULT_OK){
+            if (resultCode == Activity.RESULT_OK) {
                 Intent returnIntent = getIntent();
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
@@ -223,8 +223,7 @@ public class MakePaymentActivity extends AppCompatActivity {
 
                 statusRespon = 1;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -243,7 +242,7 @@ public class MakePaymentActivity extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             } else {
                 UtilsManager.showToast(MakePaymentActivity.this, "Terjadi kesalahan " + statusCode);
-                Crashlytics.setString(TAG, "2-Terjadi kesalahan");
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-Terjadi kesalahan");
             }
         }
     }
@@ -283,8 +282,7 @@ public class MakePaymentActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "4-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "4-" + e.getMessage());
                 e.printStackTrace();
             }
 

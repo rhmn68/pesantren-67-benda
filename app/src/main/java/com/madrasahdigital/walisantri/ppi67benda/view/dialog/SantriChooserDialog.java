@@ -11,7 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.Santrus;
 
@@ -45,8 +45,7 @@ public class SantriChooserDialog extends Dialog {
         try {
             getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG + "-SantriChDial", "1-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG + "-SantriChDial", "1-" + e.getMessage());
             e.printStackTrace();
         }
         setContentView(R.layout.dialog_santri_chooser);

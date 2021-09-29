@@ -22,7 +22,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.detailpembayaran.DetailPembayaranModel;
@@ -150,8 +150,7 @@ public class DetailPembayaran extends AppCompatActivity {
                 clipboardManager.setPrimaryClip(clipData);
                 UtilsManager.showToast(DetailPembayaran.this, "No rekening tersalin");
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
         });
@@ -198,8 +197,7 @@ public class DetailPembayaran extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
             }
 

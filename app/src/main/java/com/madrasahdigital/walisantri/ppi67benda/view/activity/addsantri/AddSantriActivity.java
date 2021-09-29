@@ -16,7 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.datasantri.AssignSantriModel;
@@ -72,8 +72,7 @@ public class AddSantriActivity extends AppCompatActivity {
         try {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG, "loadial-" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -124,8 +123,7 @@ public class AddSantriActivity extends AppCompatActivity {
                 });
                 konfirmasiSantriDialog.show(); // 171810100
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "0-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "0-" + e.getMessage());
             }
         } else {
             UtilsManager.showToast(AddSantriActivity.this, "data tidak tersedia, mohon hubungi developer");
@@ -172,8 +170,7 @@ public class AddSantriActivity extends AppCompatActivity {
                     return true;
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -198,11 +195,10 @@ public class AddSantriActivity extends AppCompatActivity {
                     infoDialog.show();
                 } else {
                     UtilsManager.showToast(AddSantriActivity.this, message);
-                    Crashlytics.setString(TAG, "not success - " + message);
+                    FirebaseCrashlytics.getInstance().setCustomKey(TAG, "not success - " + message);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 UtilsManager.showToast(AddSantriActivity.this, getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }
@@ -261,8 +257,7 @@ public class AddSantriActivity extends AppCompatActivity {
                     return 1;
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "3-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "3-" + e.getMessage());
                 e.printStackTrace();
             }
 

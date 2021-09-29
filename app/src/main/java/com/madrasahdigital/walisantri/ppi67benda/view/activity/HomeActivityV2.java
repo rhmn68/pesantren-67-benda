@@ -26,8 +26,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.viewpager.widget.ViewPager;
 
-import com.crashlytics.android.Crashlytics;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
@@ -563,8 +563,7 @@ public class HomeActivityV2 extends AppCompatActivity
                     return true;
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "0-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "0-" + e.getMessage());
                 e.printStackTrace();
             }
             return false;
@@ -620,8 +619,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return status;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -688,8 +686,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -741,8 +738,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -797,8 +793,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -852,8 +847,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -919,8 +913,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "3-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "3-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -987,8 +980,7 @@ public class HomeActivityV2 extends AppCompatActivity
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "4-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "4-" + e.getMessage());
                 e.printStackTrace();
             }
 

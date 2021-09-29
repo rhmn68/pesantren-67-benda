@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
@@ -17,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
@@ -33,8 +35,6 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class LupaSandiActivity extends AppCompatActivity {
 
@@ -69,8 +69,7 @@ public class LupaSandiActivity extends AppCompatActivity {
         try {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG, "loadial-" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -168,8 +167,7 @@ public class LupaSandiActivity extends AppCompatActivity {
                     return true;
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 
@@ -187,8 +185,7 @@ public class LupaSandiActivity extends AppCompatActivity {
                     UtilsManager.showToast(LupaSandiActivity.this, message);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 UtilsManager.showToast(LupaSandiActivity.this, getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

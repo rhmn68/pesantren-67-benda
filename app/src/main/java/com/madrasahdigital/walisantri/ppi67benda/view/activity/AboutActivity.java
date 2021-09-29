@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.madrasahdigital.walisantri.ppi67benda.BuildConfig;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
@@ -29,8 +31,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class AboutActivity extends AppCompatActivity {
 
@@ -118,11 +118,10 @@ public class AboutActivity extends AppCompatActivity {
                 } else {
                     JSONObject jsonObject = new JSONObject(bodyString.replace("\\n", ""));
                     String msg = jsonObject.getString("message");
-                    Crashlytics.setString(Constant.TAG + "-About", "1-" + msg);
+                    FirebaseCrashlytics.getInstance().setCustomKey(Constant.TAG + "-About", "1-" + msg);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(Constant.TAG + "-About", "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(Constant.TAG + "-About", "2-" + e.getMessage());
                 e.printStackTrace();
             }
 

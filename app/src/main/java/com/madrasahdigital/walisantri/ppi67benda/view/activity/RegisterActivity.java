@@ -21,7 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.register.RegisterModel;
@@ -87,8 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
         try {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG, "loadial-" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -314,13 +313,11 @@ public class RegisterActivity extends AppCompatActivity {
                     message = jsonObject.getString("message");
                 }
             } catch (IOException e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
                 Log.e("coba", "error: IOException : "+e.getMessage());
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "2-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
                 Log.e("coba", "error: exception : "+e.getMessage());
             }
@@ -344,8 +341,7 @@ public class RegisterActivity extends AppCompatActivity {
                     showError(message);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "3-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "3-" + e.getMessage());
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

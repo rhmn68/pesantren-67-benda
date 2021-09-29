@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.webkit.*
 import androidx.appcompat.app.AppCompatActivity
-import com.crashlytics.android.Crashlytics
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.madrasahdigital.walisantri.ppi67benda.R
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.DetailNewsModel
@@ -139,8 +139,7 @@ class DetailNewsVideoActivity : AppCompatActivity() {
                         youTubePlayer.cueVideo(embedVideo)
                     }
                 }else{
-                    Crashlytics.setString(TAG, "1-" + "Video empty")
-                    Log.d(TAG,"video empty")
+                    FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + "Video empty")
                 }
             }
 
@@ -200,8 +199,7 @@ class DetailNewsVideoActivity : AppCompatActivity() {
                 detailNewsModel = gson.fromJson(bodyString, DetailNewsModel::class.java)
                 return true
             } catch (e: Exception) {
-                Crashlytics.setString(TAG, "1-" + e.message)
-                Crashlytics.logException(e)
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.message)
                 e.printStackTrace()
             }
             return false

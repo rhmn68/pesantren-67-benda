@@ -1,5 +1,7 @@
 package com.madrasahdigital.walisantri.ppi67benda.view.activity;
 
+import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
+
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -17,7 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel;
@@ -34,8 +36,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
-
-import static com.madrasahdigital.walisantri.ppi67benda.utils.Constant.TIMEOUT;
 
 public class NewsVideoFromPesantrenActivity extends AppCompatActivity {
 
@@ -175,8 +175,7 @@ public class NewsVideoFromPesantrenActivity extends AppCompatActivity {
 
                 return true;
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
             }
 

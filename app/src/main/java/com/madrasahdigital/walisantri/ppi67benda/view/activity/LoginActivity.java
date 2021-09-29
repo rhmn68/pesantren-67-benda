@@ -17,7 +17,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import com.crashlytics.android.Crashlytics;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.madrasahdigital.walisantri.ppi67benda.R;
 import com.madrasahdigital.walisantri.ppi67benda.model.allsantri.AllSantri;
@@ -70,8 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         try {
             loadingDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         } catch (Exception e) {
-            Crashlytics.setString(TAG, "loadial-" + e.getMessage());
-            Crashlytics.logException(e);
+            FirebaseCrashlytics.getInstance().setCustomKey(TAG, "loadial-" + e.getMessage());
             e.printStackTrace();
         }
         sharedPrefManager = new SharedPrefManager(LoginActivity.this);
@@ -111,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if (resultCode == Activity.RESULT_OK) {
                 Log.d(TAG, "onActivityResult RESULT OK");
@@ -206,8 +206,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "1-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "1-" + e.getMessage());
                 e.printStackTrace();
                 successCode = 0;
             }
@@ -239,8 +238,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     return true;
                 } catch (Exception e) {
-                    Crashlytics.setString(TAG, "2-" + e.getMessage());
-                    Crashlytics.logException(e);
+                    FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                     e.printStackTrace();
                     successCode = 0;
                 }
@@ -270,15 +268,14 @@ public class LoginActivity extends AppCompatActivity {
                     if (msg != null)
                         showError(msg);
                     else {
-                        Crashlytics.setString(TAG, "3a - terjadi kesalahan login");
+                        FirebaseCrashlytics.getInstance().setCustomKey(TAG, "3a - terjadi kesalahan login");
                         showError("Terjadi kesalahan koneksi");
                     }
 
                     Log.w(TAG, "message : " + msg);
                 }
             } catch (Exception e) {
-                Crashlytics.setString(TAG, "3b-" + e.getMessage());
-                Crashlytics.logException(e);
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "3b-" + e.getMessage());
                 showError(getResources().getString(R.string.cekkoneksi));
                 e.printStackTrace();
             }

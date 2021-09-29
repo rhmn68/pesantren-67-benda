@@ -9,7 +9,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.AsyncTask
 import android.util.Log
-import com.crashlytics.android.Crashlytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.NewsModel
 import com.madrasahdigital.walisantri.ppi67benda.model.newsmodel.Post
@@ -115,8 +115,7 @@ class NewArticleJobService : JobService() {
 
                 return true
             } catch (e: Exception) {
-                Crashlytics.setString(TAG, "2-" + e.message)
-                Crashlytics.logException(e)
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.message)
                 e.printStackTrace()
 
                 return false
@@ -157,8 +156,7 @@ class NewArticleJobService : JobService() {
                 val input = connection.inputStream
                 BitmapFactory.decodeStream(input)
             } catch (e: IOException) {
-                Crashlytics.setString(TAG, "2-" + e.message)
-                Crashlytics.logException(e)
+                FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.message)
                 null
             }
         }
