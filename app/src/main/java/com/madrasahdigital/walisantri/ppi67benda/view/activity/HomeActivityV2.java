@@ -40,7 +40,6 @@ import com.madrasahdigital.walisantri.ppi67benda.model.presence.Presensi;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.Result;
 import com.madrasahdigital.walisantri.ppi67benda.model.slidebannermodel.SlideBannerModel;
 import com.madrasahdigital.walisantri.ppi67benda.model.tagihanallsantri.TagihanAllSantriModel;
-import com.madrasahdigital.walisantri.ppi67benda.repository.RepoNewsVideo;
 import com.madrasahdigital.walisantri.ppi67benda.utils.Constant;
 import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;

@@ -5,18 +5,31 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.google.firebase.crashlytics'
 
-
+static def getDate() {
+    return new Date().format('yyyyMMdd')
+}
 android {
-    compileSdkVersion 31
+    signingConfigs {
+        release {
+            storeFile file('D:\\Projects\\Madrasah Digital\\pesantren-67-benda\\app\\kunci67Benda.jks')
+            keyAlias 'key67Benda'
+            storePassword 'bismillah67'
+            keyPassword 'bismillah67'
+        }
+    }
+    compileSdkVersion 32
     defaultConfig {
         applicationId "com.madrasahdigital.walisantri.ppi67benda"
         minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 21
-        versionName "1.1.3"
+        targetSdkVersion 32
+        versionCode 22
+        versionName "1.1.6"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        setProperty("archivesBaseName", "mathsci-client-V.$versionName-${getDate()}")
     }
     buildTypes {
         release {

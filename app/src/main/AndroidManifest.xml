@@ -38,7 +38,8 @@
 
         <receiver
             android:name=".services.UpComingArticlesReceiver"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
@@ -46,7 +47,8 @@
 
         <service
             android:name=".services.ArticlesFirebaseMessagingServices"
-            android:enabled="true">
+            android:enabled="true"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -198,6 +200,7 @@
             android:name=".view.activity.SplashScreen"
             android:configChanges="locale|orientation"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

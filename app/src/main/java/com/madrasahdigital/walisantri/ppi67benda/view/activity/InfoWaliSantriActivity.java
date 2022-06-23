@@ -27,7 +27,6 @@ import com.madrasahdigital.walisantri.ppi67benda.utils.SharedPrefManager;
 import com.madrasahdigital.walisantri.ppi67benda.utils.UtilsManager;
 import com.madrasahdigital.walisantri.ppi67benda.view.adapter.RecyclerNewsHome;
 
-import java.io.FileReader;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
