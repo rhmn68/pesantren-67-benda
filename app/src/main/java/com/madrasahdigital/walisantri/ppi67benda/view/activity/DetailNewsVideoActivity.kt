@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerSupportFragment
+import com.google.android.youtube.player.YouTubePlayerSupportFragmentX
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import com.madrasahdigital.walisantri.ppi67benda.R
@@ -151,7 +152,7 @@ class DetailNewsVideoActivity : AppCompatActivity() {
             }
         }
 
-        val youtube = supportFragmentManager.findFragmentById(R.id.youtubeView) as YouTubePlayerSupportFragment
+        val youtube = supportFragmentManager.findFragmentById(R.id.youtubeView) as YouTubePlayerSupportFragmentX
         youtube.initialize(getString(R.string.youtube_api_key), onInitializedListener)
     }
 

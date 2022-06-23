@@ -3,9 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="../../../../.gradle/caches/transforms-2/files-2.1/2ba93e5ff7ac17583a0081a74382ffd4/jetified-appcompat-resources-1.3.1/res/drawable/abc_vector_test.xml" value="0.16510416666666666" />
-        <entry key="app/src/main/res/layout/activity_detail_news_video.xml" value="0.13796296296296295" />
-        <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.14895833333333333" />
+        <entry key="..\:/OneDrive/Projects/Madrasah Digital/pesantren-67-benda/app/src/main/res/layout/activity_detail_news_video.xml" value="0.27943840579710144" />
+        <entry key="..\:/OneDrive/Projects/Madrasah Digital/pesantren-67-benda/app/src/main/res/layout/app_bar_home_activity_v2.xml" value="0.25" />
       </map>
     </option>
   </component>
@@ -14,7 +13,7 @@
     <option name="myDefaultNotNull" value="androidx.annotation.NonNull" />
     <option name="myNullables">
       <value>
-        <list size="14">
+        <list size="12">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.Nullable" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nullable" />
           <item index="2" class="java.lang.String" itemvalue="javax.annotation.CheckForNull" />
@@ -25,16 +24,14 @@
           <item index="7" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.qual.Nullable" />
           <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableDecl" />
           <item index="9" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NullableType" />
-          <item index="10" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
-          <item index="11" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
-          <item index="12" class="java.lang.String" itemvalue="io.reactivex.annotations.Nullable" />
-          <item index="13" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.Nullable" />
+          <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.Nullable" />
+          <item index="11" class="java.lang.String" itemvalue="com.android.annotations.Nullable" />
         </list>
       </value>
     </option>
     <option name="myNotNulls">
       <value>
-        <list size="14">
+        <list size="11">
           <item index="0" class="java.lang.String" itemvalue="org.jetbrains.annotations.NotNull" />
           <item index="1" class="java.lang.String" itemvalue="javax.annotation.Nonnull" />
           <item index="2" class="java.lang.String" itemvalue="edu.umd.cs.findbugs.annotations.NonNull" />
@@ -46,14 +43,11 @@
           <item index="8" class="java.lang.String" itemvalue="org.checkerframework.checker.nullness.compatqual.NonNullType" />
           <item index="9" class="java.lang.String" itemvalue="com.android.annotations.NonNull" />
           <item index="10" class="java.lang.String" itemvalue="org.eclipse.jdt.annotation.NonNull" />
-          <item index="11" class="java.lang.String" itemvalue="io.reactivex.annotations.NonNull" />
-          <item index="12" class="java.lang.String" itemvalue="io.reactivex.rxjava3.annotations.NonNull" />
-          <item index="13" class="java.lang.String" itemvalue="lombok.NonNull" />
         </list>
       </value>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

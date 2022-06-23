@@ -10,7 +10,7 @@ public class Constant {
 
     private static final String SERVER_LINK_OLD = "http://pesantrenbenda.cloudapp.web.id/";
     private static final String SERVER__TEST_LINK = "http://test.pesantrenbenda.cloudapp.web.id/";
-    private static final String SERVER_MAIN = "https://www.67benda.com/";
+    private static final String SERVER_MAIN = "https://www.persis67benda.com/";
     private static final String SERVER_LINK = SERVER_MAIN;
 
     public static final String LINK_REGISTER = SERVER_LINK + "api/user/auth/register";

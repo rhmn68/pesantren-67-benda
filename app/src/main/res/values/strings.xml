@@ -121,7 +121,7 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
     <string name="default_notification_channel_id">com.madrasahdigital.walisantri.ppi67benda.FCM_NOTIFICATION</string>
-    <string name="youtube_api_key" translatable="false">AIzaSyDZaWslKLJuLGPdnwU9DR8yl8apsQXz3DM</string>
+    <string name="youtube_api_key" translatable="false">AIzaSyDyKc0IeczBzeBr2Gam9AgmEa00Mf4KQp4</string>
 
     <string-array name="name_example">
         <item>Farhan Ghifari</item>
