@@ -34,7 +34,7 @@ public class Constant {
     public static final String LINK_GET_OTP = SERVER_LINK + "api/user/auth/resend_otp/$"; // replace $ with id user
     public static final String LINK_GET_LATEST_VERSION = SERVER_LINK + "api/setting/presensi.app_version";
     public static final String LINK_GET_ABOUT_DETAIL = SERVER_LINK + "api/variable/tentang_aplikasi";
-    public static final String LINK_GET_IMAGE_BANNER = SERVER_LINK + "api/entry/index/slider?orderby=order&direction=asc&filter[status]=1";
+    public static final String LINK_GET_IMAGE_BANNER = SERVER_LINK + "api/entry/slider?orderby=order&direction=asc&filter[status]=1";
     public static final String LINK_INFO_PENDAFTARAN = SERVER_LINK + "app/info-pendaftaran";
     public static final String LINK_PROFIL_PESANTREN = SERVER_LINK + "app/profil-pesantren";
     public static final String LINK_GET_VIDEO_NEWS = SERVER_LINK + "api/post?type=video&orderby=published_at";

@@ -14,8 +14,8 @@ public class SlideBannerModel {
     @Expose
     private List<Result> results = null;
     @SerializedName("pagination")
-    @Expose
-    private String pagination;
+//    @Expose
+//    private String pagination;
 
     public List<Result> getResults() {
         return results;
@@ -25,11 +25,11 @@ public class SlideBannerModel {
         this.results = results;
     }
 
-    public String getPagination() {
-        return pagination;
-    }
-
-    public void setPagination(String pagination) {
-        this.pagination = pagination;
-    }
+//    public String getPagination() {
+//        return pagination;
+//    }
+//
+//    public void setPagination(String pagination) {
+//        this.pagination = pagination;
+//    }
 }

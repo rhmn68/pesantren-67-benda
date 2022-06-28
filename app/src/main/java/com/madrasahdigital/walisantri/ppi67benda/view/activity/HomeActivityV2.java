@@ -683,10 +683,13 @@ public class HomeActivityV2 extends AppCompatActivity
                 Gson gson = new Gson();
                 slideBannerModel = gson.fromJson(bodyString, SlideBannerModel.class);
 
+                Log.d(TAG, "doInBackground: "+bodyString);
                 return true;
-            } catch (Exception e) {
+            } catch (Throwable e) {
                 FirebaseCrashlytics.getInstance().setCustomKey(TAG, "2-" + e.getMessage());
                 e.printStackTrace();
+                Log.d(TAG, "doInBackground: "+e.getLocalizedMessage());
+                Log.d(TAG, "doInBackground: "+e.getMessage());
             }
 
             return false;

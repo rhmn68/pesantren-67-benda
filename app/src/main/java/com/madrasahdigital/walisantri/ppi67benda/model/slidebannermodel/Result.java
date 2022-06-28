@@ -16,7 +16,7 @@ public class Result {
     private String title;
     @SerializedName("featured_image")
     @Expose
-    private FeaturedImage featuredImage;
+    private String featuredImage;
     @SerializedName("status")
     @Expose
     private String status;
@@ -66,11 +66,11 @@ public class Result {
         this.title = title;
     }
 
-    public FeaturedImage getFeaturedImage() {
+    public String getFeaturedImage() {
         return featuredImage;
     }
 
-    public void setFeaturedImage(FeaturedImage featuredImage) {
+    public void setFeaturedImage(String featuredImage) {
         this.featuredImage = featuredImage;
     }
 

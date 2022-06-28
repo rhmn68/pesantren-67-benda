@@ -53,17 +53,10 @@ public class SlidingImageAdapter extends PagerAdapter {
 
         assert imageLayout != null;
         final ImageView imageView = imageLayout.findViewById(R.id.ivImageBanner);
-        if (articleList.get(position).getFeaturedImage().getThumb700x350() != null){
-            Glide
-                    .with(context)
-                    .load(articleList.get(position).getFeaturedImage().getThumb700x350())
-                    .into(imageView);
-        }else {
-            Glide
-                    .with(context)
-                    .load(articleList.get(position).getFeaturedImage().getOriginal())
-                    .into(imageView);
-        }
+        Glide
+                .with(context)
+                .load(articleList.get(position).getFeaturedImage())
+                .into(imageView);
 
         view.addView(imageLayout, 0);
         Log.d("SlidingImageAdapter", "instantiateItem: post type: "+article.getPostType());
